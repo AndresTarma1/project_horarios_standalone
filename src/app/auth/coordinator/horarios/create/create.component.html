@@ -1,0 +1,182 @@
+<!-- <div class="container">
+  <form (ngSubmit)="crearHorario()" [formGroup]="horarioForm">
+
+    @if (cargaAcademicas$ | async; as cargaAcademicasInfo) {
+      <div class="form-group">
+        <label for="carga_academica">Carga Academica</label>
+        <select class="form-select" formControlName="cargaAcademica" (change)="obtenerGrupos()" name="carga_academica" id="carga_academica">
+          <option selected value="#">Seleccione una carga academica</option>
+            @for (cargaAcademica of cargaAcademicasInfo.academic_loads; track $index) {
+              <option [value]="cargaAcademica.id">{{ cargaAcademica.name | titlecase }}</option>
+            }@empty {
+              <option disabled [value]="null">No hay cargas academicas disponibles</option>
+            }
+        </select>
+      </div>
+
+      @if (grupos$ | async; as gruposInfo ){
+        <div class="form-group">
+          <label for="grupos">Grupos Disponibles</label>
+          <select class="form-select" formControlName="id_group" (change)="obtenerAsignaturas()" name="grupos" id="grupos">
+            <option selected value="#">Seleccione un grupo</option>
+              @for (grupo of gruposInfo.groups; track $index) {
+                <option [value]="grupo.id">{{ grupo.name }}</option>
+              }@empty {
+                <option disabled [value]="null">No hay grupos disponibles</option>
+              }
+          </select>
+        </div>
+
+        @if (asignaturas$ | async; as asignaturasInfo) {
+          <div class="form-group">
+            <label for="asignaturas">Asignaturas Disponibles</label>
+            <select class="form-select" formControlName="id_subject" (change)="obtenerProfesores($event)" name="asignaturas" id="asignaturas">
+              <option selected value="#">Seleccione una asignatura</option>
+                @for (asignatura of asignaturasInfo.subjects; track $index) {
+                  <option [value]="asignatura.id">{{ asignatura.name | titlecase }}</option>
+                }@empty {
+                  <option disabled [value]="null">No hay asignaturas disponibles</option>
+                }
+            </select>
+          </div>
+          @if( profesores$ | async; as profesoresInfo){
+            <div class="form-group">
+              <label for="profesores">Profesores Disponibles</label>
+              <select class="form-select" formControlName="id_teacher" name="profesores" id="profesores">
+                <option selected value="#">Seleccione un profesor/a</option>
+                    @for (profesor of profesoresInfo.teachers; track $index) {
+                      <option [value]="profesor.id">{{ profesor.name | titlecase}}</option>
+                    }@empty {
+                      <option disabled [value]="null">No hay profesores disponibles</option>
+                    }
+              </select>
+            </div>
+
+            @if (enviarHorario) {
+                <button class="btn btn-success" type="submit">Enviar </button>
+            }
+          }
+        }@else {
+          <p>No hay asignaturas para esta carga academica, debe asignarlas</p>
+        }
+      }
+    }@else {
+      <h2>Cargando...</h2>
+    }
+  </form>
+</div> -->
+
+
+<div class="container-fluid">
+  <h3>Creacion De Horarios</h3>
+  <p>Sistema De Creacion De Horarios De Clases</p>
+
+  <hr class="border border-3 opacity-75 mb-3">
+
+  <br>
+  <div class="row">
+    <div class="col-lg-6 form-horario">
+      <form (ngSubmit)="crearHorario()" [formGroup]="horarioForm">
+
+        <label for="carga_academica" class="mb-1"><strong>Seleccione la carga academica</strong></label>
+        <select formControlName="id_academic_load" (change)="onChangeCargaAcademica()" class="form-select" name="carga_academica" id="carga_academica">
+          @if (cargaAcademicas$ | async; as cargaAcademicasInfo) {
+            <option selected>Cargas Academicas</option>
+            @for (cargaAcademica of cargaAcademicasInfo.academic_loads; track $index) {
+              <option [value]="cargaAcademica.id">{{ cargaAcademica.name | titlecase}}</option>
+            }@empty {
+              <option selected disabled>No hay cargas academicas disponibles</option>
+            }
+          }@else {
+            <option selected disabled>
+              Cargando...
+            </option>
+          }
+        </select>
+
+        <br>
+
+        <label for="grupo" class="mb-1"><strong>Seleccione el grupo</strong></label>
+        <select (change)="obtenerAsignaturas()" formControlName="id_group" class="form-select" name="grupo" id="grupo">
+          @if (grupos$ | async; as gruposInfo) {
+            <option selected>Grupos</option>
+            @for (grupo of gruposInfo.groups; track $index) {
+              <option [value]="grupo.id">{{ grupo.name | titlecase}}</option>
+            }@empty {
+              <option selected disabled>No hay grupos disponibles</option>
+            }
+          }@else {
+            <option selected disabled>
+                Cargando...
+            </option>
+          }
+        </select>
+
+        <br>
+
+        <label for="asignatura" class="mb-1"><strong>Seleccione la asignatura</strong></label>
+        <select (change)="obtenerProfesores()" formControlName="id_subject" class="form-select" name="asignatura" id="asignatura">
+          @if (asignaturas$ | async; as asignaturasInfo) {
+            <option selected>Asignaturas</option>
+            @for (asignatura of asignaturasInfo.subjects; track $index) {
+              <option [value]="asignatura.id">{{ asignatura.name | titlecase }}</option>
+            }@empty {
+              <option selected disabled>No hay asignaturas disponibles</option>
+            }
+          }@else {
+            <option selected disabled>
+              Cargando...
+            </option>
+          }
+        </select>
+
+        <br>
+
+        <label for="maestro" class="mb-1"><strong>Seleccione el maestro</strong></label>
+        <select formControlName="id_teacher" class="form-select" name="maestro" id="maestro">
+          @if (profesores$ | async; as profesoresInfo) {
+            <option selected>Grupos</option>
+            @for (profesor of profesoresInfo.teachers; track $index) {
+              <option [value]="profesor.id">{{ profesor.name | titlecase }} -- {{ profesor.id }}</option>
+            }@empty {
+              <option selected disabled>No hay grupos disponibles</option>
+            }
+          }@else {
+            <option selected disabled>
+              Cargando...
+            </option>
+          }
+        </select>
+
+        <br>
+
+        <button [disabled]="horarioForm.invalid" type="submit" class="btn btn-primary mb-2">Crear Horario</button>
+      </form>
+    </div>
+
+
+
+    <div class="col-lg-6 pasos">
+
+      <fieldset class="mx-auto border rounded-3 p-3 w-100 h-100">
+        <legend class="float-none w-auto px-3">Creacion de horarios</legend>
+
+        <div class="container">
+          <h3>Pasos</h3>
+
+          <hr class="border border-2 opacity-75 my-1">
+
+          <br>
+
+          <p>1. Seleccione la carga academica.</p>
+          <p>2. Seleccione el grupo al cual le asignara el horario.</p>
+          <p>3. Selecciona la asignatura del horario</p>
+          <p>4. Selecciona el maestro disponible</p>
+        </div>
+      </fieldset>
+
+    </div>
+  </div>
+
+
+</div>

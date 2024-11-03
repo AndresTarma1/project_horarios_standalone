@@ -1,0 +1,42 @@
+@if (profesores$ | async; as profesorInfo) {
+  <div class="container-fluid">
+    <!-- Contenido introductorio -->
+    <div class="row">
+      <div class="col-md-12 mt-4">
+        <h1 class="text-primary">Panel de Administración</h1>
+        <p class="text-secondary">
+          Bienvenido al sistema de gestión de profesores. Aquí podrás ver la lista de profesores registrados, filtrarlos por carrera y agregar nuevos registros.
+        </p>
+      </div>
+    </div>
+
+    <!-- Tabla de Estudiantes -->
+    <div class="row mt-4">
+      <div class="col-md-12">
+        <h2 class="text-dark">Lista de profesores Registrados</h2>
+
+        <div class="d-flex justify-content-end mb-3">
+          <label for="filterCareer" class="form-label ms-auto me-2 my-auto">Filtrar por Carrera:</label>
+          <select id="filterCareer" class="form-select me-2" style="width: auto;">
+            <option value="">Seleccione una carrera</option>
+            <option value="ing">Ingeniería</option>
+            <option value="med">Medicina</option>
+            <option value="art">Arte</option>
+            <option value="com">Comunicación</option>
+          </select>
+          <button class="btn btn-primary btn-sm">Filtrar</button>
+        </div>
+
+        <app-table [thead]="columnas" [datos]="profesorInfo.teachers" ></app-table>
+
+        <!-- Paginación y texto de conteo -->
+        
+      </div>
+    </div>
+  </div>
+}@else if(error){
+  <h1>Ha ocurrido un error en el sistema, UNU</h1>
+}@else {
+  <h1>Cargando</h1>
+}
+

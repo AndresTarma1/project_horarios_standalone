@@ -1,0 +1,40 @@
+<div class="page">
+
+  <header class="header">
+    <nav class="navbar navbar-expand-lg">
+      <div [className]="isWideScreen ? 'container' : 'container-fluid'">
+        <a class="navbar-brand">
+          <img loading="lazy" src="/logo/image.png" alt="Empresa FullStac" width="60" height="60" class="rounded">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <div class="navbar-nav content-options ms-auto">
+            <div class="nav-item">
+              <a class="nav-link options" routerLinkActive="active" routerLink="academic">Nuestra Academia</a>
+            </div>
+            <div class="nav-item">
+              <a class="nav-link options" routerLinkActive="active" routerLink="apli-student">Aplicar Estudiantes</a>
+            </div>
+            <div class="nav-item">
+              <a class="nav-link options" routerLinkActive="active" routerLink="academic-offering">Ofertas Academicas</a>
+            </div>
+            <div class="nav-item">
+              <a class="nav-link options" routerLinkActive="active" routerLink="becas">Opciones de Becas</a>
+            </div>
+            <div class="nav-item">
+              <a class="nav-link options" routerLinkActive="active" routerLink="courses">Carreras</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <content>
+    <router-outlet></router-outlet>
+  </content>
+  <footer>
+    Footer
+  </footer>
+</div>

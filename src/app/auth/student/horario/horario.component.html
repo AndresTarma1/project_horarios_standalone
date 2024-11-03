@@ -1,0 +1,47 @@
+
+
+<ng-template [ngIf]="hayHorario" [ngIfElse]="dontHaveHorario" >
+
+  <app-schedule [horario]="horario"></app-schedule>
+  <!-- <div class="main-top">
+    <h1 class="text-center">Horario de clases</h1>
+    <i class="bi bi-clock-fill"></i>
+  </div>
+  <div class="content">
+    <div class="schedule-container">
+      <div class="schedule-header">
+          <div>Código: 2024550312</div>
+          <div>Programa:  INGENIERÍA DE SISTEMAS</div>
+      </div>
+        <table class="table table-responsive">
+            <thead>
+                <tr>
+                    <th>Días</th>
+                    <th>Asignaturas</th>
+                    <th>Horas Inicio</th>
+                    <th>Horas FInal</th>
+                </tr>
+            </thead>
+
+            <tbody>
+              <ng-container *ngFor="let dia of horario">
+                <ng-container *ngFor="let clase of dia.clases; let i = index">
+                  <tr>
+                    <td *ngIf="i === 0" [attr.rowspan]="dia.clases.length">{{ dia.dia }}</td>
+                    <td>{{ clase.name }}</td>
+                    <td class="text-center">{{ clase['h:i'] }}</td>
+                    <td class="text-center">{{ clase['h:f'] }}</td>
+                  </tr>
+                </ng-container>
+              </ng-container>
+            </tbody>
+        </table>
+    </div>
+  </div> -->
+</ng-template>
+
+<ng-template #dontHaveHorario>
+  <div>
+    <h1>No hay horarios disponibles</h1>
+  </div>
+</ng-template>

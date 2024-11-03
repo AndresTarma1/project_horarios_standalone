@@ -1,0 +1,33 @@
+.table {
+  border-collapse: collapse;
+}
+
+.table th {
+  text-align: center;
+  vertical-align: middle;
+  background-color: #007bff; /* Color de fondo del encabezado */
+  color: #fff; /* Color de texto blanco para el encabezado */
+}
+
+.table td {
+  vertical-align: top;
+  padding: 15px; /* Aumentar el espaciado en las celdas */
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f1f1f1; /* Color de fondo al pasar el mouse sobre las filas */
+}
+
+.container {
+  max-width: 900px; /* Ancho máximo del contenedor */
+  margin: auto; /* Centrar el contenedor */
+}
+
+h2 {
+  color: #0056b3; /* Color del título */
+  margin-bottom: 20px; /* Margen inferior para separación */
+}
+
+.text-muted {
+  font-size: 0.9em; /* Tamaño de fuente más pequeño para el horario */
+}

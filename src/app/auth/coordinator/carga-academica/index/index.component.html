@@ -1,0 +1,41 @@
+<div class="container mt-4">
+  <h2 class="text-center mb-4">Cargas Académicas</h2>
+
+  @if (cargasAcademicas$ | async; as cargasAcademicasInfo) {
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      @for (cargaAcademica of cargasAcademicasInfo.academic_loads; track $index) {
+
+        <div class="col d-flex align-items-stretch">
+          <div class="card mb-4 shadow h-100 fixed-width-card">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">{{ cargaAcademica.name }}</h5>
+              <p class="card-text flex-grow-1">{{ cargaAcademica.description }}</p>
+              <div class="d-flex justify-content-between mt-3">
+                <button class="btn btn-primary" (click)="verAsignaturas(cargaAcademica.id)">
+                  Ver Materias
+                </button>
+                <button class="btn btn-danger" (click)="eliminarCargaAcademica(cargaAcademica.id)">
+                  <i class="bi bi-trash"></i> Eliminar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      }@empty {
+        <div class="col-12">
+          <h1 class="text-center">No hay asignaturas disponibles</h1>
+        </div>
+      }
+    </div>
+  }@else {
+    <h1>Cargando</h1>
+  }
+</div>
+
+<style>
+  .fixed-width-card {
+    width: 100%;
+    max-width: 300px; /* Ancho máximo para que no se encojan en pantallas pequeñas */
+  }
+</style>

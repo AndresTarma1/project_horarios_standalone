@@ -1,0 +1,33 @@
+@if (coordinadores$ | async; as coordinadoresInfo) {
+
+  <div class="container-fluid">
+    <!-- Contenido introductorio -->
+    <div class="row">
+      <div class="col-md-12 mt-4">
+        <h1 class="text-primary">Panel de Administración</h1>
+        <p class="text-secondary">
+          Bienvenido al sistema de gestión de coordinadores. Aquí podrás ver la lista de estudiantes registrados, filtrarlos por carrera y agregar nuevos registros.
+        </p>
+      </div>
+    </div>
+
+
+
+    <!-- Tabla de Estudiantes -->
+    <div class="row mt-4">
+      <div class="col-md-12">
+        <h2 class="text-dark">Lista de coordinadores Registrados</h2>
+
+        <app-table [thead]="columnas" [datos]="coordinadoresInfo.coor" ></app-table>
+
+      </div>
+    </div>
+  </div>
+
+}@else if(error){
+  <h1>Ha ocurrido un error en el servidor, intentelo nuevamente luego...</h1>
+}@else {
+  <div class="d-flex justify-content-center mt-5">
+    <p>Cargando</p>
+  </div>
+}

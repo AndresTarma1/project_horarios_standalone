@@ -1,0 +1,10 @@
+.becas{
+  display: grid;
+  grid-template-rows: repeat(5, 1fr);
+
+  .ads{
+    text-align: center;
+    border: 1px solid #542348;
+  }
+}
+

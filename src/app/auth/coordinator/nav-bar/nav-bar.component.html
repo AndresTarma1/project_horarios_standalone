@@ -1,0 +1,95 @@
+<div class="container_">
+  <div class="sidebar">
+    <nav class="nav flex-column">
+      <a routerLinkActive="active" class="nav-link" routerLink="dashboard">
+        <span class="icon">
+          <i class="bi bi-grid"></i>
+        </span>
+        <span class="description">Dashboard</span>
+      </a>
+
+      <a routerLinkActive="active" class="nav-link" routerLink="profile">
+        <span class="icon">
+          <i class="bi bi-person-circle"></i>
+        </span>
+        <span class="description">Perfil</span>
+      </a>
+
+      <a href="#" class="nav-link" data-bs-toggle="collapse" data-bs-target="#submenu" aria-expanded="false" aria-controls="submenu">
+        <span class="icon">
+          <i class="bi bi-calendar"></i>
+        </span>
+        <span class="description">Horario <i class="bi bi-caret-down-fill"></i></span>
+      </a>
+
+      <div class="sub-menu collapse" id="submenu">
+        <a routerLink="horario/create" routerLinkActive="active" class="nav-link">
+          <span class="icon">
+            <i class="bi bi-calendar2-check"></i>
+          </span>
+          <span class="description">Crear Horario</span>
+        </a>
+        <a routerLink="horario/index" routerLinkActive="active" class="nav-link">
+          <span class="icon">
+            <i class="bi bi-calendar-plus"></i>
+          </span>
+          <span class="description">Ver Horario</span>
+        </a>
+      </div>
+
+      <a href="#" class="nav-link" data-bs-toggle="collapse" data-bs-target="#academic" aria-expanded="false" aria-controls="submenu">
+        <span class="icon">
+          <i class="bi bi-journal-text"></i>
+        </span>
+        <span class="description">Cargas Academicas<i class="bi bi-caret-down-fill"></i></span>
+      </a>
+
+      <div class="sub-menu collapse" id="academic">
+        <a routerLink="academic_load/create" routerLinkActive="active" class="nav-link">
+          <span class="icon">
+            <i class="bi bi-file-earmark-plus"></i>
+          </span>
+          <span class="description">Crear CA</span>
+        </a>
+        <a routerLink="academic_load/index" routerLinkActive="active" class="nav-link">
+          <span class="icon">
+            <i class="bi bi-list-ul"></i>
+          </span>
+          <span class="description">Ver CAs</span>
+        </a>
+      </div>
+
+      <a routerLinkActive="active" class="nav-link" routerLink="group-student">
+        <span class="icon">
+          <i class="bi bi-people"></i>
+        </span>
+        <span class="description">Grupo Estudiante</span>
+      </a>
+
+      <a routerLinkActive="active" class="nav-link" routerLink="subject-teacher">
+        <span class="icon">
+          <i class="bi bi-book"></i>
+        </span>
+        <span class="description">Asignaturas Maestro</span>
+      </a>
+
+      <a routerLinkActive="active" class="nav-link" routerLink="config">
+        <span class="icon">
+          <i class="bi bi-gear"></i>
+        </span>
+        <span class="description">Configuración</span>
+      </a>
+
+      <a href="#" class="nav-link mt-auto" (click)="null">
+        <span class="icon">
+          <i class="bi bi-box-arrow-left"></i>
+        </span>
+        <span class="description">Logout</span>
+      </a>
+    </nav>
+  </div>
+
+  <section class="main-content">
+    <router-outlet></router-outlet>
+  </section>
+</div>

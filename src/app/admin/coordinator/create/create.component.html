@@ -1,0 +1,74 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-9 mt-4">
+      <h1 class="text-center text-primary">Formulario de Registro de Coordinadores</h1>
+      <form (ngSubmit)="onSubmit()" [formGroup]="coordinatorForm" class="light-form">
+
+        <div class="row my-3">
+          <div class="col">
+            <label for="name" class="form-label">Nombres</label>
+            <input formControlName="name" type="text" id="name" required class="form-control">
+          </div>
+          <div class="col">
+            <label for="last_name" class="form-label">Apellidos</label>
+            <input formControlName="last_name" type="text" id="last_name" required class="form-control">
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="phone" class="form-label">Teléfono</label>
+          <input formControlName="phone" type="text" class="form-control" id="phone" required>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col">
+            <label for="documento" class="form-label">N° Documento</label>
+            <input formControlName="identify" type="text" class="form-control" id="documento" required>
+          </div>
+          <div class="col">
+            <label for="departamento" class="form-label">Departamento</label>
+            <input formControlName="departament" type="text" class="form-control" id="departamento" required>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col">
+            <label for="correo" class="form-label">Correo electrónico</label>
+            <input formControlName="email" type="email" class="form-control" id="correo" required>
+          </div>
+          <div class="col">
+            <label for="password" class="form-label">Contraseña</label>
+            <input formControlName="password" type="password" class="form-control" id="password" required>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3 w-100">Registrar</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<style>
+  .light-form {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .form-control {
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    padding: 10px;
+  }
+
+  .form-control:focus {
+    border-color: #80bdff;
+    outline: none;
+    box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.25);
+  }
+
+  .text-primary {
+    color: #007bff !important;
+  }
+</style>

@@ -1,0 +1,39 @@
+<div class="container mt-4">
+  <h1 class="text-primary">Perfil del Administrador</h1>
+
+  <!-- Información del Perfil -->
+  <div class="card my-4">
+    <div class="card-body">
+      <form [formGroup]="profileForm">
+        <div class="mb-3">
+          <label for="name" class="form-label">Nombre:</label>
+          <input type="text" id="name" class="form-control" formControlName="name" [readonly]="!isEditing">
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Correo Electrónico:</label>
+          <input type="email" id="email" class="form-control" formControlName="email" [readonly]="!isEditing">
+        </div>
+        <div class="mb-3">
+          <label for="role" class="form-label">Rol:</label>
+          <input type="text" id="role" class="form-control" formControlName="role" readonly>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Botones de Acción -->
+  <div class="d-flex justify-content-end">
+    <button *ngIf="!isEditing" class="btn btn-primary me-2" (click)="toggleEdit()">Editar Perfil</button>
+    <button *ngIf="isEditing" class="btn btn-success me-2" (click)="saveChanges()">Guardar Cambios</button>
+    <button *ngIf="isEditing" class="btn btn-secondary" (click)="cancelEdit()">Cancelar</button>
+  </div>
+
+  <!-- Opciones de Configuración Adicional -->
+  <div class="card my-4">
+    <div class="card-header">Configuración Adicional</div>
+    <div class="card-body">
+      <button class="btn btn-outline-warning w-100 mb-2">Cambiar Contraseña</button>
+      <button class="btn btn-outline-danger w-100">Cerrar Sesión</button>
+    </div>
+  </div>
+</div>

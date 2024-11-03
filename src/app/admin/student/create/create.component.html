@@ -1,0 +1,56 @@
+<div class="container">
+  <div class="row mt-4">
+    <!-- Formulario de Registro (Izquierda) -->
+    <div class="col-md-6 mt-4">
+      <h2 class="mb-2">Formulario de Registro de Estudiante</h2>
+      <form (ngSubmit)="onSubmit()" [formGroup]="studenForm" class="dark-form">
+        <!-- Campo de Nombres -->
+        <div class="mb-3">
+          <label for="name" class="form-label">Nombres</label>
+          <input formControlName="name" type="text" id="name" required class="form-control dark-input">
+        </div>
+
+        <!-- Campo de Apellidos -->
+        <div class="mb-3">
+          <label for="last_name" class="form-label">Apellidos</label>
+          <input formControlName="last_name" type="text" id="last_name" required class="form-control dark-input">
+        </div>
+
+        <!-- Campos de Teléfono y N° Documento en una sola línea -->
+        <div class="row my-3">
+          <div class="col">
+            <label for="phone" class="form-label">Teléfono</label>
+            <input formControlName="phone" type="text" class="form-control dark-input" id="phone" required>
+          </div>
+          <div class="col">
+            <label for="documento" class="form-label">N° Documento</label>
+            <input formControlName="identify" type="text" class="form-control dark-input" id="documento" required>
+          </div>
+        </div>
+
+        <!-- Campo de Correo electrónico -->
+        <div class="mb-3">
+          <label for="correo" class="form-label">Correo electrónico</label>
+          <input formControlName="email" type="email" class="form-control dark-input" id="correo" required>
+        </div>
+
+        <!-- Botón de Registro -->
+        <button type="submit" class="btn btn-primary mt-3 w-100">Registrar</button>
+      </form>
+    </div>
+
+    <!-- Sección de Instrucciones (Derecha) -->
+    <div class="col-md-6 mt-4">
+      <h1 class="text-primary">Panel de Administración</h1>
+      <p class="text-secondary">
+        Bienvenido al sistema de registro de usuarios. Como administrador, puedes agregar nuevos estudiantes a la plataforma completando el formulario de registro. Asegúrate de ingresar información válida.
+      </p>
+      <h3 class="text-secondary">Guía rápida:</h3>
+      <ul class="text-secondary">
+        <li>Completa todos los campos obligatorios.</li>
+        <li>Verifica que el número de documento y el teléfono sean correctos.</li>
+        <li>Si tienes dudas, consulta el <a href="#" class="text-primary">manual del administrador</a>.</li>
+      </ul>
+    </div>
+  </div>
+</div>

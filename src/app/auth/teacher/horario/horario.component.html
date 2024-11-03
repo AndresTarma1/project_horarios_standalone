@@ -1,0 +1,10 @@
+<ng-template [ngIf]="hayHorario" [ngIfElse]="dontHaveHorario" >
+
+  <app-schedule [horario]="horario" ></app-schedule>
+</ng-template>
+
+<ng-template #dontHaveHorario>
+  <div>
+    <h1>No hay horarios disponibles</h1>
+  </div>
+</ng-template>

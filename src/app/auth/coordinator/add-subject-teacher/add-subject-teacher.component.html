@@ -1,0 +1,94 @@
+<div class="container">
+
+  <h3>Asignacion De Materias A Maestros.</h3>
+  <br>
+  <p>Bienvenido al panel para asignarle las asignaturas a un maestro
+    primero debe seleccionar al maestr&#64;</p>
+  <br>
+
+    <div class="row my-2 align-items-center">
+      <div class="col-md-12 col-lg-4">
+        <div class="profesor">
+          <label for="profesor"><strong>Maestro</strong></label>
+          <select name="profesor" class="form-select" id="profesor">
+            <option selected>Seleccione un maestro</option>
+            <option value="">a</option>
+            <option value="">e</option>
+            <option value="">i</option>
+            <option value="">o</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-md-12 ms-1 col-lg-7">
+        <p>Debe seleccionar a un maestro!<br>
+          No hay maestros? <a href="">Click aquí</a>
+        </p>
+      </div>
+    </div>
+    <br>
+
+    <hr class="border border-2 opacity-75 my-3">
+
+    <br>
+    <div class="row my-2 align-items-center">
+      <div class="col-md-12 col-lg-4">
+        <div class="profesor">
+          <label for="asignatura"><strong>Asignaturas</strong></label>
+          <select name="profesor" class="form-select" id="asignatura">
+            <option selected>Seleccione un/as asignatura</option>
+            <option value="">a</option>
+            <option value="">e</option>
+            <option value="">i</option>
+            <option value="">o</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-md-12 ms-1 col-lg-7">
+        <p>Debe seleccionar a un asignatura!<br>
+          No hay asignatura? <a href="">Click aquí</a>
+        </p>
+      </div>
+    </div>
+    <br>
+
+    <hr class="border border-2 opacity-75 my-3">
+
+    <br>
+    <div class="row">
+      <div class="col align-content-center">
+        <div class="progress">
+          <div class="progress-bar" role="progressbar" aria-label="Basic example" [style.width.%]="valor" [attr.aria-valuenow]="valor" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+      </div>
+      <div class="col text-center">
+        <button disabled class="btn btn-primary w-25">Asignar</button>
+      </div>
+    </div>
+
+  <!-- <div class="row">
+    <div class="col">
+      <h1 class=" mx-auto mt-3">Asignarle Materia a un Maestro </h1>
+      <div class="col-md-6">
+        <select (change)="onChangeProfesor($event)" class="form-select" aria-label="Default select example">
+          <option selected>Selecciona
+            un Maestro</option>
+          <option *ngFor="let profesor of profesores" [value]="profesor.id">{{ profesor.name }} -- {{ profesor.id }}
+          </option>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <select (change)="onChangeAsignatura($event)" class="form-select" aria-label="Default select example">
+          <option selected>Selecciona
+            una Asignatura</option>
+          <option *ngFor="let asignatura of asignaturas" [value]="asignatura.id">{{ asignatura.name }}</option>
+        </select>
+      </div>
+      <div class="col-md-6 mt-3">
+        <button [disabled]="disable" (click)="addAsignaturaMaestro()" class="btn btn-primary">Agregar Materia Al
+          Maestro</button>
+      </div>
+    </div>
+  </div> -->
+</div>

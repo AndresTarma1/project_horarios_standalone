@@ -1,0 +1,47 @@
+@if (asignaturasCargaAcademica$ | async; as asignaturasCargaAcademicaInfo) {
+  <div class="asignaturas-list">
+    <h2>Lista de Asignaturas</h2>
+    <ul>
+      @for (asignatura of asignaturasCargaAcademicaInfo.subjects; track $index) {
+        <li>
+          <span class="asignatura-id">{{ asignatura.id }}</span> -
+          <span class="asignatura-name">{{ asignatura.name }}</span>
+        </li>
+
+      }
+    </ul>
+  </div>
+}@else if (error) {
+  <h2>No tiene asignaturas en esta carga academica, agregue algunas</h2>
+  @if (asignaturas$ | async; as asignaturasInfo) {
+    <div class="container mt-4">
+      <h2 class="text-center mb-4">Seleccionar Asignaturas</h2>
+
+      <!-- Lista de asignaturas -->
+      <div class="row">
+        @for (asignatura of asignaturasInfo.subjects; track $index) {
+
+          <div class="col-md-4 mb-3">
+            <div
+              class="card p-3"
+              [ngClass]="{ 'selected': selectedSubjects.includes(asignatura.id)}"
+              (click)="toggleSelection(asignatura.id)"
+            >
+              <p class="card-text text-center">{{ asignatura.name }}</p>
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- Contador de seleccionadas y botón de asignar -->
+      <div class="text-center mt-4">
+        <p>Asignaturas seleccionadas: {{ selectedSubjects.length }} / {{ maxSelection }}</p>
+        <button class="btn btn-primary" (click)="assignSubjects()" [disabled]="selectedSubjects.length === 0">
+          Asignar Asignaturas
+        </button>
+      </div>
+    </div>
+  }
+}@else{
+  <p> Cargando... </p>
+}

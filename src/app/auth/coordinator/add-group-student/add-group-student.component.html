@@ -1,0 +1,73 @@
+<!-- <div class="container">
+  <div class="row">
+    <h1 class="my-3">Asignarle grupo a un Estudiante</h1>
+    <div class="col-md-6">
+      <select (change)="onChangeEstudent($event)" class="form-select" aria-label="Default select example">
+        <option selected>Selecciona
+          un estudiante</option>
+          <option *ngFor="let estudiante of estudiantes" [value]="estudiante.id">{{ estudiante.name }} -- {{ estudiante.id }}</option>
+      </select>
+    </div>
+    <div class="col-md-6">
+      <select (change)="onChangeGroup($event)" class="form-select" aria-label="Default select example">
+        <option selected>Selecciona
+          un grupo</option>
+          <option *ngFor="let grupo of grupos" [value]="grupo.id">{{ grupo.name }}</option>
+      </select>
+    </div>
+    <div class="col-md-6 mt-3">
+      <button [disabled]="disable" (click)="addGrupoEstudiante()" class="btn btn-primary">Agregar grupo al estudiante</button>
+    </div>
+  </div>
+</div> -->
+
+
+<h2>Asignacion De Grupos De Estudiantes</h2>
+
+<br>
+
+<p>Bienvenido al panel para la asginacion de grupos a Estudiante/s</p>
+
+<br>
+
+<hr class="border border-2 opacity-75">
+
+<div class="row">
+
+  <div class="col">
+    <label for="carreras">Carreras</label>
+    <select name="carreras" id="carrera">
+      <option disabled selected>Disponibles</option>
+    </select>
+  </div>
+
+  <div class="col">
+    <p>Debes seleccionar la carrera para ver los estudiantes
+      de dicha carrera
+    </p>
+  </div>
+
+</div>
+
+<br>
+
+<hr class="border border-2 opacity-75 my-3">
+
+<br>
+
+<div class="row">
+
+  <div class="col">
+    <label for="estudiantes">Estudiantes sin grupos</label>
+    <select name="estudiantes" id="estudiantes">
+      <option disabled selected>Disponibles</option>
+    </select>
+  </div>
+
+  <div class="col">
+    <p>Puedes selecconar uno o varios estudiantes. <br>
+    Si no hay estudiantes, los estudiantes ya poseen grupos
+    </p>
+  </div>
+
+</div>

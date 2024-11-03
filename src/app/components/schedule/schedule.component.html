@@ -1,0 +1,24 @@
+<div class="container-fluid">
+    <div class="container-fluid mt-4">
+      <h2 class="text-center mb-4">Horario de Clases</h2>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">Hora</th>
+            <th scope="col" *ngFor="let dia of horario">{{ dia.dia | titlecase }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let hora of horas">
+            <th scope="row">{{ hora }}</th>
+            <td *ngFor="let dia of horario">
+              <div *ngIf="clasePorHora(dia.clases, hora)">
+                <p>{{ clasePorHora(dia.clases, hora).name | titlecase}} <ng-content *ngIf="clasePorHora(dia.clases, hora).grupo != null"> - ({{ clasePorHora(dia.clases, hora).grupo }})</ng-content></p>
+
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+</div>

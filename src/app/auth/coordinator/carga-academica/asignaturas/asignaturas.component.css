@@ -1,0 +1,51 @@
+.card {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.card.selected {
+  background-color: #1561f0;
+  color: white;
+  border: 1px solid #1561f0;
+  transform: scale(1.05);
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.asignaturas-list {
+  margin: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+h2 {
+  text-align: center;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+}
+
+li:last-child {
+  border-bottom: none;
+}
+
+.asignatura-id {
+  font-weight: bold;
+  color: #007bff;
+}
+
+.asignatura-name {
+  color: #333;
+}

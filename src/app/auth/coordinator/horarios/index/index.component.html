@@ -1,0 +1,75 @@
+<div class="container mt-4">
+  <div class="form-group">
+    <label for="grupo" class="form-label h5 mb-3">Seleccione el grupo para ver su horario</label>
+    <div class="input-group">
+      <select (change)="onChange($event)" class="form-select" name="grupo" id="grupo" aria-label="Seleccionar grupo">
+        <option [value]="null" disabled selected>Seleccione</option>
+        @for (grupo of grupos; track $index) {
+          <option  [value]="grupo.id">{{ grupo.name }}</option>
+        }@empty {
+          <option value="null">No hay grupos disponibles</option>
+        }
+      </select>
+      <button (click)="buscarHorario()" class="btn btn-primary ms-2" type="button">Buscar Horario</button>
+    </div>
+  </div>
+
+  @if (horario$ | async; as horarioInfo) {
+    @if (horarioInfo.horario != null) {
+      <app-schedule [horario]="horarioInfo.horario"  ></app-schedule>
+    }
+  }
+
+  <!-- <div class="container-fluid">
+    @if (horario) {
+      <h2>Horario...</h2>
+      <div class="container mt-4">
+        <h2 class="text-center mb-4">Horario de Clases</h2>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">Hora</th>
+              <th scope="col" *ngFor="let dia of horario">{{ dia.dia | titlecase }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let hora of horas">
+              <th scope="row">{{ hora }}</th>
+              <td *ngFor="let dia of horario">
+                <div *ngIf="clasePorHora(dia.clases, hora)">
+                  <strong>{{ clasePorHora(dia.clases, hora).name }}</strong><br>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    }@else {
+      <h2>No ha seleccionado un horario</h2>
+    }
+  </div> -->
+</div>
+
+
+<!-- <div class="container mt-4">
+  <h2 class="text-center mb-4">Horario de Clases</h2>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">Hora</th>
+        <th scope="col" *ngFor="let dia of horario">{{ dia.dia | titlecase }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let hora of horas">
+        <th scope="row">{{ hora }}</th>
+        <td *ngFor="let dia of ">
+          <div *ngIf="clasePorHora(dia.clases, hora)">
+            <strong>{{ clasePorHora(dia.clases, hora).name }}</strong><br>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div> -->
