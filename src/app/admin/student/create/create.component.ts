@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { AdminService } from '../../../core/services/admin-service.service';
@@ -10,7 +10,7 @@ import { AdminService } from '../../../core/services/admin-service.service';
   templateUrl: './create.component.html',
   styleUrl: './create.component.css'
 })
-export class CreateComponent {
+export class CreateComponent implements OnInit {
   studenForm: FormGroup = this.fb.group({
     name: ['', [Validators.required]],
     last_name: ['', [Validators.required]],
@@ -18,6 +18,9 @@ export class CreateComponent {
     phone: ['', [Validators.required]],
     identify : ['', [Validators.required]]
   });
+
+  ngOnInit(): void {
+  }
 
   private adminService: AdminService = inject(AdminService);
   constructor(private fb: FormBuilder){

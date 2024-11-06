@@ -135,11 +135,11 @@
         <label for="maestro" class="mb-1"><strong>Seleccione el maestro</strong></label>
         <select formControlName="id_teacher" class="form-select" name="maestro" id="maestro">
           @if (profesores$ | async; as profesoresInfo) {
-            <option selected>Grupos</option>
+            <option selected>Maestros</option>
             @for (profesor of profesoresInfo.teachers; track $index) {
               <option [value]="profesor.id">{{ profesor.name | titlecase }} -- {{ profesor.id }}</option>
             }@empty {
-              <option selected disabled>No hay grupos disponibles</option>
+              <option selected disabled>No hay Maestros Disponibles</option>
             }
           }@else {
             <option selected disabled>

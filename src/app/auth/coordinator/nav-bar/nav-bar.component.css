@@ -10,7 +10,7 @@
   height: 100dvh;
   width: 240px;
   padding-top: 20px;
-  background-color: #1561F0;
+  background-color: #2E8B57; /* Cambiado a verde */
   box-shadow: 2px 0px 12px rgba(0, 0, 0, 0.2);
   transition: width 0.3s;
 }
@@ -43,18 +43,19 @@
 }
 
 .sidebar .nav-link.active {
-  background-color: #0044cc;
+  background-color: #006400; /* Cambiado a un verde más oscuro */
   color: #fff;
 }
 
 .sidebar .nav-link:hover {
-  background-color: #0044cc;
+  background-color: #006400; /* Cambiado a un verde más oscuro */
   color: #fff;
 }
 
 .sidebar .icon {
   font-size: 1.2rem;
 }
+
 .sidebar .description {
   font-size: 16px;
   font-weight: 500;
@@ -62,6 +63,7 @@
 
 .main-content {
   flex: 1;
+  height: 100%;
   margin-left: 240px;
   padding: 20px;
   background-color: #f4f6f9;

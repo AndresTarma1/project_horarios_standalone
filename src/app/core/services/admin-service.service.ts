@@ -3,6 +3,9 @@ import { inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
 import { appConfig } from '../../app.config';
+import { Profesor } from '../../interfaces/profesor.interface';
+import { Estudiante } from '../../interfaces/estudiante.interface';
+import { Coordinador } from '../../interfaces/coordinador.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -28,41 +31,40 @@ export class AdminService {
     return this.http.get(`${this.apiUrl}/coordinator`, { headers: this.baseHeader});
   }
 
-  postProfesor(inter: any): Observable<any>{
-    console.log(inter);
-    return this.http.post(`${this.apiUrl}/teacher`, inter, { headers: this.baseHeader});
+  postProfesor(profesor: Profesor): Observable<any>{
+    return this.http.post(`${this.apiUrl}/teacher`, profesor, { headers: this.baseHeader});
   }
 
-  postEstudiante(inter: any): Observable<any>{
-    return this.http.post(`${this.apiUrl}/student`, inter, { headers: this.baseHeader});
+  postEstudiante(estudiante: Estudiante): Observable<any>{
+    return this.http.post(`${this.apiUrl}/student`, estudiante, { headers: this.baseHeader});
   }
 
-  postCoordinador(inter: any): Observable<any>{
-    return this.http.post(`${this.apiUrl}/coordinator`, inter, { headers: this.baseHeader});
+  postCoordinador(coordinador: Coordinador): Observable<any>{
+    return this.http.post(`${this.apiUrl}/coordinator`, coordinador, { headers: this.baseHeader});
   }
 
-  patchProfesor(inter: any): Observable<any>{
-    return this.http.patch(`${this.apiUrl}/teacher`, inter, { headers: this.baseHeader});
+  patchProfesor(profesor: Profesor): Observable<any>{
+    return this.http.patch(`${this.apiUrl}/teacher/${profesor.id}`, profesor, { headers: this.baseHeader});
   }
 
-  patchEstudiante(inter: any): Observable<any>{
-    return this.http.patch(`${this.apiUrl}/student`, inter, { headers: this.baseHeader});
+  patchEstudiante(estudiante: Estudiante): Observable<any>{
+    return this.http.patch(`${this.apiUrl}/student/${estudiante.id}`, estudiante, { headers: this.baseHeader});
   }
 
-  patchCoordinador(inter: any): Observable<any>{
-    return this.http.patch(`${this.apiUrl}/coordinator`, inter);
+  patchCoordinador(coordinador: Coordinador): Observable<any>{
+    return this.http.patch(`${this.apiUrl}/coordinator/${coordinador.id}`, coordinador, { headers: this.baseHeader});
   }
 
-  deleteProfesore(inter: any): Observable<any>{
-    return this.http.delete(`${this.apiUrl}/teacher`, inter);
+  deleteProfesore(id: string): Observable<any>{
+    return this.http.delete(`${this.apiUrl}/teacher`, { headers: this.baseHeader });
   }
 
-  deleteEstudiante(inter: any): Observable<any>{
-    return this.http.delete(`${this.apiUrl}/student`, inter);
+  deleteEstudiante(id: string): Observable<any>{
+    return this.http.delete(`${this.apiUrl}/student`, { headers: this.baseHeader });
   }
 
-  deleteCoordinador(inter: any): Observable<any>{
-    return this.http.delete(`${this.apiUrl}/coordinator`, inter);
+  deleteCoordinador(id: string): Observable<any>{
+    return this.http.delete(`${this.apiUrl}/coordinator`, { headers: this.baseHeader });
   }
 
 

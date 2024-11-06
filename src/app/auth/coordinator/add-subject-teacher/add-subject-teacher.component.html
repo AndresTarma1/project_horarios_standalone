@@ -10,8 +10,8 @@
       <div class="col-md-12 col-lg-4">
         <div class="profesor">
           <label for="profesor"><strong>Maestro</strong></label>
-          <select name="profesor" class="form-select" id="profesor">
-            <option selected>Seleccione un maestro</option>
+          <select (change)="onChangeProfesor($event)" name="profesor" class="form-select" id="profesor">
+            <option value="any" selected>Seleccione un maestro</option>
             <option value="">a</option>
             <option value="">e</option>
             <option value="">i</option>
@@ -35,8 +35,8 @@
       <div class="col-md-12 col-lg-4">
         <div class="profesor">
           <label for="asignatura"><strong>Asignaturas</strong></label>
-          <select name="profesor" class="form-select" id="asignatura">
-            <option selected>Seleccione un/as asignatura</option>
+          <select (change)="onChangeAsignatura($event)" name="profesor" class="form-select" id="asignatura">
+            <option value="any" selected>Seleccione un/as asignatura</option>
             <option value="">a</option>
             <option value="">e</option>
             <option value="">i</option>
@@ -66,6 +66,7 @@
         <button disabled class="btn btn-primary w-25">Asignar</button>
       </div>
     </div>
+    <p>Progreso {{ valor }}%</p>
 
   <!-- <div class="row">
     <div class="col">

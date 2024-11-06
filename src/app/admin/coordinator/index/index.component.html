@@ -18,16 +18,16 @@
       <div class="col-md-12">
         <h2 class="text-dark">Lista de coordinadores Registrados</h2>
 
-        <app-table [thead]="columnas" [datos]="coordinadoresInfo.coor" ></app-table>
+        <app-table (userEdit)="editarCoordinador($event)" [columns]="coordinadoresColumns" [datos]="coordinadoresInfo.coor" ></app-table>
 
       </div>
     </div>
   </div>
 
 }@else if(error){
-  <h1>Ha ocurrido un error en el servidor, intentelo nuevamente luego...</h1>
+  <app-error-servidor></app-error-servidor>
 }@else {
-  <div class="d-flex justify-content-center mt-5">
-    <p>Cargando</p>
-  </div>
+  <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "pacman" [fullScreen] = "true">
+    <p style="color: white" > Cargando </p>
+  </ngx-spinner>
 }

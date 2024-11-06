@@ -13,7 +13,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 })
 export class AddSubjectTeacherComponent {
 
-  valor = 50;
+  valor = 0;
   maestroAsignatura: any;
   asignaturas: any = [];
   profesores: any[] = [];
@@ -30,12 +30,24 @@ export class AddSubjectTeacherComponent {
   }
 
   onChangeProfesor(event: any){
+
+    if(event.target.value === 'any'){
+      this.valor -= 50;
+      return;
+    }
     this.profesor = event.target.value;
+    this.valor = 50;
   }
 
   onChangeAsignatura(event: any){
+
+    if(event.target.value === 'any'){
+      this.valor -= 50;
+      return;
+    }
     this.asignatura = event.target.value;
     this.disable = false;
+    this.valor = 100;
   }
 
   addAsignaturaMaestro(){

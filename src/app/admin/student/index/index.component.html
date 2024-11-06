@@ -1,66 +1,29 @@
 @if (estudiantes$ | async; as estudiantesInfo) {
 
-  <div class="container-fluid">
-    <!-- Contenido introductorio -->
-    <div class="row">
-      <div class="col-md-12 mt-4">
-        <h1 class="text-primary">Panel de Administración</h1>
-        <p class="text-secondary">
-          Bienvenido al sistema de gestión de estudiantes. Aquí podrás ver la lista de estudiantes registrados, filtrarlos por carrera y agregar nuevos registros.
-        </p>
-      </div>
+<div class="container-fluid">
+  <!-- Contenido introductorio -->
+  <div class="row">
+    <div class="col-md-12 mt-4">
+      <h1 class="text-primary">Panel de Administración</h1>
+      <p class="text-secondary">
+        Bienvenido al sistema de gestión de estudiantes. Aquí podrás ver la lista de estudiantes registrados, filtrarlos por carrera y agregar nuevos registros.
+      </p>
     </div>
+  </div>
 
-    <!-- Tabla de Estudiantes -->
-    <div class="row mt-4">
-      <div class="col-md-12">
-        <h2 class="text-dark">Lista de estudiantes Registrados</h2>
-
-        <div class="d-flex justify-content-end mb-3">
-          <label for="filterCareer" class="form-label ms-auto me-2 my-auto">Filtrar por Carrera:</label>
-          <select id="filterCareer" class="form-select me-2" style="width: auto;">
-            <option value="">Seleccione una carrera</option>
-            <option value="ing">Ingeniería</option>
-            <option value="med">Medicina</option>
-            <option value="art">Arte</option>
-            <option value="com">Comunicación</option>
-          </select>
-          <button class="btn btn-primary btn-sm">Filtrar</button>
-        </div>
-
-        <app-table [thead]="columnas" [datos]="estudiantesInfo.student" ></app-table>
-
-        <!-- Paginación y texto de conteo -->
-        <div class="d-flex justify-content-between align-items-center mt-4">
-          <small class="text-secondary">Estudiantes 4 de 10</small>
-          <nav aria-label="Page navigation">
-            <ul class="pagination">
-              <li class="page-item">
-                <a class="page-link" href="#" aria-label="Previous">
-                  <span aria-hidden="true">&laquo;</span>
-                </a>
-              </li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item">
-                <a class="page-link" href="#" aria-label="Next">
-                  <span aria-hidden="true">&raquo;</span>
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
+  <!-- Tabla de Estudiantes -->
+  <div class="row mt-4">
+    <div class="col-md-12">
+      <h2 class="text-dark">Lista de estudiantes Registrados</h2>
+        <app-table (userEdit)="editarEstudiante($event)" [columns]="columnas" [datos]="estudiantesInfo.student" ></app-table>
       </div>
     </div>
   </div>
 
 }@else if(error){
-  <h1>Ah ocurrido un error en el servidor, intentelo nuevamente luego...</h1>
+  <app-error-servidor/>
 }@else {
-  <div class="d-flex justify-content-center mt-5">
-    <ngx-spinner>
-    </ngx-spinner>
-    <p>Cargando</p>
-  </div>
+  <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "pacman" [fullScreen] = "true">
+    <p style="color: white" >Cargando...</p>
+  </ngx-spinner>
 }

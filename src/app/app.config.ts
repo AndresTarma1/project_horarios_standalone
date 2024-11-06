@@ -19,7 +19,6 @@ export const appConfig: ApplicationConfig = {
           disableImageLazyLoadWarning: true
         }
       },
-      importProvidersFrom(NgxSpinnerModule.forRoot({type: 'ball-scale-multiple'})),
       provideAnimations(),
       importProvidersFrom(BrowserAnimationsModule)
     ]

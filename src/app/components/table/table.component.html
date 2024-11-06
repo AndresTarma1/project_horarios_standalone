@@ -1,51 +1,53 @@
-<table class="table table-striped">
+<div class="row g-3 mb-4 align-items-end">
+  <div class="col-md-4">
+    <label for="campo" class="form-label fw-bold">Filtrar por:</label>
+    <select (change)="filtro($event)" id="campo" class="form-select">
+      @for (opcion of columns; track $index) {
+      <option [value]="opcion.field">{{ opcion.header }}</option>
+      }
+    </select>
+  </div>
+  <div class="col-md-5">
+    <label for="valorFiltro" class="form-label fw-bold">Valor de búsqueda:</label>
+    <input (keyup)="buscarPorFiltro()" [(ngModel)]="filtroInput" id="valorFiltro" type="text" class="form-control"
+      placeholder="Ingrese el valor de búsqueda" />
+  </div>
+
+
+  <table class="table table-striped table-hover">
     <thead>
       <tr>
-      @for (col of thead; track $index) {
-        <th>{{ col }}</th>
-      }
-    </tr>
+        @for (col of columns; track $index) {
+        <th>{{ col.header }}</th>
+        }
+        <th colspan="2">Acciones</th>
+      </tr>
     </thead>
     <tbody>
-      @for (user of datos; track user.id) {
-        <tr>
-          <td>{{ user.id }}</td>
-          <td>{{ user.name }}</td>
-          <td>{{ user.last_name }}</td>
-          <td>{{ user.phone }}</td>
-          <td>{{ user.email }}</td>
-        </tr>
+      @for (user of datos | paginate: {itemsPerPage: 5, currentPage: p, totalItems: total()} ; track user.id) {
+      <tr>
+        @for (col of columns; track $index) {
+          <td>
+            @if(editMode){
+              <input type="text" [value]="user[col.field]">
+            }@else {
+              {{ user[col.field] }}
+            }
+          </td>
+        }
+        <td><a><i class="bi bi-pencil accion"></i></a></td>
+        <td><a><i class="bi bi-trash accion"></i></a></td>
+      </tr>
+
       } @empty {
-        <tr>
-          <td colspan="5">No hay datos disponibles</td>
-        </tr>
+      <tr>
+        <td [attr.colspan]="columns.length ">No hay datos disponibles</td>
+      </tr>
       }
     </tbody>
-</table>
-<!--
-<p-table [tableStyle]="{ 'min-width': '50rem' }">
-  <ng-template pTemplate="header">
-      <tr>
-          @for (columnas of thead; track $index) {
-            <th>{{ columnas }}</th>
-          }
-      </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-product>
-      <tr>
-        @for (user of datos; track user.id) {
-          <tr>
-            <td>{{ user.id }}</td>
-            <td>{{ user.name }}</td>
-            <td>{{ user.last_name }}</td>
-            <td>{{ user.phone }}</td>
-            <td>{{ user.email }}</td>
-          </tr>
-        } @empty {
-          <tr>
-            <td colspan="5">No hay datos disponibles</td>
-          </tr>
-        }
-      </tr>
-  </ng-template>
-</p-table> -->
+
+    <pagination-controls [responsive]="true" nextLabel="Siguiente" previousLabel="Anterior" (pageBoundsCorrection)="$event"
+      (pageChange)="p = $event"></pagination-controls>
+  </table>
+
+
