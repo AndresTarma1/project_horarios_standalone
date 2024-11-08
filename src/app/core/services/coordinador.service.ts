@@ -18,6 +18,14 @@ export class CoordinadorService {
     return this.http.get(`${this.apiURL}/student/not-group`,{ headers: {'ngrok-skip-browser-warning':'true'} });
   }
 
+  getCarreras(): Observable<any>{
+    return this.http.get(`${this.apiURL}/careers`, { headers: {'ngrok-skip-browser-warning':'true'}});
+  }
+
+  getCargasAcademicasCarrera(id_carrera: number){
+    return this.http.get(`${this.apiURL}/academic_load/ver-con-carrera/${id_carrera}`, { headers: {'ngrok-skip-browser-warning':'true'}});
+  }
+
   getProfesores(): Observable<any>{
     return this.http.get(`${this.apiURL}/teacher`, { headers: { 'ngrok-skip-browser-warning' : 'true' }});
   }
@@ -52,9 +60,6 @@ export class CoordinadorService {
     for(let i: number = 0; i < asignaturas.length ; i++){
       datos += `${i},`;
     }
-
-    console.log(datos);
-
     return this.http.post(`${this.apiURL}/academic_load-subject`, { "id_academic_load": `${cargaAcademica}`, "id_subject": `${asignaturas}` });
   }
 
@@ -94,7 +99,10 @@ export class CoordinadorService {
   }
 
   postHorario(horario: any): Observable<any>{
-    console.log(horario);
-    return this.http.post(`${this.apiURL}/schedule/`, horario , {headers : {'ngrok-skip-browser-warning':'true'}});
+    return this.http.post(`${this.apiURL}/schedule`, horario , {headers : {'ngrok-skip-browser-warning':'true'} });
+  }
+
+  postHorarioAutomatico(horario: any): Observable<any>{
+    return this.http.post(`${this.apiURL}/schedule`, horario, { headers: {'ngrok-skip-browser-warning':'true'} })
   }
 }

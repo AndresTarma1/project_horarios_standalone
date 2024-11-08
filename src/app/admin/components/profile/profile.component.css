@@ -1,0 +1,18 @@
+.profile-container {
+  max-width: 1200px;
+  margin: auto;
+}
+
+.profile-section {
+  background-color: #ffffff;
+  border-radius: 8px;
+}
+
+h2 {
+  color: #333333;
+  margin-bottom: 1rem;
+}
+
+.bg-light {
+  background-color: #f8f9fa !important;
+}

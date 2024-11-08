@@ -7,9 +7,6 @@ export const routes: Routes = [{
       path: 'dashboard', redirectTo: 'profile'
     },
     {
-      path: 'index', redirectTo: 'profile'
-    },
-    {
       path: 'config', redirectTo: 'profile'
     },
     {

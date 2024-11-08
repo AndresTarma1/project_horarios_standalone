@@ -52,7 +52,6 @@ export class IndexComponent implements OnInit {
   editarCoordinador(coordinador: Coordinador): void{
     this.adminService.patchCoordinador(coordinador).subscribe({
       next: (res: any) => {
-        console.log(res);
         if(res.ok){
           Swal.fire({
             title: 'Exito',
@@ -72,5 +71,39 @@ export class IndexComponent implements OnInit {
         }
       }
     })
+  }
+
+  eliminarCoordinador(coordinador: Coordinador){
+    Swal.fire({
+      title: "Estas seguro?",
+      text: `Vas a borrar a ${coordinador.name} ${coordinador.last_name}.`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, eliminar!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.adminService.deleteProfesor(coordinador.id).subscribe(
+          (res: any) => {
+            if(res.ok){
+              Swal.fire({
+                title: "Eliminado!",
+                text: `${coordinador.name} eliminado exitosamente!`,
+                icon: "success"
+              }).then(
+                () => { this.obtenerCoordinadores(); }
+              );
+            }else{
+              Swal.fire({
+                title: "Error!",
+                text: `El coordinador ${coordinador.name} no se ha logrado eliminar!`,
+                icon: "error"
+              });
+            }
+          }
+        )
+      }
+    });
   }
 }

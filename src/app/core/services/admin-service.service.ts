@@ -55,16 +55,16 @@ export class AdminService {
     return this.http.patch(`${this.apiUrl}/coordinator/${coordinador.id}`, coordinador, { headers: this.baseHeader});
   }
 
-  deleteProfesore(id: string): Observable<any>{
-    return this.http.delete(`${this.apiUrl}/teacher`, { headers: this.baseHeader });
+  deleteProfesor(id: string): Observable<any>{
+    return this.http.delete(`${this.apiUrl}/teacher/${id}`, { headers: this.baseHeader });
   }
 
   deleteEstudiante(id: string): Observable<any>{
-    return this.http.delete(`${this.apiUrl}/student`, { headers: this.baseHeader });
+    return this.http.delete(`${this.apiUrl}/student/${id}`, { headers: this.baseHeader });
   }
 
   deleteCoordinador(id: string): Observable<any>{
-    return this.http.delete(`${this.apiUrl}/coordinator`, { headers: this.baseHeader });
+    return this.http.delete(`${this.apiUrl}/coordinator/${id}`, { headers: this.baseHeader });
   }
 
 

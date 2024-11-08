@@ -15,7 +15,7 @@
   <div class="row mt-4">
     <div class="col-md-12">
       <h2 class="text-dark">Lista de estudiantes Registrados</h2>
-        <app-table (userEdit)="editarEstudiante($event)" [columns]="columnas" [datos]="estudiantesInfo.student" ></app-table>
+        <app-table (userDelete)="eliminarEstudiante($event)" (userEdit)="editarEstudiante($event)" [columns]="columnas" [datos]="estudiantesInfo.student" ></app-table>
       </div>
     </div>
   </div>

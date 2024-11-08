@@ -1,46 +1,31 @@
 <div class="container_">
-
-  <div class="sidebar">
-    <nav class="nav flex-column">
-      <a routerLinkActive="active" class="nav-link" routerLink="main">
-        <span class="icon">
-          <i class="bi bi-grid"></i>
-        </span>
-        <span class="description">Dashboard</span>
-      </a>
-
-      <a routerLinkActive="active" class="nav-link" routerLink="perfil">
-        <span class="icon">
-          <i class="bi bi-person-circle"></i>
-        </span>
-        <span class="description">Perfil</span>
-      </a>
-      <a routerLinkActive="active" class="nav-link" routerLink="horario">
-        <span class="icon">
-          <i class="bi bi-calendar"></i>
-        </span>
-        <span class="description">Horario</span>
-      </a>
-      <a routerLink="config" routerLinkActive="active" class="nav-link" routerLink="config">
-        <span class="icon">
-          <i class="bi bi-gear"></i>
-        </span>
-        <span class="description">Configuracion</span>
-      </a>
-
-
-      <a class="nav-link mt-auto" href="" (click)="logout()">
-        <span class="icon">
-          <i class="bi bi-box-arrow-left"></i>
-        </span>
-        <span class="description">Logout</span>
-      </a>
-    </nav>
+  <div class="sidebar" [ngClass]="{'active': isSidebarActive}" id="sidebarMenu">
+    <div class="sidebar-header">
+        <img src="https://via.placeholder.com/60" alt="Profile Image">
+        <h5>Andres Tarraz</h5>
+        <p>Estudiante</p>
+    </div>
+    <ul class="nav flex-column p-3">
+        <li class="nav-item">
+            <a routerLink="main" class="nav-link"><i class="bi bi-house-door-fill"></i> Dashboard</a>
+        </li>
+        <li class="nav-item">
+            <a routerLink="profile" class="nav-link"><i class="bi bi-person-circle"></i> Perfil</a>
+        </li>
+        <li class="nav-item">
+            <a routerLink="schedule" class="nav-link"><i class="bi bi-calendar-check-fill"></i> Horario</a>
+        </li>
+        <li class="nav-item">
+            <a routerLink="config" class="nav-link"><i class="bi bi-gear-fill"></i> Configuración</a>
+        </li>
+        <li class="nav-item logout-item">
+            <a routerLink="" class="nav-link"><i class="bi bi-box-arrow-right"></i> Logout</a>
+        </li>
+    </ul>
+  </div>
+  <button [class.menu-inactivo]="!isSidebarActive" class="toggle-btn" (click)="toggleSidebar()">☰</button>
+  <div class="section-main" [class.margin-content]="isSidebarActive" >
+    <router-outlet></router-outlet>
   </div>
 
-  <section  class="main-content">
-    <router-outlet></router-outlet>
-  </section>
-
 </div>
-

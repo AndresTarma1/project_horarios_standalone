@@ -11,36 +11,24 @@ import { FormGroup, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 })
 export class ProfileComponent {
 
-  isEditing = false;
-  profileForm: FormGroup;
+  admin = {
+    name: 'Juan',
+    lastName: 'Pérez',
+    identify: '12345678',
+    department: 'Recursos Humanos',
+    email: 'juan.perez@example.com',
+    phone: '+123456789',
+    role: 'Administrador',
+    permissions: ['Crear usuarios', 'Editar configuraciones', 'Ver reportes']
+  };
 
-  constructor(private fb: FormBuilder) {
-    // Inicializa el formulario con datos simulados
-    this.profileForm = this.fb.group({
-      name: ['Admin User'],
-      email: ['admin@example.com'],
-      role: ['Administrador']
-    });
-  }
+  recentActivities = [
+    { date: '2024-11-01', description: 'Accedió a la configuración del sistema' },
+    { date: '2024-11-03', description: 'Actualizó el perfil de usuario' },
+    { date: '2024-11-05', description: 'Generó un reporte de actividad' }
+  ];
 
-  toggleEdit() {
-    this.isEditing = !this.isEditing;
-  }
-
-  saveChanges() {
-    if (this.profileForm.valid) {
-      this.isEditing = false;
-      // Aquí iría la lógica para guardar los cambios
-      console.log('Perfil actualizado:', this.profileForm.value);
-    }
-  }
-
-  cancelEdit() {
-    this.isEditing = false;
-    this.profileForm.reset({
-      name: 'Admin User',
-      email: 'admin@example.com',
-      role: 'Administrador'
-    });
+  editProfile() {
+    // Lógica para editar el perfil
   }
 }

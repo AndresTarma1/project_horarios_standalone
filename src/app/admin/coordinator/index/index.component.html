@@ -18,7 +18,7 @@
       <div class="col-md-12">
         <h2 class="text-dark">Lista de coordinadores Registrados</h2>
 
-        <app-table (userEdit)="editarCoordinador($event)" [columns]="coordinadoresColumns" [datos]="coordinadoresInfo.coor" ></app-table>
+        <app-table (userDelete)="eliminarCoordinador($event)" (userEdit)="editarCoordinador($event)" [columns]="coordinadoresColumns" [datos]="coordinadoresInfo.coor" ></app-table>
 
       </div>
     </div>

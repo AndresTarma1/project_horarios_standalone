@@ -1,0 +1,94 @@
+<div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+  <div class="container-fluid">
+    <h3>Creacion De Horarios</h3>
+    <p>Sistema De Creacion De Horarios De Clases automaticamente</p>
+
+    <hr class="border border-3 opacity-75 mb-3">
+
+    <br>
+    <div class="row">
+      <div class="col-lg-6 form-horario">
+        <form [formGroup]="horarioForm">
+          <div class="form-group">
+            <label class="form-label" for="carrer"><strong>Carreras</strong></label>
+            <select formControlName="id_career" (change)="obtenerCargasAcademicas()" class="form-select" name="carrer" id="carrer">
+              @if (carreras$ | async; as carrerasInfo) {
+                <option value="" selected>Seleccione una carrera</option>
+                @for (carrera of carrerasInfo.data; track $index) {
+                  <option [value]="carrera.id">{{ carrera.name }}</option>
+                }@empty {
+                  <option selected value="">No hay carreras...</option>
+                }
+              }@else {
+                <option selected disabled value="">Cargando...</option>
+              }
+            </select>
+          </div>
+
+          <br>
+
+          <div class="form-group" for="academic_load">
+            <label for="academic_load" class="form-label"><strong>Cargas Academicas</strong></label>
+            <select (change)="obtenerGrupos()" formControlName="id_academic_load" name="academic_load" id="academic_load" class="form-select">
+              @if (cargas_academicas$ | async; as carga_academicaInfo) {
+                <option value="" selected>Seleccione su carga academica</option>
+                @for (carga_academica of carga_academicaInfo.cargas; track $index) {
+                  <option [value]="carga_academica.id">{{ carga_academica.name }}</option>
+                }@empty {
+                  <option selected value="">No hay cargas academicas...</option>
+                }
+              }@else {
+                <option selected disabled value="">Cargando...</option>
+              }
+            </select>
+          </div>
+
+          <br>
+
+          <div class="form-group" for="academic_load">
+            <label for="group" class="form-label"><strong>Grupos</strong></label>
+            <select formControlName="id_group" name="academic_load" id="academic_load" class="form-select">
+              <option value="" selected>Seleccione un grupo</option>
+              @if (grupos$ | async; as gruposInfo) {
+                @for (grupo of gruposInfo.groups; track $index) {
+                  <option [value]="grupo.id">{{ grupo.name }}</option>
+                }@empty {
+                  <option selected value="">No hay grupos...</option>
+                }
+              }@else {
+                <option selected disabled value="">Cargando...</option>
+              }
+            </select>
+          </div>
+
+          <br>
+
+          <div class="form-group mt-1">
+            <button type="submit" class="btn btn-primary">Crear Horario</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="col-lg-6 pasos">
+
+        <fieldset class="mx-auto border rounded-3 p-3 w-100 h-100">
+          <legend class="float-none w-auto px-3">Creacion de horarios</legend>
+
+          <div class="container">
+            <h3>Pasos</h3>
+
+            <hr class="border border-2 opacity-75 my-1">
+
+            <br>
+            <p>1. Seleccione la carrera.</p>
+            <p>2. Seleccione la carga academica de la carrera.</p>
+            <p>3. Seleccione el grupo al cual le asignara el horario.</p>
+            <p>4. Presione crear horarios, para crearlos.</p>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+
+
+  </div>
+</div>

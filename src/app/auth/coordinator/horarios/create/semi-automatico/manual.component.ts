@@ -1,20 +1,18 @@
 import { Component, inject } from '@angular/core';
-import { FormGroup, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
+import { FormGroup, Validators, FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { Observable, map, catchError } from 'rxjs';
 import Swal from 'sweetalert2';
-import { CoordinadorService } from '../../../../core/services/coordinador.service';
-import { AsyncPipe, CommonModule } from '@angular/common';
-import { catchError, map, Observable } from 'rxjs';
+import { CoordinadorService } from '../../../../../core/services/coordinador.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-create',
+  selector: 'app-manual',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, NgxSpinnerModule, AsyncPipe],
-  templateUrl: './create.component.html',
-  styleUrl: './create.component.css'
+  imports: [CommonModule, ReactiveFormsModule],
+  templateUrl: './manual.component.html',
+  styleUrl: './manual.component.css'
 })
-export class CreateComponent {
-
+export class ManualComponent {
   datos: any = {
     cargaAcademica: true,
     grupo: true,
@@ -112,5 +110,4 @@ export class CreateComponent {
       }
     });
   }
-
 }

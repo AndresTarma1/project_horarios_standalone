@@ -7,7 +7,9 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { StarIcon } from 'primeng/icons/star';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AdminService } from '../../core/services/admin-service.service';
+import { ModalEditComponent } from '../modal-edit/modal-edit.component';
 
 
 
@@ -24,7 +26,6 @@ export class TableComponent implements OnInit {
   @Input() datos: any[] = [];
   @Output() userDelete: EventEmitter<any> = new EventEmitter<any>();
   @Output() userEdit: EventEmitter<any> = new EventEmitter<any>();
-  editMode: boolean = true;
 
   unFilter: any[];
   p: number = 1;
@@ -38,8 +39,22 @@ export class TableComponent implements OnInit {
     this.userEdit.emit(usuario);
   }
 
-  constructor(){
+  constructor(private modalService: NgbModal){
 
+  }
+
+  editModal(user: any){
+    const modalRef = this.modalService.open(ModalEditComponent);
+    modalRef.componentInstance.user = user;
+    modalRef.componentInstance.campos = this.columns;
+
+    modalRef.closed.subscribe(
+      (user: any) => {
+        if(user != undefined){
+          this.userEdit.emit(user);
+        }
+      }
+    );
   }
 
   total(): number{
@@ -79,25 +94,7 @@ export class TableComponent implements OnInit {
 
 
   deleteUser(user: any): void{
-    Swal.fire({
-      title: "Estas seguro?",
-      text: `Vas a borrar a ${user.name} ${user.last_name}.`,
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Si, eliminar!"
-    }).then((result) => {
-      if (result.isConfirmed) {
-
-
-        Swal.fire({
-          title: "Eliminado!",
-          text: `${user.name} eliminado exitosamente!`,
-          icon: "success"
-        });
-      }
-    });
+    this.userDelete.emit(user);
   }
 
 

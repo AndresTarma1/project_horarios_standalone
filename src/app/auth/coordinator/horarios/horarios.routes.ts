@@ -5,7 +5,7 @@ export const routes: Routes = [
     path: 'index', loadComponent: () => import('./index/index.component').then( c => c.IndexComponent)
   },
   {
-    path: 'create', loadComponent: () => import('./create/create.component').then( c => c.CreateComponent)
+    path: 'create', loadComponent: () => import('./create/index/index.component').then( c => c.IndexComponent)
   }
 ];
 

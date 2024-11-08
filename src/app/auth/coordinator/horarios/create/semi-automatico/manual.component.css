@@ -1,0 +1,9 @@
+fieldset{
+  border: 2px solid black !important;
+}
+
+@media (max-width: 992px) {
+  .pasos{
+    display: none;
+  }
+}

@@ -3,7 +3,7 @@
     <label for="campo" class="form-label fw-bold">Filtrar por:</label>
     <select (change)="filtro($event)" id="campo" class="form-select">
       @for (opcion of columns; track $index) {
-      <option [value]="opcion.field">{{ opcion.header }}</option>
+        <option [value]="opcion.field">{{ opcion.header }}</option>
       }
     </select>
   </div>
@@ -28,26 +28,23 @@
       <tr>
         @for (col of columns; track $index) {
           <td>
-            @if(editMode){
-              <input type="text" [value]="user[col.field]">
-            }@else {
               {{ user[col.field] }}
-            }
           </td>
         }
-        <td><a><i class="bi bi-pencil accion"></i></a></td>
-        <td><a><i class="bi bi-trash accion"></i></a></td>
+        <td><a><i (click)="editModal(user)" class="bi bi-pencil accion"></i></a></td>
+        <td><a><i (click)="deleteUser(user)" class="bi bi-trash accion"></i></a></td>
       </tr>
 
       } @empty {
       <tr>
-        <td [attr.colspan]="columns.length ">No hay datos disponibles</td>
+        <td [attr.colspan]="columns.length + 1 ">No hay datos disponibles</td>
       </tr>
       }
     </tbody>
 
-    <pagination-controls [responsive]="true" nextLabel="Siguiente" previousLabel="Anterior" (pageBoundsCorrection)="$event"
-      (pageChange)="p = $event"></pagination-controls>
+    <tfoot>
+      <td [attr.colspan]="columns.length + 1">
+        <pagination-controls class="text-center" nextLabel="Siguiente" previousLabel="Anterior" (pageChange)="p = $event"></pagination-controls>
+      </td>
+    </tfoot>
   </table>
-
-

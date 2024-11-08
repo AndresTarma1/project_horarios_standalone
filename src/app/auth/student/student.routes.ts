@@ -13,10 +13,10 @@ const routes: Routes = [{
       path: 'main', loadComponent: () => import('./main/main.component').then( c => c.MainComponent)
     },
     {
-      path: 'perfil', loadComponent: () => import('./perfil/perfil.component').then( c => c.PerfilComponent)
+      path: 'profile', loadComponent: () => import('./perfil/perfil.component').then( c => c.PerfilComponent)
     }
     ,{
-      path: 'horario', loadComponent: () => import('./horario/horario.component').then( c => c.HorarioComponent)
+      path: 'schedule', loadComponent: () => import('./horario/horario.component').then( c => c.HorarioComponent)
     },
     {
       path: 'config', loadComponent: () => import('./config/config.component').then( c => c.ConfigComponent)

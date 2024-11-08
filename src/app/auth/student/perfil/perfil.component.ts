@@ -17,6 +17,6 @@ export class PerfilComponent {
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-    this.estudiante = JSON.parse(localStorage.getItem('estudiante')!);
+    // this.estudiante = JSON.parse(localStorage.getItem('estudiante')!);
   }
 }

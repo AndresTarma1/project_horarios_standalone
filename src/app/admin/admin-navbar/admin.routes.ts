@@ -6,9 +6,6 @@ export const routes: Routes = [
     path: '', component: AdminNavbarComponent,
     children: [
       {
-        path: 'carrer', loadChildren: () => import('../carreras/carreras.routes')
-      },
-      {
         path: 'student', loadChildren: () => import('../student/student.routes')
       },
       {
@@ -18,16 +15,7 @@ export const routes: Routes = [
         path: 'coordinator', loadChildren: () => import('../coordinator/coordinator.routes')
       },
       {
-        path: 'tasks', loadComponent: () => import('../components/task/task.component').then( c => c.TaskComponent)
-      },
-      {
-        path: 'config', loadComponent: () => import('../components/config/config.component').then( c => c.ConfigComponent)
-      },
-      {
         path: 'profile', loadComponent: () => import('../components/profile/profile.component').then( c => c.ProfileComponent)
-      },
-      {
-        path: 'dashboard', loadComponent: () => import('../components/dashboard/dashboard.component').then( c => c.DashboardComponent)
       }
     ]
   }

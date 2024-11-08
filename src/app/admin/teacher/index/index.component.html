@@ -15,7 +15,7 @@
       <div class="col-md-12">
         <h2 class="text-dark">Lista de profesores Registrados</h2>
 
-        <app-table (userEdit)="editarProfesor($event)" [columns]="columnas" [datos]="profesorInfo.teachers" ></app-table>
+        <app-table (userDelete)="eliminarProfesor($event)" (userEdit)="editarProfesor($event)" [columns]="columnas" [datos]="profesorInfo.teachers" ></app-table>
 
         <!-- Paginación y texto de conteo -->
 

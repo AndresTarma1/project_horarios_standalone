@@ -1,39 +1,50 @@
-<div class="container mt-4">
-  <h1 class="text-primary">Perfil del Administrador</h1>
+<div class="container profile-container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h2">Perfil del Administrador</h1>
+    <button (click)="editProfile()" class="btn btn-primary">Editar Perfil</button>
+  </div>
 
-  <!-- Información del Perfil -->
-  <div class="card my-4">
-    <div class="card-body">
-      <form [formGroup]="profileForm">
-        <div class="mb-3">
-          <label for="name" class="form-label">Nombre:</label>
-          <input type="text" id="name" class="form-control" formControlName="name" [readonly]="!isEditing">
-        </div>
-        <div class="mb-3">
-          <label for="email" class="form-label">Correo Electrónico:</label>
-          <input type="email" id="email" class="form-control" formControlName="email" [readonly]="!isEditing">
-        </div>
-        <div class="mb-3">
-          <label for="role" class="form-label">Rol:</label>
-          <input type="text" id="role" class="form-control" formControlName="role" readonly>
-        </div>
-      </form>
+  <!-- Información Personal y de Contacto en columnas -->
+  <div class="row">
+    <div class="col-md-6 mb-4">
+      <section class="profile-section p-3 shadow-sm">
+        <h2 class="h5">Información Personal</h2>
+        <p><strong>Nombre:</strong> {{ admin.name }} {{ admin.lastName }}</p>
+        <p><strong>Identificación:</strong> {{ admin.identify }}</p>
+        <p><strong>Departamento:</strong> {{ admin.department }}</p>
+      </section>
+    </div>
+    <div class="col-md-6 mb-4">
+      <section class="profile-section p-3 shadow-sm">
+        <h2 class="h5">Información de Contacto</h2>
+        <p><strong>Email:</strong> {{ admin.email }}</p>
+        <p><strong>Teléfono:</strong> {{ admin.phone }}</p>
+      </section>
     </div>
   </div>
 
-  <!-- Botones de Acción -->
-  <div class="d-flex justify-content-end">
-    <button *ngIf="!isEditing" class="btn btn-primary me-2" (click)="toggleEdit()">Editar Perfil</button>
-    <button *ngIf="isEditing" class="btn btn-success me-2" (click)="saveChanges()">Guardar Cambios</button>
-    <button *ngIf="isEditing" class="btn btn-secondary" (click)="cancelEdit()">Cancelar</button>
-  </div>
-
-  <!-- Opciones de Configuración Adicional -->
-  <div class="card my-4">
-    <div class="card-header">Configuración Adicional</div>
-    <div class="card-body">
-      <button class="btn btn-outline-warning w-100 mb-2">Cambiar Contraseña</button>
-      <button class="btn btn-outline-danger w-100">Cerrar Sesión</button>
+  <!-- Accesos y Actividades Recientes en columnas -->
+  <div class="row">
+    <div class="col-md-6 mb-4">
+      <section class="profile-section p-3 shadow-sm">
+        <h2 class="h5">Accesos y Roles</h2>
+        <p><strong>Rol:</strong> {{ admin.role }}</p>
+        <ul class="list-unstyled">
+          <li *ngFor="let permiso of admin.permissions" class="bg-light p-2 rounded mb-1">
+            {{ permiso }}
+          </li>
+        </ul>
+      </section>
+    </div>
+    <div class="col-md-6 mb-4">
+      <section class="profile-section p-3 shadow-sm">
+        <h2 class="h5">Actividades Recientes</h2>
+        <ul class="list-unstyled">
+          <li *ngFor="let activity of recentActivities" class="bg-light p-2 rounded mb-1">
+            {{ activity.date }} - {{ activity.description }}
+          </li>
+        </ul>
+      </section>
     </div>
   </div>
 </div>

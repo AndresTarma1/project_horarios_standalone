@@ -71,6 +71,36 @@ export class IndexComponent implements OnInit {
   }
 
   eliminarEstudiante(estudiante: Estudiante){
-
+    Swal.fire({
+      title: "Estas seguro?",
+      text: `Vas a borrar a ${estudiante.name} ${estudiante.last_name}.`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, eliminar!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.adminService.deleteProfesor(estudiante.id).subscribe(
+          (res: any) => {
+            if(res.ok){
+              Swal.fire({
+                title: "Eliminado!",
+                text: `${estudiante.name} eliminado exitosamente!`,
+                icon: "success"
+              }).then(
+                () => { this.obtenerEstudiantes(); }
+              );
+            }else{
+              Swal.fire({
+                title: "Error!",
+                text: `El estudiante ${estudiante.name} no se ha logrado eliminar!`,
+                icon: "error"
+              });
+            }
+          }
+        )
+      }
+    });
   }
 }
