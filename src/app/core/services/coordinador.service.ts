@@ -103,6 +103,6 @@ export class CoordinadorService {
   }
 
   postHorarioAutomatico(horario: any): Observable<any>{
-    return this.http.post(`${this.apiURL}/schedule`, horario, { headers: {'ngrok-skip-browser-warning':'true'} })
+    return this.http.post(`${this.apiURL}/schedule/create-automatico`, horario, { headers: {'ngrok-skip-browser-warning':'true'} })
   }
 }

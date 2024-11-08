@@ -67,6 +67,13 @@ export class AutomaticoComponent implements OnInit {
     }
   }
 
+  onSubmit(){
+    console.log(this.horarioForm.value);
+    let horario: any = this.horarioForm.value;
+    this.coordinatorService.postHorarioAutomatico(horario).subscribe(
+      (res: any) => { console.log(res); }
+    );
+  }
 
 
 
