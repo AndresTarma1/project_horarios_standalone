@@ -48,8 +48,8 @@
           <div class="form-group" for="academic_load">
             <label for="group" class="form-label"><strong>Grupos</strong></label>
             <select formControlName="id_group" name="academic_load" id="academic_load" class="form-select">
-              <option value="" selected>Seleccione un grupo</option>
               @if (grupos$ | async; as gruposInfo) {
+                <option value="" selected>Seleccione un grupo</option>
                 @for (grupo of gruposInfo.groups; track $index) {
                   <option [value]="grupo.id">{{ grupo.name }}</option>
                 }@empty {

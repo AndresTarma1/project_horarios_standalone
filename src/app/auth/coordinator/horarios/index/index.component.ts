@@ -5,6 +5,7 @@ import { CoordinadorService } from '../../../../core/services/coordinador.servic
 import { CommonModule } from '@angular/common';
 import { ScheduleComponent } from "../../../../components/schedule/schedule.component";
 import { map, Observable } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-index',
@@ -33,7 +34,19 @@ export class IndexComponent implements OnInit {
     this.disableBuscarHorario = false;
   }
 
-  constructor(){
+  constructor(private activeRoute: ActivatedRoute){
+
+    let id_grupo;
+    activeRoute.paramMap.subscribe(
+      (param: any) => { id_grupo = param.id}
+    );
+
+    if(id_grupo){
+      console.log('Si hay ', id_grupo)
+    }else{
+      console.log('no hay ', id_grupo)
+    }
+
     this.coordinadorService.getGrupos().subscribe(
       (res: any) => {
         this.grupos = res.groups;

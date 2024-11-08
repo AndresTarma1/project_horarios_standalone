@@ -63,7 +63,7 @@ export class TableComponent implements OnInit {
 
   ngOnInit(): void {
     this.unFilter = this.datos;
-    this.nameFiltro = 'all';
+    this.nameFiltro = 'id';
   }
 
   filtroInput: string = '';
@@ -71,16 +71,6 @@ export class TableComponent implements OnInit {
     if(!this.filtroInput){
       this.datos = this.unFilter;
       return;
-    }
-    if(this.nameFiltro == 'all'){
-      console.log("UWU");
-
-      this.datos = this.unFilter.filter(
-        item => Object.values(item).some(
-          (value: any) =>
-          {return value.toString().toLowerCase().includes(this.filtroInput);}
-        )
-      );
     }
 
     this.datos = this.unFilter.filter(
