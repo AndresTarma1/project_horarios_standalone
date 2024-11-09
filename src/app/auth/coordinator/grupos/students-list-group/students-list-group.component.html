@@ -1,0 +1,39 @@
+@if (unFiltro.length > 0) {
+<label class="form-label" for="search">Buscar por nombre/id</label>
+<input
+  (keyup)="buscarFiltro()"
+  [(ngModel)]="inputFiltro"
+  class="form-control w-75"
+  type="text"
+/>
+<hr class="border border-2 opacity-75 my-3" />
+}
+
+<ul class="list-group">
+  <li class="list-group-item">
+    <div class="row justify-content-around">
+      <div class="col-11">Añadir Estudiantes</div>
+      <div class="col-1"><i (click)="addEstudiantesGrupo()" class="icon-opc  bi bi-database-add"></i></div>
+    </div>
+  </li>
+  @for (estudiante of estudiantes; track $index) {
+  <li class="list-group-item">
+    <div class="row justify-content-around">
+      <div class="col-11">
+        {{ estudiante.id | uppercase }} - {{ estudiante.name | titlecase }}
+      </div>
+      <div class="col-1">
+        <i
+          (click)="quitarGrupoEstudiante(estudiante)"
+          ngbPopover="Quitar el estudiante del grupo"
+          triggers="mouseenter:mouseleave"
+          popoverTitle="Quitar"
+          class="icon-opc bi bi-trash3"
+        ></i>
+      </div>
+    </div>
+  </li>
+  }@empty {
+  <li class="list-group-item">No hay estudiantes</li>
+  }
+</ul>

@@ -1,0 +1,35 @@
+#rightSidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 250px;
+
+  color: #000;
+  transition: width 0.3s ease;
+  overflow-x: hidden;
+  z-index: 1000;
+}
+
+.sidebar-title {
+  display: none;
+}
+
+.link-text {
+  margin-left: 10px;
+}
+
+/* Media query para pantallas pequeñas */
+@media (max-width: 768px) {
+  #rightSidebar {
+    width: 60px; /* Se reduce a solo iconos */
+  }
+
+  .sidebar-title {
+    display: none; /* Oculta el título en pantallas pequeñas */
+  }
+
+  .link-text {
+    display: none; /* Oculta el texto de los enlaces, dejando solo los íconos */
+  }
+}

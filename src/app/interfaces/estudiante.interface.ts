@@ -1,12 +1,15 @@
+import { last } from "rxjs"
+
 export interface Estudiante {
     id: string
     name: string
     last_name: string
     email: string
     phone: string
-    identify: string
+    identify: string,
+    name_completo? : string
 }
-  
+
 export const columnasEstudiante = [
     { field: 'id', header: 'ID' },
     { field: 'name', header: 'Nombre' },
@@ -15,4 +18,3 @@ export const columnasEstudiante = [
     { field: 'phone', header: 'Teléfono' },
     { field: 'identify', header: 'Identificación' },
 ];
-  

@@ -1,1 +1,65 @@
-<p>index works!</p>
+<div class="">
+  @if (grupos$ | async; as gruposInfo){
+  <div class="row text-center justify-content-between">
+
+    @if(grupo.estudiantes){
+      <ng-template>
+        <app-students-list-group
+          (cambios)="obtenerEstudiantesPorGrupo()"
+          (quitarGrupo)="eliminarEstudianteDelGrupo($event)"
+          [estudiantes]="grupo.estudiantes"
+          [grupo]="grupo"
+        ></app-students-list-group>
+      </ng-template>
+
+    }@else {
+      <h1>Seleccione un grupo. </h1>
+    }
+
+    <!-- @for(grupo of gruposInfo.grupos; track $index){
+
+    <div class="col-md-5 my-2">
+      <fieldset class="border rounded-3 p-3" style="border: 1px black solid">
+        <legend class="float-none w-auto px-3">
+          {{ grupo.name | titlecase }}
+        </legend>
+        <div ngbAccordion>
+          <div ngbAccordionItem>
+            <h2 ngbAccordionHeader>
+              <button ngbAccordionButton>Ver Estudiantes</button>
+            </h2>
+            <div ngbAccordionCollapse>
+              <div ngbAccordionBody>
+                <ng-template>
+                  <app-students-list-group
+                    (cambios)="obtenerEstudiantesPorGrupo()"
+                    (quitarGrupo)="eliminarEstudianteDelGrupo($event)"
+                    [estudiantes]="grupo.estudiantes"
+                    [grupo]="grupo"
+                  ></app-students-list-group>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+    } -->
+
+  <app-sidebar-groups (EstudiantesLista)="obtenerEstudiantes($event)" [grupos]="gruposInfo.grupos"></app-sidebar-groups>
+  </div>
+
+
+}@else if(error){
+  <app-error-servidor></app-error-servidor>
+  }@else{
+  <ngx-spinner
+    bdColor="rgba(0, 0, 0, 0.8)"
+    size="medium"
+    color="#fff"
+    type="pacman"
+  >
+    <p style="color: white">Cargando...</p>
+  </ngx-spinner>
+}
+</div>

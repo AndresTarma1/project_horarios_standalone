@@ -1,41 +1,74 @@
 <div class="container_">
-  <div class="sidebar" [ngClass]="{'active': isSidebarActive}" id="sidebarMenu">
+  <div class="sidebar" [ngClass]="{ active: isSidebarActive }" id="sidebarMenu">
     <div class="sidebar-header">
-        <img src="https://via.placeholder.com/60" alt="Profile Image">
-        <h5>Esteban Perez</h5>
-        <p>Coordinador</p>
+      <img src="https://via.placeholder.com/60" alt="Profile Image" />
+      <h5>Esteban Perez</h5>
+      <p>Coordinador</p>
     </div>
     <ul class="nav flex-column p-3">
-        <li class="nav-item">
-            <a routerLink="dashboard" class="nav-link"><i class="bi bi-house-door-fill"></i> Dashboard</a>
-        </li>
-        <li class="nav-item">
-            <a routerLink="profile" class="nav-link"><i class="bi bi-person-circle"></i> Perfil</a>
-        </li>
-        <li class="nav-item">
-            <a href="#horarioSubmenu" class="nav-link" data-bs-toggle="collapse"><i class="bi bi-calendar-check-fill"></i> Horario</a>
-            <div class="collapse submenu" id="horarioSubmenu">
-                <a routerLink="horario/create" class="nav-link">Crear Horario</a>
-                <a routerLink="horario/index" class="nav-link">Ver Horario</a>
-            </div>
-        </li>
-        <li class="nav-item">
-            <a href="#cargasSubmenu" class="nav-link" data-bs-toggle="collapse"><i class="bi bi-folder-fill"></i> Cargas Académicas</a>
-            <div class="collapse submenu" id="cargasSubmenu">
-                <a routerLink="academic_load/create" class="nav-link">Crear CA</a>
-                <a routerLink="academic_load/index" class="nav-link">Ver CAs</a>
-            </div>
-        </li>
-        <li class="nav-item">
-            <a routerLink="subject-teacher" class="nav-link"><i class="bi bi-book-fill"></i> Asignaturas Maestro</a>
-        </li>
-        <li class="nav-item logout-item">
-            <a class="nav-link"><i class="bi bi-box-arrow-right"></i> Logout</a>
-        </li>
-    </ul>
-</div>
+      <li class="nav-item">
+        <a routerLink="dashboard" class="nav-link">
+          <i class="bi bi-house-door-fill"></i>
+          Dashboard
+        </a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="profile" class="nav-link">
+          <i class="bi bi-person-circle"></i>
+          Perfil
+        </a>
+      </li>
 
-<button [class.menu-inactivo]="!isSidebarActive" class="toggle-btn" (click)="toggleSidebar()">☰</button>
+      <li class="nav-item">
+        <a href="#horarioSubmenu" class="nav-link" data-bs-toggle="collapse">
+          <i class="bi bi-calendar-check-fill"></i>
+          Horario
+        </a>
+        <div class="collapse submenu" id="horarioSubmenu">
+          <a routerLink="horario/create" class="nav-link"> Crear Horario </a>
+          <a routerLink="horario/index" class="nav-link"> Ver Horario </a>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <a routerLink="groups" class="nav-link">
+          <i class="bi bi-person-circle"></i>
+          Grupos
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a href="#cargasSubmenu" class="nav-link" data-bs-toggle="collapse">
+          <i class="bi bi-folder-fill"></i>
+          Cargas Académicas
+        </a>
+        <div class="collapse submenu" id="cargasSubmenu">
+          <a routerLink="academic_load/create" class="nav-link"> Crear CA </a>
+          <a routerLink="academic_load/index" class="nav-link"> Ver CAs </a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a routerLink="subject-teacher" class="nav-link">
+          <i class="bi bi-book-fill"></i>
+          Asignaturas Maestro
+        </a>
+      </li>
+      <li class="nav-item logout-item">
+        <a class="nav-link">
+          <i class="bi bi-box-arrow-right"></i>
+          Logout
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <button
+    [class.menu-inactivo]="!isSidebarActive"
+    class="toggle-btn"
+    (click)="toggleSidebar()"
+  >
+    ☰
+  </button>
 
   <section [class.margin-content]="isSidebarActive" class="section-main">
     <router-outlet></router-outlet>
