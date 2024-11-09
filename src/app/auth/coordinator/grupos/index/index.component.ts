@@ -42,11 +42,15 @@ export class IndexComponent {
   }
 
   obtenerEstudiantes(grupo: any){
-    console.log(grupo);
     this.grupo = grupo;
   }
 
+  cambiosEmitidos(event: any){
+    this.obtenerEstudiantesPorGrupo();
+  }
+
   obtenerEstudiantesPorGrupo() {
+    this.grupo = [];
     this.grupos$ = this.coordinadorService.getGruposConEstudiantes().pipe(
       catchError((err) => {
         this.error = true;

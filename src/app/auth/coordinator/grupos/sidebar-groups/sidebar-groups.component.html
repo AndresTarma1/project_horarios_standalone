@@ -1,28 +1,51 @@
 <div id="rightSidebar" class="p-3 rounded-start">
   <div class="sidebar-content">
+    <h3>Grupos</h3>
 
-    <hr>
+    <hr />
 
-    <h4 class="sidebar-title">GRUPOS</h4>
     <button class="btn btn-success">Crear Grupo</button>
 
-    <hr>
+    <hr />
 
     <ul class="nav flex-column">
       @for (grupo of grupos; track $index) {
-        <li class="nav-item">
-          <a style="cursor: pointer;" (click)="emitirGrupo(grupo)" class="nav-link text-light">
-            <i class="bi bi-house"></i>
-            <span class="link-text text-dark ">{{ grupo.name }}</span>
-          </a>
-        </li>
+      <li class="nav-item">
+        <a
+          [ngClass]="{
+            'bg-dark': selectedGrupo === grupo,
+          }"
+          style="cursor: pointer"
+          (click)="emitirGrupoConEstudiantes(grupo)"
+          class="nav-link text-light rounded"
+        >
+        <div class="row">
+          <div class="col-10">
+            <span
+              [ngClass]="{ 'text-white': selectedGrupo === grupo }"
+              class="link-text text-dark"
+              >{{ grupo.name | titlecase }}</span
+            >
+          </div>
+          <div class="col-2">
+            <i
+            (click)="editarGrupo(grupo)"
+            ngbPopover="Editar el grupo"
+            triggers="mouseenter:mouseleave"
+            popoverTitle="Editar Grupo"
+            popoverClass="text-dark"
+
+            [ngClass]="{ 'text-white': selectedGrupo === grupo }" class="bi bi-pencil text-black"></i>
+          </div>
+        </div>
+        </a>
+      </li>
       }@empty {
-        <li class="nav-item">
-          <a href="#" class="nav-link text-light">
-            <i class="bi bi-house"></i>
-            <span class="link-text text-dark">No hay grupos disponibles</span>
-          </a>
-        </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link text-light">
+          <span class="link-text text-dark">No hay grupos disponibles</span>
+        </a>
+      </li>
       }
     </ul>
   </div>

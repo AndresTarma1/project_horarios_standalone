@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, inject, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Estudiante } from '../../../../interfaces/estudiante.interface';
 import { CoordinadorService } from '../../../../core/services/coordinador.service';
 import { Input } from '@angular/core';
@@ -15,18 +15,18 @@ import { ModalAddStudentGroupComponent } from '../modal-add-student-group/modal-
   templateUrl: './students-list-group.component.html',
   styleUrl: './students-list-group.component.css',
 })
-export class StudentsListGroupComponent implements OnInit {
+export class StudentsListGroupComponent implements OnInit, OnChanges {
 
   private modalService = inject(NgbModal);
 
   addEstudiantesGrupo(): void{
-
     const modalRef = this.modalService.open(ModalAddStudentGroupComponent);
     modalRef.componentInstance.grupo =  this.grupo;
 
     modalRef.result.then(
       (resultado: any) => {
         if(resultado){
+          console.log(resultado);
           this.cambios.emit(true);
         }
       }
@@ -36,7 +36,6 @@ export class StudentsListGroupComponent implements OnInit {
   @Output() cambios: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Input() grupo: any;
 
-  @Input() estudiantes: any;
   coordinadorService: CoordinadorService = inject(CoordinadorService);
   unFiltro: Estudiante[];
   inputFiltro: string = '';
@@ -44,24 +43,33 @@ export class StudentsListGroupComponent implements OnInit {
 
   constructor() {}
 
+  ngOnChanges(changes: SimpleChanges): void {
+    this.grupo = changes['grupo'].currentValue;
+    this.completarNombres();
+  }
+
   ngOnInit(): void {
-    if (this.estudiantes) {
-      this.estudiantes.forEach((estudiante: Estudiante) => {
+    this.completarNombres()
+  }
+
+  completarNombres(): void{
+    if (this.grupo.estudiantes) {
+      this.grupo.estudiantes.forEach((estudiante: Estudiante) => {
         estudiante.name_completo = estudiante.name + ' ' + estudiante.last_name;
       });
-      this.unFiltro = [...this.estudiantes];
+      this.unFiltro = [...this.grupo.estudiantes];
     }
   }
 
   buscarFiltro() {
     if (this.inputFiltro) {
-      this.estudiantes = this.unFiltro.filter((estudiantes: Estudiante) => {
+      this.grupo.estudiantes = this.unFiltro.filter((estudiantes: Estudiante) => {
         return estudiantes
           .name_completo!.toLowerCase()
           .includes(this.inputFiltro.toLowerCase());
       });
     } else {
-      this.estudiantes = this.unFiltro;
+      this.grupo.estudiantes = this.unFiltro;
     }
   }
 

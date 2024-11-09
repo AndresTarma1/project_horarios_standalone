@@ -160,13 +160,19 @@ export class CoordinadorService {
     });
   }
 
-  patchQuitarEstudianteDeGrupo(id_student: string) {
+  patchQuitarEstudianteDeGrupo(id_student: string): Observable<any> {
     return this.http.patch(
       `${this.apiURL}/student/delete-group/${id_student}`,
       {
         headers: { 'ngrok-skip-browser-warning': 'true' },
       }
     );
+  }
+
+  patchGrupos(grupo: any): Observable<any>{
+    return this.http.patch(
+      `${this.apiURL}/group/${grupo.id}`, grupo ,{headers: { 'ngrok-skip-browser-warning': 'true' }}
+    )
   }
 
   postHorario(horario: any): Observable<any> {
