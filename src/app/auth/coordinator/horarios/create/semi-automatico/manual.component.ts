@@ -6,13 +6,13 @@ import { CoordinadorService } from '../../../../../core/services/coordinador.ser
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-manual',
+  selector: 'app-semiautomatico',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './manual.component.html',
   styleUrl: './manual.component.css'
 })
-export class ManualComponent {
+export class SemiAutomaticoComponent {
   datos: any = {
     cargaAcademica: true,
     grupo: true,

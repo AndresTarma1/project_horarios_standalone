@@ -1,1 +1,142 @@
-<p>manual works!</p>
+<div
+  class="tab-pane fade show active"
+  id="home-tab-pane"
+  role="tabpanel"
+  aria-labelledby="home-tab"
+  tabindex="0"
+>
+  <div class="container">
+    <h3>Creacion de horarios manualmente</h3>
+    <p>Sistema de creacion de horarios manualmente >:D</p>
+    <div class="row align-items-center">
+      <div class="col-12 mx-auto">
+        <form (ngSubmit)="crearHorario()" [formGroup]="horarioForm">
+
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label for="carreras" class="form-label">Carreras</label>
+                <select
+                  (change)="obtenerCargasAcademicas()"
+                  formControlName="id_career"
+                  class="form-select"
+                  name="carrera"
+                  id="carreras"
+                >
+                  @if ($carreras| async; as carrerasInfo) {
+                  <option value="">Seleccione una carrera</option>
+                  @for (carrera of carrerasInfo.data; track $index) {
+                  <option [value]="carrera.id">{{ carrera.name }}</option>
+                  }@empty {
+                  <option value="">No hay carreras disponibles</option>
+                  } }@else {
+                  <option selected disabled value="">Cargando...</option>
+                  }
+                </select>
+              </div>
+            </div>
+
+              <div class="col">
+                <div class="form-group">
+                  <label for="carga_academica" class="form-label">Cargas Academicas</label>
+                  <select (change)="obtenerAsignaturas()" formControlName="id_academic_load" name="carga_academica" id="carga_academica" class="form-select">
+                    @if ($cargas_academicas | async; as cargasAcademicasInfo) {
+                        <option value="">Seleccione una carga academica</option>
+                      @for (carga of cargasAcademicasInfo.cargas; track $index) {
+                        <option [value]="carga.id">{{ carga.name }}</option>
+                      }@empty {
+                        <option value="">No hay cargas academicas disponibles</option>
+                      }
+                    }@else {
+                        <option selected disabled value="">Cargando...</option>
+                    }
+                  </select>
+                </div>
+              </div>
+          </div>
+
+
+          <div class="form-group">
+            <label for="asignatura" class="form-label">Asignaturas</label>
+            <select (change)="obtenerMaestros()" formControlName="id_subject" name="asignatura" id="asignatura" class="form-select">
+              @if ($asignaturas | async; as asignaturasInfo) {
+                  <option value="">Seleccione una asignatura</option>
+                @for (asignatura of asignaturasInfo.subjects; track $index) {
+                  <option [value]="asignatura.id">{{ asignatura.name | titlecase }}</option>
+                }@empty {
+                  <option value="">No hay asignaturas disponibles</option>
+                }
+              }@else {
+                  <option selected disabled value="">Cargando...</option>
+              }
+            </select>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label for="profesor" class="form-label">Profesores</label>
+                <select (change)="obtenerGrupos()" formControlName="id_teacher" name="profesor" id="profesor" class="form-select">
+                  @if ($profesores | async; as profesoresInfo) {
+                      <option value="">Seleccione un profesor</option>
+                    @for (profesor of profesoresInfo.teachers; track $index) {
+                      <option [value]="profesor.id">{{ profesor.name | titlecase }}</option>
+                    }@empty {
+                      <option value="">No hay profesores disponibles</option>
+                    }
+                  }@else {
+                      <option selected disabled value="">Cargando...</option>
+                  }
+                </select>
+              </div>
+
+              <div class="col">
+
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="grupo" class="form-label">Grupos</label>
+              <select class="form-select" (change)="obtenerDisponibilidad()" formControlName="id_group" name="grupo" id="grupo">
+                @if ($grupos | async; as gruposInfo) {
+                  <option value="">Seleccione un grupo</option>
+                @for (grupo of gruposInfo.groups; track $index) {
+                  <option [value]="grupo.id">{{ grupo.name | titlecase }}</option>
+                }@empty {
+                  <option value="">No hay grupos disponibles</option>
+                }
+              }@else {
+                  <option selected disabled value="">Cargando...</option>
+              }
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="disponibilidad" class="form-label">Disponibilidad del profesor</label>
+              <select name="disponibilidad" id="grupo" class="form-select">
+                @if (diasDisponibles) {
+                  <option value="">Seleccione su disponibilidad</option>
+                    @for (disponibilidad of diasDisponibles ; track $index) {
+                        @for (horas of disponibilidad.horas ; track $index) {
+                          <option value="">{{ disponibilidad.dia }} {{ horas['h:i'] }} -- {{ horas['h:f'] }}</option>
+                        }
+                    }@empty {
+                      <option value="">El profesor no está disponible. </option>
+                    }
+                  }@else {
+                    <option selected disabled value="">Cargando...</option>
+                  }
+              </select>
+            </div>
+
+            <br>
+          </div>
+
+          <div class="form-group">
+            <button type="submit" class="btn my-2 me-auto w-25 btn-secondary">Crear Horario</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
