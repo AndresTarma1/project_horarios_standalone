@@ -41,8 +41,7 @@ export class ModalEditComponent implements OnDestroy, OnInit {
   }
 
   verificarUsuario() {
-
-    if(this.user){
+    if (this.user) {
       if (this.user.id.startsWith('COOR')) {
         this.typeUser = 'coordinador';
       } else if (this.user.id.startsWith('EST')) {
@@ -51,14 +50,13 @@ export class ModalEditComponent implements OnDestroy, OnInit {
         this.typeUser = 'profesor';
       }
       this.crearFormulario();
-    }else if(this.grupo){
+    } else if (this.grupo) {
       this.crearFormulario();
     }
   }
 
   crearFormulario() {
-
-    if(this.typeUser){
+    if (this.typeUser) {
       this.campos.forEach((campo) => {
         if (campo.field == 'id') {
           this.formulario.addControl(
@@ -72,8 +70,8 @@ export class ModalEditComponent implements OnDestroy, OnInit {
           );
         }
       });
-    }else{
-      this.campos.forEach( (campo) => {
+    } else {
+      this.campos.forEach((campo) => {
         if (campo.field == 'id') {
           this.formulario.addControl(
             campo.field,
@@ -85,13 +83,29 @@ export class ModalEditComponent implements OnDestroy, OnInit {
             this.fb.control(this.grupo[campo.field], Validators.required)
           );
         }
-      })
+      });
     }
   }
 
-  onSubmit() {
+  borrarGrupo() {
     this.formulario.controls['id'].enable();
-    let usuario = this.formulario.value;
-    this.activeModal.close(usuario);
+
+    let grupo: { id: number; delete: boolean } = {
+      id: this.formulario.controls['id'].value,
+      delete: true
+    };
+    this.activeModal.close(grupo);
+  }
+
+  onSubmit() {
+    if (this.user) {
+      this.formulario.controls['id'].enable();
+      let usuario = this.formulario.value;
+      this.activeModal.close(usuario);
+    } else {
+      this.formulario.controls['id'].enable();
+      let grupo = this.formulario.value;
+      this.activeModal.close(grupo);
+    }
   }
 }

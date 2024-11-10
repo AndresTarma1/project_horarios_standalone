@@ -8,6 +8,7 @@ import {
   timer,
   switchMap,
   interval,
+  retry,
 } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
 
@@ -107,14 +108,16 @@ export class CoordinadorService {
 
   getProfesoresDisponibilidad(credenciales: any) {
     return this.http.get(`${this.apiURL}/schedule/ver-dias-horas`, {
-      headers: { 'ngrok-skip-browser-warning': 'true' }, params: credenciales
+      headers: { 'ngrok-skip-browser-warning': 'true' },
+      params: credenciales,
     });
   }
 
   postAsignaturaMaestro(credenctials: any): Observable<any> {
     const { id_subject, id_teacher } = credenctials;
     return this.http.post(
-      `${this.apiURL}/subject_teacher`,{},
+      `${this.apiURL}/subject_teacher`,
+      {},
       {
         params: {
           id_subject: id_subject,
@@ -144,6 +147,12 @@ export class CoordinadorService {
     });
   }
 
+  postHorarioManual(horario: any): Observable<any> {
+    return this.http.post(`${this.apiURL}/schedule/create-manual`, horario, {
+      headers: { 'ngrok-skip-browser-warning': 'true' },
+    });
+  }
+
   postHorarioAutomatico(horario: any): Observable<any> {
     return this.http.post(
       `${this.apiURL}/schedule/create-automatico`,
@@ -153,10 +162,9 @@ export class CoordinadorService {
   }
 
   postCargaAcademica(cargaAcademica: any) {
-    console.log(cargaAcademica);
     return this.http.post(
       `${this.apiURL}/academic_load`,
-      { name: cargaAcademica.name, description: cargaAcademica.description },
+      { name: cargaAcademica.name, description: cargaAcademica.description, id_career : 1 },
       { headers: { 'ngrok-skip-browser-warning': 'true' } }
     );
   }
@@ -173,6 +181,12 @@ export class CoordinadorService {
     });
   }
 
+  postGrupo(grupo: any){
+    return this.http.post(`${this.apiURL}/group`, grupo,
+      { headers: { 'ngrok-skip-browser-warning': 'true' } }
+    );
+  }
+
   patchQuitarEstudianteDeGrupo(id_student: string): Observable<any> {
     return this.http.patch(
       `${this.apiURL}/student/delete-group/${id_student}`,
@@ -182,10 +196,16 @@ export class CoordinadorService {
     );
   }
 
-  patchGrupos(grupo: any): Observable<any> {
-    return this.http.patch(`${this.apiURL}/group/${grupo.id}`, grupo, {
+  putGrupos(grupo: any): Observable<any> {
+    return this.http.put(`${this.apiURL}/group/${grupo.id}`, grupo, {
       headers: { 'ngrok-skip-browser-warning': 'true' },
     });
+  }
+
+  deleteGrupo(id_grupo: string): Observable<any>{
+    return this.http.delete(`${this.apiURL}/group/${id_grupo}`, {
+      headers: { 'ngrok-skip-browser-warning': 'true' },
+    })
   }
 
   deleteHorario(horario: number): Observable<any> {

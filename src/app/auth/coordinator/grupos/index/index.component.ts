@@ -1,15 +1,24 @@
-import { Component, inject } from '@angular/core';
-import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
-import { catchError, ignoreElements, map, Observable } from 'rxjs';
+import { Component, inject, Input } from '@angular/core';
+import {
+  NgbAccordionModule,
+  NgbActiveModal,
+  NgbModal,
+} from '@ng-bootstrap/ng-bootstrap';
+import { catchError, Observable } from 'rxjs';
 import { CoordinadorService } from '../../../../core/services/coordinador.service';
 import { CommonModule } from '@angular/common';
 import { ErrorServidorComponent } from '../../../../components/error-servidor/error-servidor.component';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
-import { Estudiante } from '../../../../interfaces/estudiante.interface';
 import { StudentsListGroupComponent } from '../students-list-group/students-list-group.component';
 import Swal from 'sweetalert2';
-import { FormsModule } from '@angular/forms';
-import { SidebarGroupsComponent } from "../sidebar-groups/sidebar-groups.component";
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { SidebarGroupsComponent } from '../sidebar-groups/sidebar-groups.component';
 
 @Component({
   selector: 'app-index',
@@ -21,8 +30,8 @@ import { SidebarGroupsComponent } from "../sidebar-groups/sidebar-groups.compone
     ErrorServidorComponent,
     NgxSpinnerModule,
     StudentsListGroupComponent,
-    SidebarGroupsComponent
-],
+    SidebarGroupsComponent,
+  ],
   templateUrl: './index.component.html',
   styleUrl: './index.component.css',
 })
@@ -32,7 +41,10 @@ export class IndexComponent {
   grupo: any = [];
   error = false;
 
-  constructor(private spinner: NgxSpinnerService) {}
+  constructor(
+    private spinner: NgxSpinnerService,
+    private modalService: NgbModal
+  ) {}
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
@@ -41,12 +53,52 @@ export class IndexComponent {
     this.obtenerEstudiantesPorGrupo();
   }
 
-  obtenerEstudiantes(grupo: any){
+  obtenerEstudiantes(grupo: any) {
     this.grupo = grupo;
   }
 
-  cambiosEmitidos(event: any){
+  cambiosEmitidos(event: any) {
     this.obtenerEstudiantesPorGrupo();
+  }
+
+  obtenerCambios(grupo: any) {
+    this.coordinadorService.putGrupos(grupo).subscribe((res: any) => {
+      if (res.ok) {
+        Swal.fire({
+          title: 'Exito',
+          text: `El grupo ${grupo.name} ha sido editado correctamente`,
+          icon: 'success',
+        }).then(() => {
+          this.obtenerEstudiantesPorGrupo();
+        });
+      } else {
+        Swal.fire({
+          title: 'Error',
+          text: `El grupo ${grupo.name} no se ha podido editar`,
+          icon: 'error',
+        });
+      }
+    });
+  }
+
+  eliminarGrupo(grupo: string) {
+    this.coordinadorService.deleteGrupo(grupo).subscribe((res: any) => {
+      if (res.ok) {
+        Swal.fire({
+          title: 'Exito',
+          text: `El grupo sido eliminado correctamente`,
+          icon: 'success',
+        }).then(() => {
+          this.obtenerEstudiantesPorGrupo();
+        });
+      } else {
+        Swal.fire({
+          title: 'Error',
+          text: `El grupo no se ha podido eliminar`,
+          icon: 'error',
+        });
+      }
+    });
   }
 
   obtenerEstudiantesPorGrupo() {
@@ -58,7 +110,6 @@ export class IndexComponent {
       })
     );
   }
-
 
   eliminarEstudianteDelGrupo(estudiante: any) {
     this.coordinadorService
@@ -72,14 +123,103 @@ export class IndexComponent {
           }).then(() => {
             this.obtenerEstudiantesPorGrupo();
           });
-        }else{
+        } else {
           Swal.fire({
             title: 'Error',
             text: `El estudiante ${estudiante.name} no se ha logrado quitar del grupo`,
             icon: 'error',
-          })
+          });
         }
       });
   }
 
+  crearGrupo() {
+    const modalRef = this.modalService.open(CreateGroupComponent);
+    modalRef.closed.subscribe((res: any) => {
+      if (res != undefined) {
+        this.coordinadorService.postGrupo(res).subscribe((res: any) => {
+          if (res.ok) {
+            Swal.fire({
+              title: 'Exito',
+              text: `El grupo ${res} se ha añadido correctamente`,
+              icon: 'success',
+            }).then(() => {
+              this.obtenerEstudiantesPorGrupo();
+            });
+          } else {
+            Swal.fire({
+              title: 'Error',
+              text: `El grupo no se ha podido crear`,
+              icon: 'error',
+            });
+          }
+        });
+      }
+    });
+  }
+}
+
+@Component({
+  selector: 'app-modal-create-component',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
+  template: `
+    <div class="modal-header">
+      <h4 class="modal-title">Crear Grupo</h4>
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="activeModal.dismiss('Cross click')"
+      ></button>
+    </div>
+    <form [formGroup]="formGrupo">
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="nombre" class="form-label">Nombre del grupo:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="nombre"
+            formControlName="name"
+          />
+          @if(formGrupo.get('name')!.invalid && formGrupo.get('name')!.touched){
+          <div class="text-danger">El nombre es requerido.</div>
+          }
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          [disabled]="formGrupo.invalid"
+          class="btn btn-primary me-2"
+          (click)="activeModal.close(formGrupo.value)"
+        >
+          Crear Grupo
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          (click)="activeModal.close('Close click')"
+        >
+          Cerrar
+        </button>
+      </div>
+    </form>
+  `,
+  styles: '',
+})
+export class CreateGroupComponent {
+  activeModal = inject(NgbActiveModal);
+
+  formGrupo: FormGroup;
+
+  constructor(private formBuilder: FormBuilder) {}
+
+  ngOnInit() {
+    this.formGrupo = this.formBuilder.group({
+      name: ['', Validators.required],
+    });
+  }
 }

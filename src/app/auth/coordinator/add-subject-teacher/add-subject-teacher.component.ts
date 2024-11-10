@@ -2,97 +2,94 @@ import { Component } from '@angular/core';
 import Swal from 'sweetalert2';
 import { CoordinadorService } from '../../../core/services/coordinador.service';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { NgbProgressbarModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-add-subject-teacher',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, NgbProgressbarModule],
   templateUrl: './add-subject-teacher.component.html',
   styleUrl: './add-subject-teacher.component.css'
 })
 export class AddSubjectTeacherComponent {
 
   valor = 0;
-  maestroAsignatura: any;
-  asignaturas: any = [];
-  profesores: any[] = [];
+  asignaturas$: Observable<any>;
+  profesores$: Observable<any>;
 
-  constructor(private coordinadorService: CoordinadorService){}
 
-  asignatura: any;
-  profesor: any;
+  asignacionMaterias: FormGroup = this.fb.group({
+    'id_teacher': ['', Validators.required],
+    'id_subject': ['', Validators.required],
+  });
+
+  constructor(private coordinadorService: CoordinadorService, private fb: FormBuilder){}
+
   disable: boolean = true;
 
   ngOnInit(): void {
-      this.obtenerProfesores();
-      this.obtenerAsignaturas();
+    this.obtenerMaestros();
   }
 
-  onChangeProfesor(event: any){
+  obtenerMaestros(): void{
+    this.profesores$ = this.coordinadorService.getProfesores();
 
-    if(event.target.value === 'any'){
-      this.valor -= 50;
-      return;
-    }
-    this.profesor = event.target.value;
-    this.valor = 50;
+    this.valorCien()
   }
 
-  onChangeAsignatura(event: any){
-
-    if(event.target.value === 'any'){
-      this.valor -= 50;
-      return;
+  obtenerAsignaturas(): void{
+    if(this.asignacionMaterias.controls['id_teacher'].value){
+      this.asignaturas$ = this.coordinadorService.getAsignaturas();
+    }else{
+      this.asignaturas$ = new BehaviorSubject(null);
     }
-    this.asignatura = event.target.value;
-    this.disable = false;
-    this.valor = 100;
+
+    this.valorCien()
   }
 
-  addAsignaturaMaestro(){
-    let credential: any = {
-      id_teacher : this.profesor,
-      id_subject : this.asignatura,
+  valorCien(){
+    if(this.asignacionMaterias.controls['id_subject'].value && this.asignacionMaterias.controls['id_teacher'].value){
+      this.valor = 100;
+    }else if(this.asignacionMaterias.controls['id_teacher'].value){
+      this.valor = 50;
+    }else{
+      this.valor = 0;
     }
 
-    this.coordinadorService.postAsignaturaMaestro(credential).subscribe(
-      (res: any) =>  {
-        console.log(res);
+  }
+
+
+  addAsignaturaAMaestro(): void{
+    this.coordinadorService.postAsignaturaMaestro(this.asignacionMaterias.value).subscribe({
+      next: (res: any) => {
         if(res.ok){
           Swal.fire({
-            title: 'Correcto',
-            text: `${res.msg}`,
+            title: 'Exito',
+            text: 'La asignatura se ha establecido exitosamente',
             icon: 'success'
           });
+          this.asignacionMaterias.reset();
         }else{
           Swal.fire({
-            title: 'error',
-            text: `${res.msg}`,
+            title: 'Error',
+            text: 'El profesor no se ha podido asignar a la asignatura, ah ocurrido un error',
             icon: 'error'
           });
         }
-      }
-    );
-    // console.log(credential);
+      },
+      error: (err: any) => {
+        Swal.fire({
+          title: 'Conflicto',
+          text: `El profesor ya esta dando esta asignatura`,
+          icon: 'error'
+        });
+        this.asignacionMaterias.patchValue({
+          'id_subject' : ''
+        });
+      },
+      complete: () => { this.valorCien();}
+    })
   }
-
-  obtenerAsignaturas(){
-    this.coordinadorService.getAsignaturas().subscribe(
-      (res: any) => {
-        this.asignaturas = res.subjects;
-      }
-    )
-  }
-
-  // adminService = inject(AdminService);
-
-  obtenerProfesores(){
-    this.coordinadorService.getProfesores().subscribe(
-      (res: any) => {
-        this.profesores = res.teachers;
-      }
-    );
-  }
-
 }

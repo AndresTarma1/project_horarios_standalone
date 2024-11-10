@@ -113,12 +113,12 @@
 
             <div class="form-group">
               <label for="disponibilidad" class="form-label">Disponibilidad del profesor</label>
-              <select name="disponibilidad" id="grupo" class="form-select">
+              <select (change)="controlarDias()" formControlName="disponibilidad" name="disponibilidad" id="grupo" class="form-select">
                 @if (diasDisponibles) {
                   <option value="">Seleccione su disponibilidad</option>
                     @for (disponibilidad of diasDisponibles ; track $index) {
                         @for (horas of disponibilidad.horas ; track $index) {
-                          <option value="">{{ disponibilidad.dia }} {{ horas['h:i'] }} -- {{ horas['h:f'] }}</option>
+                          <option>{{ disponibilidad.dia }} {{ horas['h:i'] }} -- {{ horas['h:f'] }}</option>
                         }
                     }@empty {
                       <option value="">El profesor no está disponible. </option>
@@ -133,7 +133,7 @@
           </div>
 
           <div class="form-group">
-            <button type="submit" class="btn my-2 me-auto w-25 btn-secondary">Crear Horario</button>
+            <button [disabled]="horarioForm.invalid" type="submit" class="btn my-2 me-auto w-25 btn-secondary">Crear Horario</button>
           </div>
         </form>
       </div>

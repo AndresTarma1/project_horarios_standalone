@@ -1,13 +1,13 @@
 <div class="container">
   <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
     <li [ngbNavItem]="1">
-      <button class="text-dark" ngbNavLink>Manual</button>
+      <button class="text-dark" ngbNavLink>SemiAutomatico</button>
       <ng-template ngbNavContent>
         <app-semiautomatico></app-semiautomatico>
       </ng-template>
     </li>
     <li [ngbNavItem]="2">
-      <button class="text-dark" ngbNavLink>Semiautomatico</button>
+      <button class="text-dark" ngbNavLink>Manual</button>
       <ng-template ngbNavContent>
         <app-manual></app-manual>
       </ng-template>

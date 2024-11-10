@@ -19,11 +19,33 @@ export class SidebarGroupsComponent implements OnInit{
   @Input() grupos: any[];
   @Output() grupoConEstudiantes: EventEmitter<any> = new EventEmitter<any>();
   campos: {field: string, header: string}[] = [{field: 'id', header: 'ID'}, {field: 'name', header: 'Nombre'}];
-
+  @Output() emitirCambiosGrupo: EventEmitter<any> = new EventEmitter<any>();
+  @Output() emitirBorrarGrupo: EventEmitter<any> = new EventEmitter<any>();
   editarGrupo(grupo: any): void{
     const modalRef = this.modalService.open(ModalEditComponent);
     modalRef.componentInstance.grupo = grupo;
     modalRef.componentInstance.campos = this.campos;
+
+    modalRef.closed.subscribe(
+      (grupo: any) => {
+        if(grupo != undefined){
+          if(grupo.delete){
+            this.emitirBorrarGrupo.emit(grupo.id);
+          }else{
+            this.emitirCambiosGrupo.emit(grupo);
+          }
+        }
+
+      }
+    )
+
+  }
+
+  @Output() emitirCrearGrupo: EventEmitter<any> = new EventEmitter<any>();
+
+  CrearGrupo()
+  {
+    this.emitirCrearGrupo.emit();
   }
 
   ngOnInit(): void {
@@ -34,3 +56,5 @@ export class SidebarGroupsComponent implements OnInit{
     this.grupoConEstudiantes.emit(grupo);
   }
 }
+
+

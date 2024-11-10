@@ -19,7 +19,7 @@
   <div class="modal-footer">
     <button type="button" (click)="activeModal.close()" class="btn btn-secondary">Cancelar</button>
     @if (grupo) {
-      <button type="submit" class="btn btn-danger">Eliminar</button>
+      <button type="button" (click)="borrarGrupo()" class="btn btn-danger">Eliminar</button>
     }
     <button type="submit"  class="btn btn-primary">Guardar</button>
   </div>

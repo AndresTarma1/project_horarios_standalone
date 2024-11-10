@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container m-4 mx-auto">
 
   <h3>Asignacion De Materias A Maestros.</h3>
   <br>
@@ -6,16 +6,23 @@
     primero debe seleccionar al maestr&#64;</p>
   <br>
 
+  <form (ngSubmit)="addAsignaturaAMaestro()" [formGroup]="asignacionMaterias">
+
     <div class="row my-2 align-items-center">
       <div class="col-md-12 col-lg-4">
         <div class="profesor">
           <label for="profesor"><strong>Maestro</strong></label>
-          <select (change)="onChangeProfesor($event)" name="profesor" class="form-select" id="profesor">
-            <option value="any" selected>Seleccione un maestro</option>
-            <option value="">a</option>
-            <option value="">e</option>
-            <option value="">i</option>
-            <option value="">o</option>
+          <select (change)="obtenerAsignaturas()" formControlName="id_teacher" name="profesor" class="form-select" id="profesor">
+            @if (profesores$| async; as profesoresInfo) {
+              <option value="">Seleccione un profesor</option>
+              @for( profesor of profesoresInfo.teachers; track $index) {
+                <option [value]="profesor.id">{{ profesor.id }}--{{ profesor.name | titlecase }}</option>
+              }@empty {
+                <option value="">No hay profesores disponibles.</option>
+              }
+            }@else {
+              <option value="" disabled selected>Cargando...</option>
+            }
           </select>
         </div>
       </div>
@@ -35,12 +42,17 @@
       <div class="col-md-12 col-lg-4">
         <div class="profesor">
           <label for="asignatura"><strong>Asignaturas</strong></label>
-          <select (change)="onChangeAsignatura($event)" name="profesor" class="form-select" id="asignatura">
-            <option value="any" selected>Seleccione un/as asignatura</option>
-            <option value="">a</option>
-            <option value="">e</option>
-            <option value="">i</option>
-            <option value="">o</option>
+          <select (change)="valorCien()"  formControlName="id_subject" name="profesor" class="form-select" id="asignatura">
+            @if (asignaturas$ | async; as asignaturasInfo) {
+              <option value="">Seleccione una asignatura</option>
+              @for (asignatura of asignaturasInfo.subjects; track $index) {
+                <option [value]="asignatura.id">{{ asignatura.name | titlecase }}</option>
+              }@empty {
+                <option value="">No hay asignaturas disponibles.</option>
+              }
+            }@else {
+              <option value="" disabled selected>Cargando...</option>
+            }
           </select>
         </div>
       </div>
@@ -57,16 +69,14 @@
 
     <br>
     <div class="row">
-      <div class="col align-content-center">
-        <div class="progress">
-          <div class="progress-bar" role="progressbar" aria-label="Basic example" [style.width.%]="valor" [attr.aria-valuenow]="valor" aria-valuemin="0" aria-valuemax="100"></div>
-        </div>
+      <div class="col-8 align-content-center">
+        <ngb-progressbar type="dark" textType="white" [value]="valor" [showValue]="true" />
       </div>
-      <div class="col text-center">
-        <button disabled class="btn btn-primary w-25">Asignar</button>
+      <div class="col-4 text-center">
+        <button type="submit" [disabled]="asignacionMaterias.invalid" class="btn btn-secondary">Asignar materias</button>
       </div>
     </div>
-    <p>Progreso {{ valor }}%</p>
+  </form>
 
   <!-- <div class="row">
     <div class="col">

@@ -35,7 +35,11 @@ export class ManualComponent implements OnInit {
       'id_academic_load': ['', [Validators.required, Validators.minLength(1)]],
       'id_subject': ['', [Validators.required, Validators.minLength(1)]],
       'id_group': ['', [Validators.required, Validators.minLength(1)]],
-      'id_teacher': ['', [Validators.required, Validators.minLength(1)]]
+      'id_teacher': ['', [Validators.required, Validators.minLength(1)]],
+      'disponibilidad': ['', Validators.required,],
+      'day': '',
+      'hi': '',
+      'hf': ''
     }
   );
 
@@ -79,7 +83,8 @@ export class ManualComponent implements OnInit {
         'id_academic_load': '',
         'id_subject': '',
         'id_group': '',
-        'id_teacher': ''
+        'id_teacher': '',
+        'disponibilidad': ''
       });
       this.$cargas_academicas = new BehaviorSubject(null);
       this.obtenerAsignaturas();
@@ -95,7 +100,8 @@ export class ManualComponent implements OnInit {
       this.horarioForm.patchValue({
         'id_subject': '',
         'id_group': '',
-        'id_teacher': ''
+        'id_teacher': '',
+        'disponibilidad': ''
       });
 
       this.$asignaturas = new BehaviorSubject(null);
@@ -111,7 +117,8 @@ export class ManualComponent implements OnInit {
     }else{
       this.horarioForm.patchValue({
         'id_group': '',
-        'id_teacher': ''
+        'id_teacher': '',
+        'disponibilidad': ''
       });
       this.$profesores = new BehaviorSubject(null);
       this.obtenerGrupos();
@@ -123,7 +130,8 @@ export class ManualComponent implements OnInit {
       this.$grupos = this.coordinadorService.getGrupos();
     }else{
       this.horarioForm.patchValue({
-        'id_teacher': ''
+        'id_teacher': '',
+        'disponibilidad': ''
       });
       this.$grupos = new BehaviorSubject(null);
       this.obtenerDisponibilidad();
@@ -131,6 +139,7 @@ export class ManualComponent implements OnInit {
   }
 
   diasDisponibles: DiaDisponible[] = [];
+  dia_hora: any;
 
   obtenerDisponibilidad(): void{
     let credenciales = {
@@ -143,10 +152,6 @@ export class ManualComponent implements OnInit {
     if(credenciales.id_group){
       this.coordinadorService.getProfesoresDisponibilidad(credenciales).subscribe(
         (res: any) => {
-
-          // Object.entries(res.dias_horas).forEach(([key, value]) => {
-          //   console.log(value);
-          // })
           const devolverHoraDia = (dia: string)  =>{
             return Object.values(res.dias_horas[dia]) as [{'h:i': string, 'h:f': string}];
           }
@@ -166,7 +171,24 @@ export class ManualComponent implements OnInit {
 
   }
 
+  controlarDias(){
+    const disponibilidad = this.horarioForm.controls['disponibilidad'].value;
+    const regex = /(\w+) (\d{2}:\d{2}:\d{2}) -- (\d{2}:\d{2}:\d{2})/;
+    const match = disponibilidad.match(regex);
+
+    if(match){
+      this.horarioForm.get('day')?.setValue(match[1]);
+      this.horarioForm.get('hi')?.setValue(match[2]);
+      this.horarioForm.get('hf')?.setValue(match[3]);
+    }
+
+  }
+
   crearHorario(){
-    console.log(this.horarioForm.value);
+    this.coordinadorService.postHorarioManual(this.horarioForm.value).subscribe(
+      (res: any) => {
+        console.log(res);
+      }
+    )
   }
 }
