@@ -15,7 +15,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './index.component.css',
 })
 export class IndexComponent implements OnInit {
-  horas = ['08:00 - 10:00', '10:00 - 12:00', '12:00 - 14:00'];
+  horas = ['08:00 - 10:00', '10:00 - 12:00', '12:00 - 14:00', '14:00 - 16:00', '16:00 - 18:00'];
   grupos: any[];
   grupo: number;
   public horario$: Observable<any>;

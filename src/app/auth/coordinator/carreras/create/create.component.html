@@ -1,0 +1,93 @@
+<div class="container mt-5">
+
+  <!-- Formulario de Carrera -->
+  <div class="row justify-content-center mb-4">
+    <div class="col-12 col-md-8">
+      <div class="card shadow-lg">
+        <div class="card-header text-dark text-center">
+          <h3>Registrar Carrera Académica</h3>
+        </div>
+        <div class="card-body">
+          <form (ngSubmit)="crearCarrera()" [formGroup]="carreraForm">
+            <!-- Nombre de la carrera -->
+            <div class="form-group mb-3">
+              <label for="name" class="form-label">Nombre de la carrera</label>
+              <input type="text" formControlName="name" id="name" class="form-control" placeholder="Ingrese el nombre de la carrera" />
+            </div>
+
+            <!-- Botones para habilitar/deshabilitar y asignar carrera -->
+            <div class="d-flex justify-content-end align-items-center mt-3">
+
+              <button class="btn btn-success" [disabled]="carreraForm.invalid" type="submit">
+                Crear carrera
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sección de Cargas Académicas (Formulario a la izquierda y lista a la derecha) -->
+  <div class="row justify-content-center mb-4">
+    <div class="col-12 col-md-8">
+      <div class="card shadow-lg">
+        <div class="card-header text-dark">
+          <h5>Agregar Carga Académica</h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <!-- Columna de formulario para agregar carga académica -->
+            <div class="col-md-6 mt-2 mb-3">
+              <form (ngSubmit)="agregarCargaAcademica()" [formGroup]="cargaAcademicaForm">
+                <div class="form-group mb-3">
+                  <label for="cargaName" class="form-label">Nombre de la carga académica</label>
+                  <input type="text" formControlName="name" id="cargaName" class="form-control" placeholder="Ejemplo: Primer Semestre" />
+                </div>
+                <div class="form-group mb-3">
+                  <label for="cargaDescription" class="form-label">Descripción</label>
+                  <input type="text" formControlName="description" id="cargaDescription" class="form-control" placeholder="Descripción de la carga" />
+                </div>
+
+                <!-- Botón para agregar carga académica -->
+                <div class="text-start">
+                  <button class="btn btn-primary" [disabled]="cargaAcademicaForm.invalid" type="submit">
+                    Añadir Carga Académica
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- Columna de cargas académicas agregadas -->
+            <div class="col-md-6 mb-3">
+              @if (carreraForm.controls['cargasAcademicas'].value.length > 0) {
+                <div>
+                  <h6 class="mb-3">Cargas Académicas Agregadas</h6>
+                  <ul class="list-group">
+                    @for (carga of carreraForm.controls['cargasAcademicas'].value;let i = $index ;track $index) {
+                      <li class="list-group-item">
+                        <div class="row">
+                          <div class="col-10">
+                            <span>{{ carga.name | titlecase }}</span>
+                          </div>
+                          <div class="col-2">
+                            <i class="bi bi-trash-fill"></i>
+                          </div>
+                        </div>
+                      </li>
+                    }
+                  </ul>
+                </div>
+              }@else {
+                <div>
+                  <p class="text-center text-muted">No has agregado cargas académicas aún.</p>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

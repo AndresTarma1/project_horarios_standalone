@@ -14,7 +14,6 @@
             <td *ngFor="let dia of horario">
               <div *ngIf="clasePorHora(dia.clases, hora)">
                 <p>{{ clasePorHora(dia.clases, hora).name | titlecase}} <ng-content *ngIf="clasePorHora(dia.clases, hora).grupo != null"> - ({{ clasePorHora(dia.clases, hora).grupo }})</ng-content></p>
-
               </div>
             </td>
           </tr>

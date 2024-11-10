@@ -1,0 +1,55 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{ carrera | titlecase }}</h4>
+  <button
+    type="button"
+    class="btn-close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  ></button>
+</div>
+<div class="modal-body">
+  <ul class="list-group">
+    @for (cargaAcademica of cargasAcademicas;let i = $index; track $index) {
+
+    <li
+      type="button"
+      class="list-group-item my-1 rounded d-flex justify-content-between"
+      (click)="toggleCollapse(i)"
+      [attr.aria-expanded]="!isCollapsed[i]"
+      aria-controls="collapseExample"
+    >
+      {{ cargaAcademica.name }}
+      <i class="bi bi-arrow-down-circle ms-auto"></i>
+    </li>
+
+    <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed[i]">
+      <div class="card">
+        <div class="card-body">
+          @if (cargaAcademica.subjects.length > 0) {
+            <h5>Asignaturas</h5>
+            <ul class="list-group">
+              @for (asignatura of cargaAcademica.subjects; track $index) {
+                <li class="list-group-item">{{ asignatura.name }}</li>
+              }
+            </ul>
+          }@else {
+            <h5>No tiene asignaturas</h5>
+          }
+        </div>
+      </div>
+    </div>
+
+    }@empty {
+    <li class="list-group-item">No tiene cargas academicas</li>
+    }
+  </ul>
+</div>
+<div class="modal-footer">
+  <button
+    type="button"
+    class="btn btn-outline-secondary"
+    (click)="activeModal.close('Close click')"
+  >
+    Close
+  </button>
+</div>

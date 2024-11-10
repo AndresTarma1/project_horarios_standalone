@@ -7,3 +7,7 @@ fieldset{
     display: none;
   }
 }
+
+.swal-content-with-line-breaks {
+  white-space: pre-wrap;  /* Habilita saltos de línea */
+}

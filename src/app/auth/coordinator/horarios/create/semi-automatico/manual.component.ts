@@ -94,7 +94,7 @@ export class SemiAutomaticoComponent {
     let horario: any = this.horarioForm.value;
     this.coordinadorService.postHorario(horario).subscribe({
       next: (res: any) => {
-        if( res.ok){
+        if(res.ok){
           Swal.fire({
             title: 'Exito',
             text: 'Horario Creado Correctamente',
@@ -103,7 +103,7 @@ export class SemiAutomaticoComponent {
         }else{
           Swal.fire({
             title: 'Error',
-            text: 'Ah ocurrido un error dentro del servidor',
+            text: `${res.msg}`,
             icon: 'error'
           });
         }

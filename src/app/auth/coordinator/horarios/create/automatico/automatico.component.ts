@@ -97,10 +97,25 @@ export class AutomaticoComponent implements OnInit {
     this.coordinatorService.postHorarioAutomatico(horario).subscribe(
       (res: any) => {
 
+        console.log(res);
         if(res.ok){
+
+          let mensaje = '';
+
+          const capitalizeFirstLetter = (dato: string) => {
+            dato.toLowerCase();
+            console.log(dato);
+            return dato;
+          }
+          res.msg.forEach((element: string) => {
+              mensaje += `${capitalizeFirstLetter(element)} <br>`
+              console.log(mensaje);
+          });
+
           Swal.fire({
             title: 'Exito...',
-            text: `${res.msg} \n aunque ${res.advertencia}`,
+            html: `${mensaje}
+            ${res.advertencia}`,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Ver horario',
@@ -108,9 +123,6 @@ export class AutomaticoComponent implements OnInit {
           }).then((result) => {
             if (result.isConfirmed) {
               this.router.navigate([`../index`, horario.id_group], { relativeTo: this.route});
-            }else if (result.isDismissed) {
-              // Acción cuando se hace clic en 'Listo'
-              console.log('Listo');
             }
           });
         }else{

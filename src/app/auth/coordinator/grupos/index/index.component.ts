@@ -135,13 +135,13 @@ export class IndexComponent {
 
   crearGrupo() {
     const modalRef = this.modalService.open(CreateGroupComponent);
-    modalRef.closed.subscribe((res: any) => {
-      if (res != undefined) {
-        this.coordinadorService.postGrupo(res).subscribe((res: any) => {
+    modalRef.closed.subscribe((grupo: any) => {
+      if (grupo != undefined) {
+        this.coordinadorService.postGrupo(grupo).subscribe((res: any) => {
           if (res.ok) {
             Swal.fire({
               title: 'Exito',
-              text: `El grupo ${res} se ha añadido correctamente`,
+              text: `El grupo ${grupo.name} se ha añadido correctamente`,
               icon: 'success',
             }).then(() => {
               this.obtenerEstudiantesPorGrupo();

@@ -6,6 +6,7 @@ import { CoordinadorService } from '../../../../../core/services/coordinador.ser
 import { AsignaturasComponent } from '../../../carga-academica/asignaturas/asignaturas.component';
 import { group } from '@angular/animations';
 import { StarIcon } from 'primeng/icons/star';
+import Swal from 'sweetalert2';
 
 interface Horario {
   'h:i': string;
@@ -187,8 +188,23 @@ export class ManualComponent implements OnInit {
   crearHorario(){
     this.coordinadorService.postHorarioManual(this.horarioForm.value).subscribe(
       (res: any) => {
-        console.log(res);
+        if(res.ok){
+          Swal.fire({
+            title: 'Exito',
+            text: `${res.msg}`,
+            icon: 'success'
+          })
+        }else{
+          Swal.fire({
+            title: 'Error',
+            text: `${res.msg}`,
+            icon: 'error'
+          })
+
+        }
+
       }
+
     )
   }
 }

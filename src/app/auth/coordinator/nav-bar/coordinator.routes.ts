@@ -42,6 +42,12 @@ export const routes: Routes = [
       {
         path: 'academic_load',
         loadChildren: () => import('../carga-academica/carga-academica.routes'),
+      },{
+        path: 'carreras/create',
+        loadComponent: () => import('../carreras/create/create.component').then( (c) => c.CreateComponent)
+      },{
+        path: 'carreras/index',
+        loadComponent: () => import('../carreras/index/index.component').then( (c) => c.IndexComponent)
       },
       {
         path: '**',
