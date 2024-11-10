@@ -1,38 +1,118 @@
 <div class="container">
   @if (carreras$ | async; as carrerasInfo) {
 
-    <div class="container mt-5">
-      <div class="row g-4">
-        @for (carrera of carrerasInfo.data; track $index) {
-          <div class="col-12 col-sm-6 col-md-4">
-            <div class="card shadow-sm h-100 d-flex flex-column">
+  <div class="container mt-5">
+    <div *ngIf="!mostrarDetalle" class="row g-4">
+      @for (carrera of carrerasInfo.data; track $index) {
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="card shadow-sm h-100 d-flex flex-column">
+          <div class="card-body">
+            <h5
+              class="card-title text-primary text-truncate"
+              title="{{ carrera.name | titlecase }}"
+            >
+              {{ carrera.name | titlecase }}
+            </h5>
+            <h6 class="card-subtitle mb-3 text-muted">
+              <span>Cargas Académicas:</span>
+              <span class="badge bg-secondary ms-1">{{
+                carrera.academic_loads.length
+              }}</span>
+            </h6>
+          </div>
+          <div
+            class="card-footer mt-auto d-flex justify-content-between align-items-center"
+          >
+            <div class="btn-group">
+              <a
+                (click)="openModalAcademico(carrera)"
+                class="btn btn-outline-primary btn-sm"
+              >
+                <i class="bi bi-eye me-1"></i>Ver Cargas
+              </a>
+              <a (click)="eliminarCarrera(carrera)" class="btn btn-outline-danger btn-sm">
+                <i class="bi bi-trash3 me-1"></i>Eliminar
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+
+    <!-- Vista de detalles de la carrera seleccionada -->
+    @if (mostrarDetalle) {
+    <div class="row">
+      <div class="col-12">
+        <button class="btn btn-secondary mb-3" (click)="regresar()">
+          Regresar a Lista de Carreras
+        </button>
+        <h3 class="text-primary">{{ carreraSeleccionada.name | titlecase }}</h3>
+        <h6 class="text-muted mb-4">Cargas Académicas</h6>
+
+        <!-- Lista de cargas académicas -->
+        <ul class="list-group">
+          @for (carga of carreraSeleccionada.academic_loads;let i = $index
+          ;track $index) {
+            <li
+            type="button"
+            class="list-group-item my-1 rounded d-flex justify-content-between"
+            [attr.aria-expanded]="!isCollapse[i]"
+            aria-controls="collapseExample"
+          >
+            {{ carga.name }}
+            <div class="d-flex">
+              <!-- Icono de eliminar (basura) -->
+              <i
+                class="bi bi-trash ms-3 text-danger"
+                style="cursor: pointer;"
+                (click)="eliminarCargaAcademica(carga)"
+                title="Eliminar Carga Académica"
+              ></i>
+
+              <!-- Icono de colapso -->
+              <i (click)="toggleCollapse(i)" style="cursor: pointer;" class="bi bi-arrow-down-circle ms-2"></i>
+            </div>
+          </li>
+
+
+          <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapse[i]">
+            <div class="card">
               <div class="card-body">
-                <h5 class="card-title text-primary">{{ carrera.name | titlecase }}</h5>
-                <h6 class="card-subtitle mb-3 text-muted">Cargas Académicas {{ carrera.academic_loads.length }}</h6>
-              </div>
-              <div class="card-footer d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <a (click)="openModalAcademico(carrera)" class="btn btn-outline-primary btn-sm">
-                    <i class="bi bi-eye me-1"></i>Ver Cargas
-                  </a>
-                  <a class="btn btn-outline-danger btn-sm">
-                    <i class="bi bi-trash3 me-1"></i>Eliminar
-                  </a>
-                </div>
+                @if (carga.subjects.length > 0) {
+                  <h5>Asignaturas</h5>
+                  <ul class="list-group">
+                    @for (asignatura of carga.subjects; track $index) {
+                      <li class="list-group-item">{{ asignatura.name }}</li>
+                    }
+                  </ul>
+                }@else {
+                  <h5>No tiene asignaturas</h5>
+                }
               </div>
             </div>
           </div>
-        }
+
+          }@empty {
+          <li class="list-group-item">No tiene cargas académicas</li>
+          }
+        </ul>
       </div>
     </div>
-
+    }
+  </div>
 
   }@else if (error) {
-    <app-error-servidor></app-error-servidor>
+  <app-error-servidor></app-error-servidor>
   }@else {
-    <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "pacman" [fullScreen] = "true">
-      <p style="color: white" > Cargando </p>
-    </ngx-spinner>
+  <ngx-spinner
+    bdColor="rgba(0, 0, 0, 0.8)"
+    size="medium"
+    color="#fff"
+    type="pacman"
+    [fullScreen]="true"
+  >
+    <p style="color: white">Cargando</p>
+  </ngx-spinner>
   }
-
 </div>

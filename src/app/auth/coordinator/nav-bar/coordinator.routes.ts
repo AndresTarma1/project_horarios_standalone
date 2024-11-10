@@ -38,10 +38,6 @@ export const routes: Routes = [
       {
         path: 'horario',
         loadChildren: () => import('../horarios/horarios.routes'),
-      },
-      {
-        path: 'academic_load',
-        loadChildren: () => import('../carga-academica/carga-academica.routes'),
       },{
         path: 'carreras/create',
         loadComponent: () => import('../carreras/create/create.component').then( (c) => c.CreateComponent)

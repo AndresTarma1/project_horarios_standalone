@@ -214,6 +214,12 @@ export class CoordinadorService {
     });
   }
 
+  deleteCarrera(id_carrera: string): Observable<any>{
+    return this.http.delete(`${this.apiURL}/careers/${id_carrera}`, {
+      headers: { 'ngrok-skip-browser-warning': 'true' },
+    });
+  }
+
   deleteCargaAcademica(id: number): Observable<any> {
     return this.http.delete(`${this.apiURL}/academic_load/${id}`, {
       headers: { 'ngrok-skip-browser-warning': 'true' },

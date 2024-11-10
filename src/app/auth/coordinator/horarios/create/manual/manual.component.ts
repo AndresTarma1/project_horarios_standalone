@@ -3,7 +3,6 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { CoordinadorService } from '../../../../../core/services/coordinador.service';
-import { AsignaturasComponent } from '../../../carga-academica/asignaturas/asignaturas.component';
 import { group } from '@angular/animations';
 import { StarIcon } from 'primeng/icons/star';
 import Swal from 'sweetalert2';

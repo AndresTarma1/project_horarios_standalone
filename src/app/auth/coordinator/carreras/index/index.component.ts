@@ -4,13 +4,14 @@ import { CoordinadorService } from '../../../../core/services/coordinador.servic
 import { CommonModule } from '@angular/common';
 import { ErrorServidorComponent } from "../../../../components/error-servidor/error-servidor.component";
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
-import { NgbModal, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCollapseModule, NgbModal, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { CargasAcademicasModalComponent } from './cargas-academicas-modal/cargas-academicas-modal.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-index',
   standalone: true,
-  imports: [CommonModule, ErrorServidorComponent, NgxSpinnerModule],
+  imports: [CommonModule, ErrorServidorComponent, NgxSpinnerModule, NgbCollapseModule],
   templateUrl: './index.component.html',
   styleUrl: './index.component.css'
 })
@@ -21,12 +22,6 @@ export class IndexComponent implements OnInit {
 
   constructor(private spinner: NgxSpinnerService, private modalService: NgbModal){
 
-  }
-
-  openModalAcademico(carrera: any){
-    const modalRef = this.modalService.open(CargasAcademicasModalComponent);
-    modalRef.componentInstance.cargasAcademicas = carrera.academic_loads;
-    modalRef.componentInstance.carrera = carrera.name;
   }
 
   ngOnInit(): void {
@@ -43,4 +38,62 @@ export class IndexComponent implements OnInit {
       })
     );
   }
+
+  isCollapse: boolean[];
+
+  carreraSeleccionada: any = null;
+  mostrarDetalle: boolean = false;
+  openModalAcademico(carrera: any) {
+    this.mostrarDetalle = true;
+    this.carreraSeleccionada = carrera;
+    this.isCollapse = new Array(this.carreraSeleccionada.academic_loads?.length || 0).fill(true);
+  }
+
+  toggleCollapse(index: number) {
+    this.isCollapse[index] = !this.isCollapse[index];
+  }
+
+  // Método para regresar a la vista general de carreras
+  regresar() {
+    this.mostrarDetalle = false;
+    this.carreraSeleccionada = null;
+  }
+
+  eliminarCarrera(carrera: any) {
+    Swal.fire({
+      title: `¿Estás seguro de eliminar la carrera "${carrera.name}"?`,
+      text: "Esta acción no se puede deshacer.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.coordinadorService.deleteCarrera(carrera.id).subscribe(
+          (res: any) => {
+            if(res.ok){
+              Swal.fire(
+                'Eliminado',
+                `La carrera "${carrera.name}" ha sido eliminada exitosamente.`,
+                'success'
+              ).then( () => { this.obtenerCarreras(); });
+            }else{
+              Swal.fire(
+                'Error',
+                `La carrera "${carrera.name}" no ha sido eliminada.`,
+                'error'
+              );
+            }
+          }
+        )
+      }
+    });
+  }
+
+  eliminarCargaAcademica(carga: any){
+
+  }
+
 }
