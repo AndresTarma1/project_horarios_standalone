@@ -20,56 +20,5 @@
     }
   }
 
-  <!-- <div class="container-fluid">
-    @if (horario) {
-      <h2>Horario...</h2>
-      <div class="container mt-4">
-        <h2 class="text-center mb-4">Horario de Clases</h2>
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th scope="col">Hora</th>
-              <th scope="col" *ngFor="let dia of horario">{{ dia.dia | titlecase }}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let hora of horas">
-              <th scope="row">{{ hora }}</th>
-              <td *ngFor="let dia of horario">
-                <div *ngIf="clasePorHora(dia.clases, hora)">
-                  <strong>{{ clasePorHora(dia.clases, hora).name }}</strong><br>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-    }@else {
-      <h2>No ha seleccionado un horario</h2>
-    }
-  </div> -->
 </div>
 
-
-<!-- <div class="container mt-4">
-  <h2 class="text-center mb-4">Horario de Clases</h2>
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th scope="col">Hora</th>
-        <th scope="col" *ngFor="let dia of horario">{{ dia.dia | titlecase }}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let hora of horas">
-        <th scope="row">{{ hora }}</th>
-        <td *ngFor="let dia of ">
-          <div *ngIf="clasePorHora(dia.clases, hora)">
-            <strong>{{ clasePorHora(dia.clases, hora).name }}</strong><br>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div> -->

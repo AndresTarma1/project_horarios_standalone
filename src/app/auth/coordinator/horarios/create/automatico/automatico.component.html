@@ -27,7 +27,7 @@
               id="carrer"
             >
               @if (carreras$ | async; as carrerasInfo) {
-              <option value="" selected>Seleccione una carrera</option>
+              <option value="" selected>Seleccione</option>
               @for (carrera of carrerasInfo.data; track $index) {
               <option [value]="carrera.id">{{ carrera.name }}</option>
               }@empty {
@@ -61,7 +61,7 @@
               }@empty {
               <option selected value="">No hay cargas academicas...</option>
               } }@else {
-              <option selected disabled value="">Cargando...</option>
+              <option selected disabled value="">Seleccione una carrera</option>
               }
             </select>
           </div>
@@ -85,7 +85,7 @@
               }@empty {
               <option selected value="">No hay grupos...</option>
               } }@else {
-              <option selected disabled value="">Cargando...</option>
+              <option selected disabled value="">Seleccione una carga academica</option>
               }
             </select>
           </div>

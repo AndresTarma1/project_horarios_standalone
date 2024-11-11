@@ -53,6 +53,12 @@ export class CoordinadorService {
     });
   }
 
+  getCarrera(carrera_id: string): Observable<any>{
+    return this.http.get(`${this.apiURL}/careers/${carrera_id}`,{
+      headers: { 'ngrok-skip-browser-warning': 'true' },
+    });
+  }
+
   getCargaAcademicas(): Observable<any> {
     return this.http.get(`${this.apiURL}/academic_load`, {
       headers: { 'ngrok-skip-browser-warning': 'true' },
@@ -72,29 +78,18 @@ export class CoordinadorService {
   }
 
   getGrupos(): Observable<any> {
-    // return interval(5000).pipe(
-    //   switchMap(() => {
-    //     console.log('UWU');
-    //     return this.http.get(`${this.apiURL}/group`, {
-    //       headers: { 'ngrok-skip-browser-warning': 'true' },
-    //     });
-    //   })
-    // );
-
     return this.http.get(`${this.apiURL}/group`, {
       headers: { 'ngrok-skip-browser-warning': 'true' },
     });
   }
 
+  postAsignatura(asignatura: any): Observable<any>{
+    return this.http.post(`${this.apiURL}/subject`, asignatura, {
+      headers: { 'ngrok-skip-browser-warning': 'true' },
+    })
+  }
+
   getGruposConEstudiantes(): Observable<any> {
-    // return timer(0,10000).pipe(
-    //   switchMap( () => {
-    //     console.log("UWU");
-    //     return this.http.get(`${this.apiURL}/group/with-students`, {
-    //       headers: { 'ngrok-skip-browser-warning': 'true' },
-    //     });
-    //   })
-    // );
     return this.http.get(`${this.apiURL}/group/with-students`, {
       headers: { 'ngrok-skip-browser-warning': 'true' },
     });
@@ -127,11 +122,17 @@ export class CoordinadorService {
     );
   }
 
+  postCarreraConCargas(credentials: any): Observable<any>{
+    return this.http.post(`${this.apiURL}/careers/withAcademic`, credentials,
+      {headers: { 'ngrok-skip-browser-warning': 'true' }}
+    );
+  }
+
+
   postGrupoEstudiante(credentials: any): Observable<any> {
     const { id_group, id_student } = credentials;
     return this.http.patch(
       `${this.apiURL}/student/add-group`,
-      {},
       {
         params: {
           id_group: id_group,
@@ -164,20 +165,16 @@ export class CoordinadorService {
   postCargaAcademica(cargaAcademica: any) {
     return this.http.post(
       `${this.apiURL}/academic_load`,
-      { name: cargaAcademica.name, description: cargaAcademica.description, id_career : 1 },
+      { name: cargaAcademica.name, description: cargaAcademica.description, id_career : cargaAcademica.id_career },
       { headers: { 'ngrok-skip-browser-warning': 'true' } }
     );
   }
 
-  postAsignaturasCargaAcademica(cargaAcademica: number, asignaturas: string[]) {
+  postAsignaturasCargaAcademica(datos: any) {
     // console.log(cargaAcademica, asignaturas);
-    let datos: string = '';
-    for (let i: number = 0; i < asignaturas.length; i++) {
-      datos += `${i},`;
-    }
     return this.http.post(`${this.apiURL}/academic_load-subject`, {
-      id_academic_load: `${cargaAcademica}`,
-      id_subject: `${asignaturas}`,
+      id_academic_load: `${datos.carga.id}`,
+      id_subject: `${datos.id_subject}`,
     });
   }
 

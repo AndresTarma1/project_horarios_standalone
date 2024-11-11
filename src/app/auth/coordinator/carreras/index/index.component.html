@@ -1,6 +1,8 @@
 <div class="container">
-  @if (carreras$ | async; as carrerasInfo) {
 
+  @if (carreras$ | async; as carrerasInfo) {
+  <h2 class="mt-4 text-center">Carreras</h2>
+  <hr class="border my-3">
   <div class="container mt-5">
     <div *ngIf="!mostrarDetalle" class="row g-4">
       @for (carrera of carrerasInfo.data; track $index) {
@@ -52,6 +54,7 @@
 
         <!-- Lista de cargas académicas -->
         <ul class="list-group">
+          <li class="list-group-item d-flex justify-content-between rounded" (click)="crearCargaAcademica(carreraSeleccionada)" style="cursor: pointer;"> <strong>Agregar cargas academicas</strong> <i class="bi bi-plus-circle"></i></li>
           @for (carga of carreraSeleccionada.academic_loads;let i = $index
           ;track $index) {
             <li
@@ -80,21 +83,21 @@
             <div class="card">
               <div class="card-body">
                 @if (carga.subjects.length > 0) {
-                  <h5>Asignaturas</h5>
                   <ul class="list-group">
+                  <h5>Asignaturas</h5>
+                  <li (click)="openModalMaterias(carga)" class="list-group-item d-flex justify-content-between rounded" style="cursor: pointer;"> <strong>Agregar asignaturas</strong> <i class="bi bi-plus-circle"></i></li>
+
                     @for (asignatura of carga.subjects; track $index) {
                       <li class="list-group-item">{{ asignatura.name }}</li>
                     }
                   </ul>
-                }@else {
-                  <h5>No tiene asignaturas</h5>
-                }
+                  }@else {
+                    <p>No tiene asignaturas, <a (click)="openModalMaterias(carga)">añadir</a></p>
+                  }
               </div>
             </div>
           </div>
 
-          }@empty {
-          <li class="list-group-item">No tiene cargas académicas</li>
           }
         </ul>
       </div>

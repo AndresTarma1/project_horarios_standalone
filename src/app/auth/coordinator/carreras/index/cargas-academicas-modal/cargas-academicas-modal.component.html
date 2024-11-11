@@ -1,55 +1,43 @@
 <div class="modal-header">
-  <h4 class="modal-title">{{ carrera | titlecase }}</h4>
+  <h4 class="modal-title">{{ carrera.name | titlecase }}</h4>
   <button
     type="button"
     class="btn-close"
     aria-label="Close"
-    (click)="activeModal.dismiss('Cross click')"
+    (click)="activeModal.dismiss()"
   ></button>
 </div>
-<div class="modal-body">
-  <ul class="list-group">
-    @for (cargaAcademica of cargasAcademicas;let i = $index; track $index) {
+<form (ngSubmit)="crearCargaAcademica()" [formGroup]="formulario">
+  <div class="modal-body">
 
-    <li
-      type="button"
-      class="list-group-item my-1 rounded d-flex justify-content-between"
-      (click)="toggleCollapse(i)"
-      [attr.aria-expanded]="!isCollapsed[i]"
-      aria-controls="collapseExample"
-    >
-      {{ cargaAcademica.name }}
-      <i class="bi bi-arrow-down-circle ms-auto"></i>
-    </li>
-
-    <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed[i]">
-      <div class="card">
-        <div class="card-body">
-          @if (cargaAcademica.subjects.length > 0) {
-            <h5>Asignaturas</h5>
-            <ul class="list-group">
-              @for (asignatura of cargaAcademica.subjects; track $index) {
-                <li class="list-group-item">{{ asignatura.name }}</li>
-              }
-            </ul>
-          }@else {
-            <h5>No tiene asignaturas</h5>
-          }
-        </div>
-      </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon1">Nombre</span>
+      <input formControlName="name" type="text" class="form-control" placeholder="Primer_semestre..." aria-label="name" aria-describedby="basic-addon1">
     </div>
 
-    }@empty {
-    <li class="list-group-item">No tiene cargas academicas</li>
-    }
-  </ul>
-</div>
-<div class="modal-footer">
-  <button
-    type="button"
-    class="btn btn-outline-secondary"
-    (click)="activeModal.close('Close click')"
-  >
-    Close
-  </button>
-</div>
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-text">Descripcion</span>
+        <textarea formControlName="description" class="form-control" aria-label="With textarea"></textarea>
+      </div>
+    </div>
+  </div>
+
+  {{ formulario.value | json }}
+  <div class="modal-footer d-flex justify-content-end gap-2">
+    <button
+      type="button"
+      class="btn btn-outline-secondary"
+      (click)="activeModal.close()"
+    >
+      Cerrar
+    </button>
+    <button
+      [disabled]="formulario.invalid"
+      type="submit"
+      class="btn btn-outline-primary"
+    >
+      Crear
+    </button>
+  </div>
+</form>

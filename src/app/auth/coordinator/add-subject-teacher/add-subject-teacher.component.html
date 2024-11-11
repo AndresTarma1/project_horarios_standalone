@@ -1,4 +1,4 @@
-<div class="container m-4 mx-auto">
+<div class="container m-4 mx-4 mx-auto">
 
   <h3>Asignacion De Materias A Maestros.</h3>
   <br>
@@ -29,7 +29,7 @@
 
       <div class="col-md-12 ms-1 col-lg-7">
         <p>Debe seleccionar a un maestro!<br>
-          No hay maestros? <a href="">Click aquí</a>
+          No hay maestros? contacte con su administracion!
         </p>
       </div>
     </div>
@@ -59,7 +59,7 @@
 
       <div class="col-md-12 ms-1 col-lg-7">
         <p>Debe seleccionar a un asignatura!<br>
-          No hay asignatura? <a href="">Click aquí</a>
+          No hay asignatura? contacte con su administracion!
         </p>
       </div>
     </div>
@@ -77,29 +77,4 @@
       </div>
     </div>
   </form>
-
-  <!-- <div class="row">
-    <div class="col">
-      <h1 class=" mx-auto mt-3">Asignarle Materia a un Maestro </h1>
-      <div class="col-md-6">
-        <select (change)="onChangeProfesor($event)" class="form-select" aria-label="Default select example">
-          <option selected>Selecciona
-            un Maestro</option>
-          <option *ngFor="let profesor of profesores" [value]="profesor.id">{{ profesor.name }} -- {{ profesor.id }}
-          </option>
-        </select>
-      </div>
-      <div class="col-md-6">
-        <select (change)="onChangeAsignatura($event)" class="form-select" aria-label="Default select example">
-          <option selected>Selecciona
-            una Asignatura</option>
-          <option *ngFor="let asignatura of asignaturas" [value]="asignatura.id">{{ asignatura.name }}</option>
-        </select>
-      </div>
-      <div class="col-md-6 mt-3">
-        <button [disabled]="disable" (click)="addAsignaturaMaestro()" class="btn btn-primary">Agregar Materia Al
-          Maestro</button>
-      </div>
-    </div>
-  </div> -->
 </div>

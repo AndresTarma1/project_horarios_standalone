@@ -15,29 +15,52 @@
     <div class="row">
       <div class="col-lg-6 form-horario">
         <form (ngSubmit)="crearHorario()" [formGroup]="horarioForm">
+
+          <label for="carrera"><strong>Carreras</strong></label>
+          <select
+          formControlName="id_career"
+          (change)="obtenerCargasAcademicas()"
+          class="form-select"
+          >
+            @if (carreras$ | async; as carrerasInfo) {
+              <option value="" selected>Carreras</option>
+              @for (carrera of carrerasInfo.data; track $index) {
+                <option [value]="carrera.id">{{ carrera.name }}</option>
+              }@empty {
+                <option value="" selected disabled>
+                  No hay carreras disponibles
+                </option>
+              }
+            }@else {
+              <option value="" selected disabled>
+                cargando...
+              </option>
+            }
+          </select>
+
           <label for="carga_academica" class="mb-1"
             ><strong>Seleccione la carga academica</strong></label
           >
           <select
             formControlName="id_academic_load"
-            (change)="onChangeCargaAcademica()"
+            (change)="obtenerGrupos()"
             class="form-select"
             name="carga_academica"
             id="carga_academica"
           >
             @if (cargaAcademicas$ | async; as cargaAcademicasInfo) {
-            <option selected>Cargas Academicas</option>
+            <option value="" selected>Cargas Academicas</option>
             @for (cargaAcademica of cargaAcademicasInfo.academic_loads; track
             $index) {
             <option [value]="cargaAcademica.id">
               {{ cargaAcademica.name | titlecase }}
             </option>
             }@empty {
-            <option selected disabled>
+            <option value="" selected disabled>
               No hay cargas academicas disponibles
             </option>
             } }@else {
-            <option selected disabled>Seleccione</option>
+            <option value="" selected disabled>Seleccione una carrera</option>
             }
           </select>
 
@@ -54,13 +77,13 @@
             id="grupo"
           >
             @if (grupos$ | async; as gruposInfo) {
-            <option selected>Grupos</option>
+            <option value="" selected>Grupos</option>
             @for (grupo of gruposInfo.groups; track $index) {
             <option [value]="grupo.id">{{ grupo.name | titlecase }}</option>
             }@empty {
-            <option selected disabled>No hay grupos disponibles</option>
+            <option value="" selected disabled>No hay grupos disponibles</option>
             } }@else {
-            <option selected disabled>Seleccione una carga academica primero</option>
+            <option value="" selected disabled>Seleccione una carga academica primero</option>
             }
           </select>
 
@@ -77,15 +100,15 @@
             id="asignatura"
           >
             @if (asignaturas$ | async; as asignaturasInfo) {
-            <option selected>Asignaturas</option>
+            <option value="" selected>Asignaturas</option>
             @for (asignatura of asignaturasInfo.subjects; track $index) {
             <option [value]="asignatura.id">
               {{ asignatura.name | titlecase }}
             </option>
             }@empty {
-            <option selected disabled>No hay asignaturas disponibles</option>
+            <option value="" selected disabled>No hay asignaturas disponibles</option>
             } }@else {
-            <option selected disabled>Seleccione un grupo primero</option>
+            <option value="" selected disabled>Seleccione un grupo primero</option>
             }
           </select>
 
@@ -101,15 +124,15 @@
             id="maestro"
           >
             @if (profesores$ | async; as profesoresInfo) {
-            <option selected>Maestros</option>
+            <option value="" selected>Maestros</option>
             @for (profesor of profesoresInfo.teachers; track $index) {
             <option [value]="profesor.id">
               {{ profesor.name | titlecase }} -- {{ profesor.id }}
             </option>
             }@empty {
-            <option selected disabled>No hay Maestros Disponibles</option>
+            <option value="" selected disabled>No hay Maestros Disponibles</option>
             } }@else {
-            <option selected disabled>Seleccione una asignatura primero</option>
+            <option value="" selected disabled>Seleccione una asignatura primero</option>
             }
           </select>
 

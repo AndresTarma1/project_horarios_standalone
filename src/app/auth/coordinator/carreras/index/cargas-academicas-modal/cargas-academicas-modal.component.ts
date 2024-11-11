@@ -1,31 +1,35 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgbActiveModal, NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-cargas-academicas-modal',
   standalone: true,
-  imports: [CommonModule, NgbCollapseModule],
+  imports: [CommonModule, NgbCollapseModule, ReactiveFormsModule],
   templateUrl: './cargas-academicas-modal.component.html',
   styleUrl: './cargas-academicas-modal.component.css'
 })
 export class CargasAcademicasModalComponent {
 
-  @Input() cargasAcademicas: any[];
-  @Input() carrera: string;
+  @Input() carrera: any;
+  formulario: FormGroup;
 
-  // Arreglo para guardar el estado de colapso (true = colapsado, false = expandido)
-  isCollapsed: boolean[] = [];
+  constructor(public activeModal: NgbActiveModal, private fb: FormBuilder) {
 
-  constructor(public activeModal: NgbActiveModal) { }
+  }
 
   ngOnInit() {
-    // Inicializa isCollapsed con false para cada cargaAcademica
-    this.isCollapsed = new Array(this.cargasAcademicas?.length || 0).fill(true);
+    this.formulario = this.fb.group({
+      id_career : [this.carrera.id],
+      name: ['', Validators.required],
+      description: ['', Validators.required]
+    });
   }
 
-  toggleCollapse(index: number) {
-    this.isCollapsed[index] = !this.isCollapsed[index];
-  }
 
+  crearCargaAcademica(): void{
+
+    this.activeModal.close(this.formulario.value);
+  }
 }

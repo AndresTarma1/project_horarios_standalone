@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormGroup, Validators, FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { Observable, map, catchError } from 'rxjs';
+import { Observable, map, catchError, BehaviorSubject } from 'rxjs';
 import Swal from 'sweetalert2';
 import { CoordinadorService } from '../../../../../core/services/coordinador.service';
 import { CommonModule } from '@angular/common';
@@ -13,22 +13,18 @@ import { CommonModule } from '@angular/common';
   styleUrl: './manual.component.css'
 })
 export class SemiAutomaticoComponent {
-  datos: any = {
-    cargaAcademica: true,
-    grupo: true,
-    asignatura: true,
-    profesor: true
-  };
 
   horarioForm: FormGroup = this.fb.group({
-    id_academic_load: [{value: '', disabled: true }, [Validators.required]],
-    id_subject: [{value: '', disabled: true}, [Validators.required]],
-    id_teacher: [{value: '', disabled: true}, [Validators.required]],
-    id_group: [{value: '', disabled: true}, [Validators.required]]
-  });
+    id_career: ['', [Validators.required]],
+    id_academic_load: ['', [Validators.required]],
+    id_subject: ['', [Validators.required]],
+    id_teacher: ['', [Validators.required]],
+    id_group: ['', [Validators.required]]
+});
 
   private coordinadorService: CoordinadorService = inject(CoordinadorService);
 
+  public carreras$: Observable<any>;
   public cargaAcademicas$: Observable<any>;
   public asignaturas$: Observable<any>;
   public profesores$: Observable<any>;
@@ -40,54 +36,101 @@ export class SemiAutomaticoComponent {
   }
 
   ngOnInit(): void {
-    this.obtenerCargasAcademicas();
+    this.obtenerCarreras();
+  }
+
+  obtenerCarreras(){
+    this.carreras$ = this.coordinadorService.getCarreras();
   }
 
   obtenerCargasAcademicas(): void{
-    this.cargaAcademicas$ = this.coordinadorService.getCargaAcademicas()
-    .pipe(  map ( (res) => { this.horarioForm.get('id_academic_load')?.enable() ; return res; }));
+    let id_carrera =this.horarioForm.controls['id_career'].value;
+    if(id_carrera){
+      this.cargaAcademicas$ = this.coordinadorService.getCargaAcademicas();
+    }else{
+      this.horarioForm.patchValue({
+        id_career: '',
+        id_academic_load: '',
+        id_group: '',
+        id_subject: '',
+        id_teacher: '',
+      });
+
+      this.cargaAcademicas$ = new BehaviorSubject(null);
+      this.obtenerGrupos()
+    }
   }
 
-  onChangeCargaAcademica(): void{
-    this.obtenerGrupos();
-  }
 
   obtenerGrupos() : void{
-    this.grupos$ = this.coordinadorService.getGrupos().pipe( map ( (res) => { this.horarioForm.get('id_group')?.enable() ; return res;}));
+    let id_carga_academica = this.horarioForm.controls['id_academic_load'].value;
+    if(id_carga_academica){
+      this.grupos$ = this.coordinadorService.getGrupos();
+    }else{
+      this.horarioForm.patchValue({
+        id_academic_load: '',
+        id_group: '',
+        id_subject: '',
+        id_teacher: '',
+      });
+
+      this.grupos$ = new BehaviorSubject(null);
+      this.obtenerAsignaturas()
+    }
   }
 
   obtenerAsignaturas(): void{
     let cargaAcademica = this.horarioForm.controls['id_academic_load'].value;
-    this.asignaturas$ = this.coordinadorService.getAsignaturasCargaAcademica(cargaAcademica).pipe( map( (res: any) => {
-      if(res.ok){
-        this.horarioForm.get('id_subject')?.enable();
-      }else{
-        Swal.fire({
-          title: 'Error',
-          text: 'Esta carga academica no contiene asignaturas',
-          icon: 'error'
-        });
-      }
-      return res;
-    }),
-    catchError( (err: any) => {
-      if(!err.error.ok){
-        Swal.fire({
-          title: 'Error',
-          text: 'Esta carga academica no contiene asignaturas',
-          icon: 'error'
-        });
-      }
-      throw new Error('Ah ocurrido un error');
-    })
+    let id_grupo = this.horarioForm.controls['id_group'].value;
 
-  );}
+    if(id_grupo){
+        this.asignaturas$ = this.coordinadorService.getAsignaturasCargaAcademica(cargaAcademica).pipe( map( (res: any) => {
+          if(!res.ok){
+            Swal.fire({
+              title: 'Error',
+              text: 'Esta carga academica no contiene asignaturas',
+              icon: 'error'
+            });
+          }
+          return res;
+        }),
+        catchError( (err: any) => {
+          if(!err.error.ok){
+            Swal.fire({
+              title: 'Error',
+              text: 'Esta carga academica no contiene asignaturas',
+              icon: 'error'
+            });
+          }
+          throw new Error('Ah ocurrido un error');
+        })
+
+      );
+    }else{
+      this.horarioForm.patchValue({
+        id_subject: '',
+        id_teacher: '',
+      });
+
+      this.asignaturas$ = new BehaviorSubject(null);
+      this.obtenerProfesores();
+
+    }
+}
 
   obtenerProfesores(): void{
     let asignatura: string = this.horarioForm.controls['id_subject'].value;
-    this.profesores$ = this.coordinadorService.getProfesoresAsignatura(asignatura).pipe( map((res) => {
-      this.horarioForm.get('id_teacher')?.enable() ; return res;
-    }));
+
+    if(asignatura){
+      this.profesores$ = this.coordinadorService.getProfesoresAsignatura(asignatura);
+    }else{
+      this.horarioForm.patchValue({
+        id_teacher: '',
+      });
+
+      this.profesores$ = new BehaviorSubject(null);
+    }
+
   }
 
   crearHorario(){

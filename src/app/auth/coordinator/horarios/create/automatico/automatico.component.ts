@@ -45,11 +45,13 @@ export class AutomaticoComponent implements OnInit {
       this.cargas_academicas$ = this.coordinatorService.getCargasAcademicasCarrera(id_carrera);
       return;
     }else{
-      Swal.fire({
-        title: 'Advertencia',
-        text: 'Seleccione una carrera',
-        icon: 'warning'
+
+      this.horarioForm.patchValue({
+        id_career: '',
+        id_academic_load: '',
+        id_group: '',
       });
+      this.obtenerGrupos();
       this.cargas_academicas$ = new BehaviorSubject(null);
     }
   }
@@ -76,12 +78,6 @@ export class AutomaticoComponent implements OnInit {
       return
 
     }else{
-      Swal.fire({
-        title: 'Advertencia',
-        text: 'Seleccione una carrera y/o carga academica',
-        icon: 'warning'
-      });
-
       /**
        * Si el usuario no ha seleccionado la carga academica se vaciara el campo para evitar...
        * submit innecesario

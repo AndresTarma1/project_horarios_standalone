@@ -11,6 +11,7 @@ import {
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { CoordinadorService } from '../../../../core/services/coordinador.service';
 import { map, Observable } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-create',
@@ -66,12 +67,33 @@ export class CreateComponent implements OnInit {
 
   crearCarrera(): void{
     console.log(this.carreraForm.value);
-    this.coordinadorService;
+    this.coordinadorService.postCarreraConCargas(this.carreraForm.value).subscribe(
+      (res: any) => {
+        if(res.ok){
+          Swal.fire({
+            title: 'Exito',
+            text: 'Se ha creado la carrera con exito',
+            icon: 'success'
+          });
 
-    this.carreraForm.patchValue({
-      name: '',
-    });
-    this.carreraForm.removeControl('cargasAcademicas');
-    this.carreraForm.addControl('cargasAcademicas', this.fb.array([], Validators.required));
+          this.carreraForm.patchValue({
+            name: '',
+          });
+          this.carreraForm.removeControl('cargasAcademicas');
+          this.carreraForm.addControl('cargasAcademicas', this.fb.array([], Validators.required));
+        }else{
+          Swal.fire({
+            title: 'warning',
+            text: `${res.msg}`,
+            icon: 'error'
+          });
+        }
+      }
+    )
+  }
+
+  eliminarCargaAcademica(index: number) {
+    const cargasAcademicas = this.carreraForm.get('cargasAcademicas') as FormArray;
+    cargasAcademicas.removeAt(index);
   }
 }
