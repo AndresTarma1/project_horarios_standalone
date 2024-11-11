@@ -1,10 +1,11 @@
 import { Component, HostListener } from '@angular/core';
 import { RouterLink, RouterModule, Routes } from '@angular/router';
+import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-main-page',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, NgbDropdownModule],
   templateUrl: './main-page.component.html',
   styleUrl: './main-page.component.css'
 })

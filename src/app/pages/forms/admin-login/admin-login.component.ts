@@ -28,8 +28,6 @@ export default class AdminLoginComponent {
 
     this.loginService.loginAdmin(this.adminLogin.value).subscribe(
       (res: any) => {
-        // console.log(res);
-
         if(res.ok){
           localStorage.setItem('admin', JSON.stringify(res.admin));
           this.router.navigateByUrl('admin');

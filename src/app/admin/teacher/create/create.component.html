@@ -1,87 +1,72 @@
-<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
-  <div class="card p-4 shadow w-50">
-    <h2 class="text-center text-primary mb-4">Registro de Usuario</h2>
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-6 mt-4">
+      <h2 class="mb-2">Formulario De Registro De Profesor</h2>
+      <form (ngSubmit)="onSubmit()" [formGroup]="teacherForm" class="dark-form">
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="firstName" class="form-label text-start">Nombres:</label>
+            <input formControlName="name" type="text" id="firstName" required class="form-control dark-input">
+          </div>
+          <div class="col-md-6">
+            <label for="lastName" class="form-label text-start">Apellidos:</label>
+            <input formControlName="last_name" type="text" id="lastName" required class="form-control dark-input">
+          </div>
+        </div>
 
-    <form [formGroup]="teacherForm" (ngSubmit)="onSubmit()" novalidate>
-      <!-- Nombres -->
-      <div class="mb-3">
-        <label for="firstName" class="form-label">Nombres:</label>
-        <input
-          type="text"
-          id="firstName"
-          class="form-control"
-          formControlName="name"
-        />
-      </div>
+        <!-- Campo N° Documento y Correo Electrónico en una fila -->
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="documentNumber" class="form-label text-start">N° Documento:</label>
+            <input formControlName="identify" type="text" id="documentNumber" required class="form-control dark-input">
+          </div>
+          <div class="col-md-6">
+            <label for="email" class="form-label text-start">Correo Electrónico:</label>
+            <input formControlName="email" type="email" id="email" required class="form-control dark-input">
+          </div>
+        </div>
 
-      <!-- Apellidos -->
-      <div class="mb-3">
-        <label for="lastName" class="form-label">Apellidos:</label>
-        <input
-          type="text"
-          id="lastName"
-          class="form-control"
-          formControlName="last_name"
-        />
-      </div>
+        <!-- Campo de Contraseña y Teléfono en una fila -->
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="password" class="form-label text-start">Contraseña:</label>
+            <input formControlName="password" type="password" id="password" required class="form-control dark-input">
+          </div>
+          <div class="col-md-6">
+            <label for="phone" class="form-label text-start">Teléfono:</label>
+            <input formControlName="phone" type="text" id="phone" required class="form-control dark-input">
+          </div>
+        </div>
 
-      <!-- N° Documento -->
-      <div class="mb-3">
-        <label for="documentNumber" class="form-label">N° Documento:</label>
-        <input
-          type="text"
-          id="documentNumber"
-          class="form-control"
-          formControlName="identify"
-        />
-      </div>
+        <!-- Campo de Especialidad -->
+        <div class="mb-3">
+          <label for="specialty" class="form-label text-start">Especialidad:</label>
+          <input formControlName="specialty" type="text" id="specialty" required class="form-control dark-input">
+        </div>
 
-      <!-- Correo Electrónico -->
-      <div class="mb-3">
-        <label for="email" class="form-label">Correo Electrónico:</label>
-        <input
-          type="email"
-          id="email"
-          class="form-control"
-          formControlName="email"
-        />
-      </div>
+        <!-- Botón de Registro -->
+        <div class="text-start">
+          <button [disabled]="teacherForm.invalid" type="submit" class="btn btn-primary mt-3 w-50">Registrar</button>
+        </div>
+      </form>
+    </div>
 
-      <!-- Contraseña -->
-      <div class="mb-3">
-        <label for="password" class="form-label">Contraseña:</label>
-        <input
-          type="password"
-          id="password"
-          class="form-control"
-          formControlName="password"
-        />
-      </div>
-
-      <!-- Teléfono -->
-      <div class="mb-3">
-        <label for="phone" class="form-label">Teléfono:</label>
-        <input
-          type="text"
-          id="phone"
-          class="form-control"
-          formControlName="phone"
-        />
-      </div>
-
-      <!-- Especialidad -->
-      <div class="mb-3">
-        <label for="specialty" class="form-label">Especialidad:</label>
-        <input
-          type="text"
-          id="specialty"
-          class="form-control"
-          formControlName="specialty"
-        />
-      </div>
-
-      <!-- Botón de Enviar -->
-      <button type="submit" class="btn btn-primary w-100">Registrar</button>
-    </form>
+    <div class="col-md-6 mt-4 text-start">
+      <h2 class="text-primary">Bienvenido</h2>
+      <p class="text-secondary">
+        Este es el formulario de registro de profesores. A continuación, encontrarás los campos necesarios para completar la inscripción.
+      </p>
+      <h3 class="text-primary">Instrucciones:</h3>
+      <p class="text-secondary">
+        - Completa todos los campos obligatorios con la información requerida.
+      </p>
+      <p class="text-secondary">
+        - Verifica que el número de documento y el teléfono sean correctos.
+      </p>
+      <h3 class="text-primary">¿Necesitas ayuda?</h3>
+      <p class="text-secondary">
+        Si tienes alguna pregunta, no dudes en consultar a nuestro equipo de soporte.
+      </p>
+    </div>
   </div>
 </div>

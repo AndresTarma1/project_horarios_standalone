@@ -8,12 +8,6 @@ export const routes: Routes = [{
       path: 'academic', loadComponent: () => import('./our-academic/our-academic.component')
     },
     {
-      path: 'academic-offering', loadComponent: () => import('./academic-offerings/academic-offerings.component')
-    },
-    {
-      path: 'apli-student', loadComponent: () => import('./apli-student/apli-student.component')
-    },
-    {
       path: 'becas', loadComponent: () => import('./becas/becas.component')
     },
     {

@@ -32,11 +32,7 @@ export class IndexComponent implements OnInit {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     this.spinner.show();
-    setTimeout(
-      () => {
-        this.obtenerCoordinadores();
-      }, 2500
-    );
+    this.obtenerCoordinadores();
   }
 
   obtenerCoordinadores(): void{

@@ -1,32 +1,74 @@
 <div class="page">
-
   <header class="header">
     <nav class="navbar navbar-expand-lg">
       <div [className]="isWideScreen ? 'container' : 'container-fluid'">
         <a class="navbar-brand">
-          <img loading="lazy" src="/logo/image.png" alt="Empresa FullStac" width="60" height="60" class="rounded">
+          <img
+            loading="lazy"
+            src="/logo/image.png"
+            alt="Empresa FullStac"
+            width="60"
+            height="60"
+            class="rounded"
+          />
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
           <div class="navbar-nav content-options ms-auto">
             <div class="nav-item">
-              <a class="nav-link options" routerLinkActive="active" routerLink="academic">Nuestra Academia</a>
+              <a
+                class="nav-link options"
+                routerLinkActive="active"
+                routerLink="academic"
+                >Nuestra Academia</a
+              >
             </div>
             <div class="nav-item">
-              <a class="nav-link options" routerLinkActive="active" routerLink="apli-student">Aplicar Estudiantes</a>
+              <a
+                class="nav-link options"
+                routerLinkActive="active"
+                routerLink="courses"
+                >Carreras</a
+              >
             </div>
-            <div class="nav-item">
-              <a class="nav-link options" routerLinkActive="active" routerLink="academic-offering">Ofertas Academicas</a>
-            </div>
-            <div class="nav-item">
-              <a class="nav-link options" routerLinkActive="active" routerLink="becas">Opciones de Becas</a>
-            </div>
-            <div class="nav-item">
-              <a class="nav-link options" routerLinkActive="active" routerLink="courses">Carreras</a>
+            <div ngbDropdown class="nav-item">
+              <a
+                type="button"
+                class="nav-link options"
+                id="loginOptions"
+                ngbDropdownToggle
+              >
+                Login
+              </a>
+              <div ngbDropdownMenu aria-labelledby="loginOptions">
+                <button ngbDropdownItem>
+                  <a ngbDropdownItem href="login/student">Estudiante</a>
+                </button>
+                <button ngbDropdownItem>
+                  <a ngbDropdownItem href="login/teacher">Profesor</a>
+                </button>
+                <button ngbDropdownItem>
+                  <a ngbDropdownItem href="login/coordinator">Coordinador</a>
+                </button>
+                <button ngbDropdownItem>
+                  <a ngbDropdownItem href="login/admin">Admin</a>
+                </button>
+              </div>
             </div>
           </div>
+
+          <!-- <div ngbDropdown class="d-inline-block">
+          </div> -->
         </div>
       </div>
     </nav>
@@ -34,7 +76,5 @@
   <content>
     <router-outlet></router-outlet>
   </content>
-  <footer>
-    Footer
-  </footer>
+  <footer>Footer</footer>
 </div>

@@ -29,9 +29,7 @@ export class IndexComponent implements OnInit {
 
   ngOnInit(): void {
     this.spinner.show();
-    setTimeout( () => {
-      this.obtenerProfesores()
-    }, 2500);
+    this.obtenerProfesores()
   }
 
   obtenerProfesores(): void{
@@ -39,8 +37,7 @@ export class IndexComponent implements OnInit {
       catchError( (err: any) => {
         this.error = true;
         throw new Error("Ah ocurrido un error");
-      }),
-      retry({delay: 5000})
+      })
     )
   }
 

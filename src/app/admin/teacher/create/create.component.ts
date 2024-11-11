@@ -31,7 +31,6 @@ export class CreateComponent {
 
   onSubmit() {
     if (this.teacherForm.valid) {
-      console.log('Formulario enviado:', this.teacherForm.value);
       this.adminService.postProfesor(this.teacherForm.value).subscribe(
         (res: any) => {
           if(res.ok){
@@ -49,17 +48,6 @@ export class CreateComponent {
         }
         }
       );
-
-
-    } else {
-      Swal.fire(
-        {
-          title: 'Precaucion',
-          text: 'Debe completar todos los campos',
-          icon: 'warning'
-        }
-      )
     }
   }
-
 }

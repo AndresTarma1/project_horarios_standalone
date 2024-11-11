@@ -30,11 +30,7 @@ export class IndexComponent implements OnInit {
 
   ngOnInit(): void {
     this.spinner.show();
-    setTimeout(
-      () => {
-        this.obtenerEstudiantes()
-      }, 2500
-    );
+    this.obtenerEstudiantes()
   }
 
   obtenerEstudiantes(){

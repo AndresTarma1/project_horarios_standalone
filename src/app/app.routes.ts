@@ -1,7 +1,5 @@
 import { Routes } from '@angular/router';
-import { MainPageComponent } from './pages/main-page/main-page.component';
-import StudentLoginComponent from './pages/forms/student-login/student-login.component';
-import AdminLoginComponent from './pages/forms/admin-login/admin-login.component';
+
 
 export const routes: Routes = [{
   path: 'login', loadChildren: () => import('./pages/forms/login.routes'),
