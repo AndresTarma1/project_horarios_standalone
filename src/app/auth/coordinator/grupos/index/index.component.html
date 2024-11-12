@@ -2,17 +2,17 @@
   @if (grupos$ | async; as gruposInfo){
 
     @if(grupo.estudiantes){
-
       <div class="content-group">
         <app-students-list-group
           (cambios)="cambiosEmitidos($event)"
           (quitarGrupo)="eliminarEstudianteDelGrupo($event)"
           [grupo]="grupo"
+          class="card p-3 mb-3"
         ></app-students-list-group>
       </div>
     }@else {
-      <div class="content-group">
-        <h2 class="text-center">
+      <div class="content-group text-center my-5">
+        <h2 class="text-secondary">
           Seleccione un grupo...
         </h2>
       </div>

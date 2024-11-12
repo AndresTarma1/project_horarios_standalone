@@ -129,16 +129,13 @@ export class CoordinadorService {
   }
 
 
-  postGrupoEstudiante(credentials: any): Observable<any> {
+  patchGrupoEstudiante(credentials: any): Observable<any> {
     const { id_group, id_student } = credentials;
     return this.http.patch(
       `${this.apiURL}/student/add-group`,
-      {
-        params: {
-          id_group: id_group,
-          id_student: id_student,
-        },
-      }
+        credentials, {
+          headers: { 'ngrok-skip-browser-warning': 'true' }
+        }
     );
   }
 

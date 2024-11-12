@@ -19,14 +19,15 @@ export default class CoordinatorLoginComponent {
     password: ['', Validators.required]
   });
 
-  constructor(private loginService: LoginService, private fb: FormBuilder, private router: Router){}
+  constructor(private loginService: LoginService, private fb: FormBuilder, private router: Router){
+    if(localStorage.getItem('user')){
+      this.router.navigateByUrl('/coordinator');
+    }
+  }
 
   loginCoordinador(){
-    console.log(this.coordinatorLogin.value);
     this.loginService.loginCoordinador(this.coordinatorLogin.value).subscribe(
       (res: any) => {
-        console.log(res);
-
         if(res.ok){
           let coordinador: any = res.coor;
           coordinador.token = res.token;

@@ -1,4 +1,11 @@
 .content-group{
   margin: 20px;
-  margin-right: 350px;
+  margin-right: 370px;
+}
+
+@media (max-width: 768px) {
+  .content-group {
+    margin-right: 80px; /* Se reduce a solo iconos */
+  }
+
 }

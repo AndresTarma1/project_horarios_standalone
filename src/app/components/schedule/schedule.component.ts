@@ -21,45 +21,48 @@ interface Dia {
 })
 export class ScheduleComponent implements OnInit {
 
-  @Input() horario: Dia[];
-  horarioCompleto: Dia[] = [];
-
-  horas = ['08:00 - 10:00', '10:00 - 12:00', '12:00 - 14:00', '14:00 - 16:00', '14:00 - 18:00'];
-  diasCompletos: string[] = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado'];
+  @Input() horario: any;
+  horarioTransformado_ : any;
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    this.horarioCompleto = this.completarHorario(this.horario)
-    this.horario = this.horarioCompleto;
+    this.horarioTransformado_ = this.transformarHorario(this.horario);
   }
 
-  completarHorario(horario: Dia[]): Dia[] {
-    const horarioCompleto_: Dia[] = [];
+  transformarHorario(horario: any): any {
+    const horarioTransformado : any = {
+      lunes: ['', '', '', '', ''],
+      martes: ['', '', '', '', ''],
+      miercoles: ['', '', '', '', ''],
+      jueves: ['', '', '', '', ''],
+      viernes: ['', '', '', '', ''],
+      sabado: ['', '', '', '', '']
+    };
 
-    // Agregar los días existentes al nuevo horario
-    horario.forEach(dia => {
-      horarioCompleto_.push(dia);
+    horario.forEach((dia: any) => {
+      dia.clases.forEach((clase: any) => {
+        const horaInicio = clase["h:i"];
+        const indiceHora = this.obtenerIndiceHora(horaInicio);
+
+        if (indiceHora !== -1) {
+          horarioTransformado[dia.dia][indiceHora] = clase.name;
+        }
+      });
     });
 
-    // Agregar los días faltantes con un arreglo vacío de clases
-    this.diasCompletos.forEach((dia: any) => {
-      if (!horarioCompleto_.find(d => d.dia === dia)) {
-        horarioCompleto_.push({
-          dia,
-          clases: [
-
-          ]
-        });
-      }
-    });
-
-    return horarioCompleto_;
+    return horarioTransformado;
   }
 
-  clasePorHora(clases: any[], hora: string) {
-    const [horaInicio] = hora.split(' - ');
-    return clases.find(clase => clase['h:i'] === horaInicio + ':00');
+  obtenerIndiceHora(horaInicio: string): number {
+    const horas: any = {
+      "08:00:00": 0,
+      "10:00:00": 1,
+      "12:00:00": 2,
+      "14:00:00": 3,
+      "16:00:00": 4
+    };
+
+    return horas[horaInicio] !== undefined ? horas[horaInicio] : -1;
   }
+
 
 }

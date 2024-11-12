@@ -1,49 +1,42 @@
 <div id="rightSidebar" class="p-3 rounded-start">
   <div class="sidebar-content">
-    <h3>Grupos</h3>
-
+    <h3 class="sidebar-title">Grupos</h3>
     <hr />
-
-    <button (click)="CrearGrupo()" class="btn btn-success">Crear Grupo</button>
-
+    <button (click)="CrearGrupo()" class="btn btn-success w-100">Crear Grupo</button>
     <hr />
-
     <ul class="nav flex-column">
       @for (grupo of grupos; track $index) {
       <li class="nav-item">
         <a
-          [ngClass]="{
-            'bg-dark': selectedGrupo === grupo,
-          }"
+          [ngClass]="{ 'selected': selectedGrupo === grupo }"
           style="cursor: pointer"
           (click)="emitirGrupoConEstudiantes(grupo)"
-          class="nav-link text-light rounded"
+          class="nav-link text-dark rounded d-flex align-items-center"
         >
-        <div class="row">
-          <div class="col-10">
-            <span
-              [ngClass]="{ 'text-white': selectedGrupo === grupo }"
-              class="link-text text-dark"
-              >{{ grupo.name | titlecase }}</span
-            >
+          <div class="row w-100">
+            <div class="col-10">
+              <span [ngClass]="{ 'text-white': selectedGrupo === grupo }" class="link-text">
+                {{ grupo.name | titlecase }}
+              </span>
+            </div>
+            <div class="col-2 text-right">
+              <i
+                (click)="editarGrupo(grupo)"
+                ngbPopover="Editar el grupo"
+                triggers="mouseenter:mouseleave"
+                popoverTitle="Editar Grupo"
+                popoverClass="text-dark"
+                [ngClass]="{ 'text-white': selectedGrupo === grupo }"
+                class="bi bi-pencil text-muted"
+              ></i>
+            </div>
           </div>
-          <div class="col-2">
-            <i
-            (click)="editarGrupo(grupo)"
-            ngbPopover="Editar el grupo"
-            triggers="mouseenter:mouseleave"
-            popoverTitle="Editar Grupo"
-            popoverClass="text-dark"
-
-            [ngClass]="{ 'text-white': selectedGrupo === grupo }" class="bi bi-pencil text-black"></i>
-          </div>
-        </div>
         </a>
       </li>
       }@empty {
       <li class="nav-item">
-        <a href="#" class="nav-link text-light">
-          <span class="link-text text-dark">No hay grupos disponibles</span>
+        <a href="#" class="nav-link text-dark">
+          <span class="link-text">No hay grupos disponibles</span>
         </a>
       </li>
       }

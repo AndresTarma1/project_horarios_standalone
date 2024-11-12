@@ -11,3 +11,9 @@ fieldset{
 .swal-content-with-line-breaks {
   white-space: pre-wrap;  /* Habilita saltos de línea */
 }
+
+.text-success {
+  font-size: 1.5rem;
+  margin-left: 0.5rem;
+  color: green;
+}

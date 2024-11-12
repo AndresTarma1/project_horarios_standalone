@@ -27,7 +27,6 @@ export class ModalAddStudentGroupComponent implements OnInit {
   }
 
   obtenerEstudiantesSinGrupo(){
-
     this.estudiantesNoGrupo$ = this.coordinadorService.getEstudiantesSinGrupo();
   }
 
@@ -37,7 +36,9 @@ export class ModalAddStudentGroupComponent implements OnInit {
       id_student: id_estudiante
     };
 
-    this.coordinadorService.postGrupoEstudiante(credenctials).subscribe(
+    console.log(credenctials);
+
+    this.coordinadorService.patchGrupoEstudiante(credenctials).subscribe(
       (res: any) => {
         if(res.ok){
           Swal.fire({
@@ -50,7 +51,7 @@ export class ModalAddStudentGroupComponent implements OnInit {
         }else{
           Swal.fire({
             title: 'Error',
-            text: 'Ah ocurrido un error al intentar agregar al estudiante',
+            text: 'Ah ocurrido un error al intentar agregar al estudiante' + res.msg,
             icon: 'error'
           })
         }

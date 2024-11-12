@@ -1,37 +1,28 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { CoordinadorService } from '../../../../core/services/coordinador.service';
 import { CommonModule } from '@angular/common';
 import { ScheduleComponent } from '../../../../components/schedule/schedule.component';
 import { map, Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { ErrorServidorComponent } from "../../../../components/error-servidor/error-servidor.component";
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-index',
   standalone: true,
-  imports: [CommonModule, ScheduleComponent],
+  imports: [CommonModule, FormsModule, ScheduleComponent],
   templateUrl: './index.component.html',
   styleUrl: './index.component.css',
 })
 export class IndexComponent implements OnInit {
-  horas = ['08:00 - 10:00', '10:00 - 12:00', '12:00 - 14:00', '14:00 - 16:00', '16:00 - 18:00'];
-  grupos: any[];
-  grupo: number;
+
   public horario$: Observable<any>;
-  disableBuscarHorario: boolean = true;
+  public grupos$: Observable<any>;
+
   private coordinadorService: CoordinadorService = inject(CoordinadorService);
 
-  clasePorHora(clases: any[], hora: string) {
-    const [horaInicio] = hora.split(' - ');
-    return clases.find((clase) => clase['h:i'] === horaInicio + ':00');
-  }
-
-  onChange(event: any) {
-    this.grupo = event.target.value;
-    console.log(this.grupo);
-    this.disableBuscarHorario = false;
-  }
+  grupo_id: string;
 
   constructor(private activeRoute: ActivatedRoute) {
     let id_grupo;
@@ -40,30 +31,22 @@ export class IndexComponent implements OnInit {
     });
 
     if (id_grupo) {
-      console.log('Si hay ', id_grupo);
-    } else {
-      console.log('no hay ', id_grupo);
-    }
 
-    this.coordinadorService.getGrupos().subscribe((res: any) => {
-      this.grupos = res.groups;
-    });
+    } else {
+
+    }
+    this.grupos$ = this.coordinadorService.getGrupos();
   }
 
   buscarHorario() {
-    this.horario$ = this.coordinadorService.getHorario(this.grupo).pipe(
-      map((res: any) => {
-        if (!res.ok) {
-          Swal.fire({
-            title: 'Error',
-            text: 'Este grupo no contiene horarios',
-            icon: 'warning',
-          });
-        }
-        return res;
-      })
-    );
+    if(!this.grupo_id){
+      return;
+    }else{
+      this.horario$ = this.coordinadorService.getHorario(this.grupo_id);
+    }
   }
+
+
 
   ngOnInit(): void {}
 }

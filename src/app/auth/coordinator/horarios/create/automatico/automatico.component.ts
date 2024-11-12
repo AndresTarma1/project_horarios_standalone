@@ -100,12 +100,10 @@ export class AutomaticoComponent implements OnInit {
 
           const capitalizeFirstLetter = (dato: string) => {
             dato.toLowerCase();
-            console.log(dato);
             return dato;
           }
           res.msg.forEach((element: string) => {
               mensaje += `${capitalizeFirstLetter(element)} <br>`
-              console.log(mensaje);
           });
 
           Swal.fire({

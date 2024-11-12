@@ -1,24 +1,32 @@
-<div class="container mt-4">
-  <div class="form-group">
-    <label for="grupo" class="form-label h5 mb-3">Seleccione el grupo para ver su horario</label>
-    <div class="input-group">
-      <select (change)="onChange($event)" class="form-select" name="grupo" id="grupo" aria-label="Seleccionar grupo">
-        <option [value]="null" disabled selected>Seleccione</option>
-        @for (grupo of grupos; track $index) {
-          <option  [value]="grupo.id">{{ grupo.name }}</option>
-        }@empty {
-          <option value="null">No hay grupos disponibles</option>
-        }
-      </select>
-      <button (click)="buscarHorario()" class="btn btn-primary ms-2" type="button">Buscar Horario</button>
+<div class="container">
+  <form>
+    <label class="form-label" for="grupo">Grupos</label>
+    <div class="row">
+
+      <div class="col-8">
+        <select [(ngModel)]="grupo_id" class="form-control" name="grupo" id="grupo">
+          @if (grupos$| async; as gruposInfo) {
+            <option selected value="">Seleccione un grupo</option>
+            @for (grupo of gruposInfo.groups; track $index) {
+              <option [value]="grupo.id">{{ grupo.name |titlecase }}</option>
+            }@empty {
+              <option value="">No hay grupos disponibles</option>
+            }
+          }@else {
+            <option selected value="">Cargando grupos...</option>
+          }
+        </select>
+      </div>
+
+      <div class="col-3">
+        <button [disabled]="!grupo_id" (click)="buscarHorario()" class="btn btn-secondary">Buscar horario</button>
+      </div>
     </div>
-  </div>
 
-  @if (horario$ | async; as horarioInfo) {
-    @if (horarioInfo.horario != null) {
-      <app-schedule [horario]="horarioInfo.horario"  ></app-schedule>
-    }
-  }
-
+  </form>
 </div>
+
+@if (horario$ | async; as horarioInfo) {
+  <app-schedule [horario]="horarioInfo.horario" ></app-schedule>
+}
 

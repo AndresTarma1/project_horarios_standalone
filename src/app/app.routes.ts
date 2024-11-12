@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { authGuardAdmin, authGuardCoordinador, authGuardEstudiante, authGuardProfesor } from './guards/auth.guard';
 
 
 export const routes: Routes = [{
@@ -6,15 +7,15 @@ export const routes: Routes = [{
 },{
   path: 'main', loadChildren: () => import('./pages/main-page/main.routes'),
 },{
-  path: 'admin', loadChildren: () => import('./admin/admin-navbar/admin.routes'), title: 'Admin'
+  path: 'admin', canActivate: [authGuardAdmin] ,loadChildren: () => import('./admin/admin-navbar/admin.routes'), title: 'Admin'
 },{
-  path: 'coordinator', loadChildren: () => import('./auth/coordinator/nav-bar/coordinator.routes')
+  path: 'coordinator', canActivate: [authGuardCoordinador] ,loadChildren: () => import('./auth/coordinator/nav-bar/coordinator.routes')
 },
 {
-  path: 'student', loadChildren: () => import('./auth/student/student.routes')
+  path: 'student', canActivate: [authGuardEstudiante] , loadChildren: () => import('./auth/student/student.routes')
 },
 {
-  path: 'teacher', loadChildren: () => import('./auth/teacher/teacher.routes')
+  path: 'teacher', canActivate: [authGuardProfesor] , loadChildren: () => import('./auth/teacher/teacher.routes')
 },
 {
   path: '', redirectTo: '/main', pathMatch: 'full'

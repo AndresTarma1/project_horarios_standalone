@@ -26,7 +26,6 @@ export class StudentsListGroupComponent implements OnInit, OnChanges {
     modalRef.result.then(
       (resultado: any) => {
         if(resultado){
-          console.log(resultado);
           this.cambios.emit(true);
         }
       }
@@ -49,7 +48,7 @@ export class StudentsListGroupComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.completarNombres()
+    this.completarNombres();
   }
 
   completarNombres(): void{
@@ -83,7 +82,6 @@ export class StudentsListGroupComponent implements OnInit, OnChanges {
       showCancelButton: true,
       cancelButtonText: 'Cancelar',
     }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         this.quitarGrupo.emit(estudiante);
       }

@@ -4,19 +4,32 @@
   right: 0;
   height: 100%;
   width: 350px;
+  background-color: #f8f9fa; /* Fondo claro para mejor contraste */
   color: #000;
-  transition: width 0.3s ease;
+  transition: width 0.3s ease, transform 0.3s ease;
   overflow-x: hidden;
   z-index: 1000;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
 }
 
-.link-text{
-  font-size: 15px ;
+.link-text {
+  font-size: 15px;
 }
 
-.selected{
+.selected {
+  background-color: #17a2b8; /* Color de fondo cuando está seleccionado */
+  color: #fff;
+}
+
+.sidebar-title {
   font-size: 18px;
-  background-color: aqua;
+  font-weight: bold;
+  color: #343a40; /* Color oscuro para el título */
+}
+
+.sidebar-content h3 {
+  font-size: 20px;
+  color: #343a40;
 }
 
 /* Media query para pantallas pequeñas */

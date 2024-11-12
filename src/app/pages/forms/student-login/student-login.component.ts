@@ -25,8 +25,6 @@ export default class StudentLoginComponent {
   }
 
   loginStudent(){
-    console.log(this.studentLogin.value);
-
     if(this.studentLogin.invalid){
       return;
     }
