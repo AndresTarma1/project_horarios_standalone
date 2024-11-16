@@ -5,46 +5,42 @@
       <form (ngSubmit)="onSubmit()" [formGroup]="teacherForm" class="dark-form">
         <div class="row mb-3">
           <div class="col-md-6">
-            <label for="firstName" class="form-label text-start">Nombres:</label>
+            <label for="firstName" class="form-label w-100 text-start">Nombres:</label>
             <input formControlName="name" type="text" id="firstName" required class="form-control dark-input">
           </div>
           <div class="col-md-6">
-            <label for="lastName" class="form-label text-start">Apellidos:</label>
+            <label for="lastName" class="form-label w-100 text-start">Apellidos:</label>
             <input formControlName="last_name" type="text" id="lastName" required class="form-control dark-input">
           </div>
         </div>
 
-        <!-- Campo N° Documento y Correo Electrónico en una fila -->
         <div class="row mb-3">
           <div class="col-md-6">
-            <label for="documentNumber" class="form-label text-start">N° Documento:</label>
+            <label for="documentNumber" class="form-label w-100 text-start">N° Documento:</label>
             <input formControlName="identify" type="text" id="documentNumber" required class="form-control dark-input">
           </div>
           <div class="col-md-6">
-            <label for="email" class="form-label text-start">Correo Electrónico:</label>
-            <input formControlName="email" type="email" id="email" required class="form-control dark-input">
-          </div>
-        </div>
-
-        <!-- Campo de Contraseña y Teléfono en una fila -->
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <label for="password" class="form-label text-start">Contraseña:</label>
-            <input formControlName="password" type="password" id="password" required class="form-control dark-input">
-          </div>
-          <div class="col-md-6">
-            <label for="phone" class="form-label text-start">Teléfono:</label>
+            <label for="phone" class="form-label w-100 text-start">Teléfono:</label>
             <input formControlName="phone" type="text" id="phone" required class="form-control dark-input">
           </div>
         </div>
 
-        <!-- Campo de Especialidad -->
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="email" class="form-label w-100 text-start">Correo Electrónico:</label>
+            <input formControlName="email" type="email" id="email" required class="form-control dark-input">
+          </div>
+          <div class="col-md-6">
+            <label for="password" class="form-label w-100 text-start">Contraseña:</label>
+            <input formControlName="password" type="password" id="password" required class="form-control dark-input">
+          </div>
+        </div>
+
         <div class="mb-3">
-          <label for="specialty" class="form-label text-start">Especialidad:</label>
+          <label for="specialty" class="form-label w-100 text-start">Especialidad:</label>
           <input formControlName="specialty" type="text" id="specialty" required class="form-control dark-input">
         </div>
 
-        <!-- Botón de Registro -->
         <div class="text-start">
           <button [disabled]="teacherForm.invalid" type="submit" class="btn btn-primary mt-3 w-50">Registrar</button>
         </div>

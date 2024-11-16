@@ -1,0 +1,90 @@
+<div class="container-fluid">
+  <br />
+
+  <h2 class="text-center text-uppercase">Asignaturas</h2>
+
+  <hr class="my-2 custom-gradient" />
+
+  <div class="container">
+    <div class="form-group">
+      <label class="form-label" for="filter-search">Buscar por nombre</label>
+      <div class="input-group">
+        <input class="form-control" type="text" placeholder="eje: ingles II" />
+        <span class="search-icon"><i class="bi bi-search text-end"></i></span>
+      </div>
+    </div>
+
+    <div class="row my-4 asignaturas-container">
+      @if (asignaturas$ | async ;as asignaturasInfo) {
+
+          @if (asignaturasInfo.subjects) {
+            @for (asignatura of asignaturasInfo.subjects | paginate : {itemsPerPage: 6, currentPage: p,
+                totalItems: total(asignaturasInfo) } ;track $index)
+              {
+                <div class="col-12 col-md-6 col-lg-4 mb-3">
+                  <button [ngClass]="{'active' : botonSeleccionado  === asignatura.id }" (click)="buscarInformacionAsignatura(asignatura.id)" class="btn btn-outline-secondary w-100">
+                    {{ asignatura.name | titlecase }}
+                  </button>
+                </div>
+              }
+
+              <div class="align-items-end">
+                <pagination-controls
+                  class="text-center"
+                  nextLabel="Siguiente"
+                  previousLabel="Anterior"
+                  (pageChange)="p = $event"
+                ></pagination-controls>
+              </div>
+
+          }@else {
+            <h3>No hay asignaturas disponibles</h3>
+          }
+        }@else {
+          <div class="d-flex align-items-center">
+            <strong>Cargando asignaturas...</strong>
+            <div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
+          </div>
+        }
+    </div>
+
+    <hr class="my-2 custom-gradient" />
+
+    <div class="section-secundary">
+      <div class="row">
+      @if (asignaturasPertenecientes$| async; as asignaturasPertenecientesInfo) {
+        <div class="h4">Profesores y Cargas Academicas a las que pertenece.</div>
+        <div class="col-md-6">
+          <div class="container">
+            <div class="h4">Profesores</div>
+            <ul class="list-group">
+              @for (profesor of asignaturasPertenecientesInfo.teachers; track $index) {
+                <li class="list-group-item">{{ profesor.name }}</li>
+              }@empty {
+                <li class="list-group-item">No hay profesores que den esta asignatura. </li>
+              }
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="container">
+            <div class="h4">Cargas Academicas</div>
+            <ul class="list-group">
+              @for (cargaAcademica of asignaturasPertenecientesInfo.cargas; track $index) {
+                <li class="list-group-item">{{ cargaAcademica.name }}</li>
+              }@empty {
+                <li class="list-group-item">Ninguna carga academica contiene esta asignatura</li>
+              }
+            </ul>
+          </div>
+        </div>
+      }@else {
+        <div>
+          <div class="h4 text-center">Seleccione una asignatura. </div>
+        </div>
+      }
+      </div>
+    </div>
+  </div>
+</div>

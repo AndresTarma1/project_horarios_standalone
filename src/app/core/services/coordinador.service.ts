@@ -11,6 +11,7 @@ import {
   retry,
 } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
+import { appConfig } from '../../app.config';
 
 @Injectable({
   providedIn: 'root',
@@ -32,6 +33,12 @@ export class CoordinadorService {
     return this.http.get(`${this.apiURL}/careers`, {
       headers: { 'ngrok-skip-browser-warning': 'true' },
     });
+  }
+
+  getProfesoresConCargaAcademica(id_subject: number): Observable<any>{
+    return this.http.get(
+      `${this.apiURL}/subject/show-teachers-academicLoads/${id_subject}`, { headers: { 'ngrok-skip-browser-warning': 'true' }}
+    )
   }
 
   getCargasAcademicasCarrera(id_carrera: number) {

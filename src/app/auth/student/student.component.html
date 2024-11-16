@@ -31,7 +31,7 @@
         </a>
       </li>
       <li class="nav-item logout-item">
-        <a routerLink class="nav-link">
+        <a style="cursor: pointer;" (click)="logout()" class="nav-link">
           <i class="bi bi-box-arrow-right"></i>
           Logout
         </a>
@@ -45,7 +45,9 @@
   >
     ☰
   </button>
-  <div class="section-main" [class.margin-content]="isSidebarActive">
-    <router-outlet></router-outlet>
+  <div class="main">
+    <div class="section-main text-center" [class.margin-content]="isSidebarActive">
+      <router-outlet></router-outlet>
+    </div>
   </div>
 </div>

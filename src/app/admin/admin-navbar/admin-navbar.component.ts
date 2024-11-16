@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-admin-navbar',
@@ -15,5 +15,11 @@ export class AdminNavbarComponent {
   toggleSidebar() {
     this.isExpanded = !this.isExpanded;
   }
-  
+
+
+  router: Router = inject(Router);
+  logout(): void{
+    localStorage.removeItem('admin');
+    this.router.navigateByUrl('/main');
+  }
 }

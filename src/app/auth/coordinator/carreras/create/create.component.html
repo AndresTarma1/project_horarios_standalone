@@ -1,6 +1,4 @@
 <div class="container mt-5">
-
-  <!-- Formulario de Carrera -->
   <div class="row justify-content-center mb-4">
     <div class="col-12 col-md-8">
       <div class="card shadow-lg">
@@ -17,7 +15,6 @@
 
             <!-- Botones para habilitar/deshabilitar y asignar carrera -->
             <div class="d-flex justify-content-end align-items-center mt-3">
-
               <button class="btn btn-success" [disabled]="carreraForm.invalid" type="submit">
                 Crear carrera
               </button>
@@ -64,16 +61,10 @@
                 <div>
                   <h6 class="mb-3">Cargas Académicas Agregadas</h6>
                   <ul class="list-group">
-                    @for (carga of carreraForm.controls['cargasAcademicas'].value;let i = $index ;track $index) {
-                      <li class="list-group-item">
-                        <div class="row">
-                          <div class="col-10">
-                            <span>{{ carga.name | titlecase }}</span>
-                          </div>
-                          <div class="col-2">
-                            <i style="cursor: pointer;" (click)="eliminarCargaAcademica(i)" class="bi bi-trash-fill"></i>
-                          </div>
-                        </div>
+                    @for (carga of carreraForm.controls['cargasAcademicas'].value; let i = $index; track $index) {
+                      <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>{{ carga.name | titlecase }}</span>
+                        <i style="cursor: pointer;" (click)="eliminarCargaAcademica(i)" class="bi bi-trash-fill text-danger"></i>
                       </li>
                     }
                   </ul>
@@ -89,5 +80,4 @@
       </div>
     </div>
   </div>
-
 </div>

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 
 @Component({
@@ -11,9 +11,16 @@ import { Router, RouterModule } from '@angular/router';
 })
 export class StudentComponent {
 
+  router = inject(Router);
+
   isSidebarActive: boolean = false;
 
   toggleSidebar() {
     this.isSidebarActive = !this.isSidebarActive;
+  }
+
+  logout(): void{
+    localStorage.removeItem('estudiante');
+    this.router.navigateByUrl('/main');
   }
 }

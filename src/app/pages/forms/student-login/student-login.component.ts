@@ -15,22 +15,21 @@ import { CommonModule } from '@angular/common';
 export default class StudentLoginComponent {
 
   studentLogin: FormGroup = this.fb.group({
-    email: ['', Validators.email],
+    email: ['', [Validators.email, Validators.required]],
     password: ['', Validators.required]
   });
 
 
   constructor(private fb: FormBuilder, private loginService: LoginService, private router: Router){
-
+    if(localStorage.getItem('estudiante')){
+      router.navigateByUrl('/student');
+    }
   }
 
   loginStudent(){
-    if(this.studentLogin.invalid){
-      return;
-    }
+
     this.loginService.loginEstudiante(this.studentLogin.value).subscribe(
       (res: any) => {
-        console.log(res);
         if(res.ok){
           localStorage.setItem('estudiante', JSON.stringify(res.student));
           this.router.navigateByUrl('student');

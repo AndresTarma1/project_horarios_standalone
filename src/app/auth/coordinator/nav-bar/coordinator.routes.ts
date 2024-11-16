@@ -7,6 +7,12 @@ export const routes: Routes = [
     component: NavBarComponent,
     children: [
       {
+        path: 'subjects', loadComponent: () => import('../subjects/index/index.component').then( c => c.IndexComponent)
+      },
+      {
+        path: 'carreras/index', loadComponent: () => import('../carreras/index/index-v2.component').then( c  => c.IndexV2Component)
+      },
+      {
         path: 'dashboard',
         redirectTo: 'profile',
       },
@@ -41,9 +47,6 @@ export const routes: Routes = [
       },{
         path: 'carreras/create',
         loadComponent: () => import('../carreras/create/create.component').then( (c) => c.CreateComponent)
-      },{
-        path: 'carreras/index',
-        loadComponent: () => import('../carreras/index/index.component').then( (c) => c.IndexComponent)
       },
       {
         path: '**',

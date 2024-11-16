@@ -20,7 +20,7 @@ export default class CoordinatorLoginComponent {
   });
 
   constructor(private loginService: LoginService, private fb: FormBuilder, private router: Router){
-    if(localStorage.getItem('user')){
+    if(localStorage.getItem('coordinador')){
       this.router.navigateByUrl('/coordinator');
     }
   }

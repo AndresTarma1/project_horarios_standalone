@@ -16,7 +16,7 @@
             @if (profesores$| async; as profesoresInfo) {
               <option value="">Seleccione un profesor</option>
               @for( profesor of profesoresInfo.teachers; track $index) {
-                <option [value]="profesor.id">{{ profesor.id }}--{{ profesor.name | titlecase }}</option>
+                <option [value]="profesor.id">{{ profesor.id }}  {{ profesor.name | titlecase }}</option>
               }@empty {
                 <option value="">No hay profesores disponibles.</option>
               }

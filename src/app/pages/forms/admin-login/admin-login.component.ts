@@ -19,7 +19,13 @@ export default class AdminLoginComponent {
     password: ['', Validators.required]
   });
 
-  constructor(private fb: FormBuilder,private loginService: LoginService, private router: Router){}
+  constructor(private fb: FormBuilder,private loginService: LoginService, private router: Router){
+
+    if(localStorage.getItem('admin')){
+      router.navigateByUrl('/admin');
+    }
+
+  }
 
   loginAdmin(){
     if(this.adminLogin.invalid){

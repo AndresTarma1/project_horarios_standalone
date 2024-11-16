@@ -1,0 +1,93 @@
+<div class="container-fluid">
+
+  <br>
+
+  <h2 class="text-center text-uppercase">Carreras Academicas</h2>
+
+  <hr class="my-2">
+
+  <div class="container">
+
+    <div class="form-group">
+      <label class="form-label" for="filter-search">Buscar por nombre de la carrera</label>
+      <div class="input-group">
+          <input class="form-control" type="text" placeholder="eje: Ingenieria en sistemas">
+          <span class="search-icon"><i class="bi bi-search text-end"></i></span>
+      </div>
+    </div>
+
+      <div class="row my-4 carrers-container">
+
+        @if (carreras$ | async; as carrerasInfo) {
+          @if (carrerasInfo.data) {
+            @for (carrera of carrerasInfo.data; track $index) {
+              <div class="col-12 col-md-6">
+                <button [ngClass]="{'active': carrera.id === selectedCarrera.id}" (click)="carreraSeleccionada(carrera)" class="btn btn-outline-secondary w-100 py-2">{{ carrera.name | titlecase }}</button>
+              </div>
+            }
+          }@else {
+            <div class="h4">No hay carreras disponibles. </div>
+          }
+        }@else {
+          <div class="d-flex align-items-center">
+            <strong>Cargando carreras...</strong>
+            <div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
+          </div>
+        }
+      </div>
+
+      <hr class="my-3">
+
+      <div class="section-secundary">
+        @if (selectedCarrera.id) {
+          <div class="h4">{{ selectedCarrera.name | titlecase }} </div>
+          <p>Cargas academica de la carrera {{ selectedCarrera.name }}</p>
+            @if (cargasAcademicas$ | async; as cargasAcademicasInfo) {
+                @for (cargaAcademica of cargasAcademicasInfo.cargas; track $index) {
+                    <div ngbAccordion>
+                        <div ngbAccordionItem>
+                            <h2 ngbAccordionHeader>
+                                <button ngbAccordionButton>{{ cargaAcademica.name }}</button>
+                            </h2>
+                            <div ngbAccordionCollapse>
+                                <div ngbAccordionBody>
+                                    <ng-template>
+                                        <!-- Botón para añadir asignatura -->
+                                        <button class="btn btn-primary mb-3">
+                                            <i class="bi bi-plus"></i> Añadir Asignatura
+                                        </button>
+
+                                        <ul class="list-group list-group-flush">
+                                            @if (cargaAcademica.asignaturas) {
+                                                @for (asignatura of cargaAcademica.asignaturas; track $index) {
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                        {{ asignatura.name }}
+
+                                                        <!-- Botón para eliminar asignatura -->
+                                                        <button class="btn btn-danger btn-sm" >
+                                                            <i class="bi bi-trash"></i>
+                                                        </button>
+                                                    </li>
+                                                }@empty {
+                                                    <li class="list-group-item">No tiene asignaturas.</li>
+                                                }
+                                            }@else {
+                                                <li class="list-group-item">Cargando asignaturas...</li>
+                                            }
+                                        </ul>
+                                    </ng-template>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        }@else {
+            <div class="h4 text-center">Seleccione una carrera</div>
+        }
+    </div>
+
+
+
+    </div>
+</div>

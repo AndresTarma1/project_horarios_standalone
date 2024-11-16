@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router, RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-nav-bar',
@@ -15,5 +15,12 @@ export class NavBarComponent {
 
   toggleSidebar() {
     this.isSidebarActive = !this.isSidebarActive;
+  }
+
+
+  router: Router = inject(Router);
+  logout(): void{
+    localStorage.removeItem('coordinador');
+    this.router.navigateByUrl('/main');
   }
 }

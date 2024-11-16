@@ -1,3 +1,3 @@
 export const environment = {
-  apiUrl: 'http://4.155.204.52:8000/api'
+  apiUrl: 'https://virtually-suited-racer.ngrok-free.app/api'
 };

@@ -20,7 +20,9 @@ export default class TeacherLoginComponent {
 
 
   constructor(private fb: FormBuilder, private loginService: LoginService, private router: Router){
-
+    if(localStorage.getItem('profesor')){
+      router.navigateByUrl('/teacher');
+    }
   }
 
 

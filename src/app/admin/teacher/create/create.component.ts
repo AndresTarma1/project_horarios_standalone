@@ -19,14 +19,45 @@ export class CreateComponent {
 
   constructor(private fb: FormBuilder) {
     this.teacherForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(2)]],
-      last_name: ['', [Validators.required, Validators.minLength(2)]],
-      identify: ['', [Validators.required, Validators.pattern(/^[0-9]+$/)]],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      phone: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
+      name: ['', [Validators.required]],
+      last_name: ['', [Validators.required]],
+      identify: ['', [Validators.required]],
+      email: [{value: '', disabled: true}, [Validators.required, Validators.email]],
+      password: [{value: '', disabled: true}, [Validators.required]],
+      phone: ['', [Validators.required]],
       specialty: ['', Validators.required]
     });
+
+    this.generarEmailPassword();
+  }
+
+  generarEmailPassword(): void{
+    this.teacherForm.get('name')?.valueChanges.subscribe( () => this.generarEmail());
+    this.teacherForm.get('last_name')?.valueChanges.subscribe( () => this.generarEmail());
+    this.teacherForm.get('identify')?.valueChanges.subscribe( () => this.generarPassword());
+  }
+
+  generarPassword(): void{
+    const n_documento = this.teacherForm.get('identify')?.value;
+    this.teacherForm.get('password')?.setValue(`Aa${n_documento}`, { emitEvent: false})
+  }
+
+  generarEmail(): void{
+    const name = this.teacherForm.get('name')?.value;
+    const last_name = this.teacherForm.get('last_name')?.value;
+
+    const nameParts = name.split(' ');
+    const surnameParts = last_name.split(' ');
+
+    const firstInitial = nameParts[0]?.charAt(0) || '';
+    const secondInitial = nameParts[1]?.charAt(0) || '';
+    const firstLastName = surnameParts[0] || '';
+    const secondLastInitial = surnameParts[1]?.charAt(0) || '';
+
+    const email = `${firstInitial}${secondInitial}${firstLastName}${secondLastInitial}`.toLowerCase() + '@profesor.com'
+
+    this.teacherForm.get('email')?.setValue(email, { emitEvent: false });
+
   }
 
   onSubmit() {

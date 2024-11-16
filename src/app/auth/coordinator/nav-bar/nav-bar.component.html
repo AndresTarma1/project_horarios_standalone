@@ -40,7 +40,7 @@
       <li class="nav-item">
         <a href="#cargasSubmenu" class="nav-link" data-bs-toggle="collapse">
           <i class="bi bi-folder-fill"></i>
-          Cargas Académicas
+          Carreras
         </a>
         <div class="collapse submenu" id="cargasSubmenu">
           <a routerLink="carreras/create" class="nav-link">Crear Carreras</a>
@@ -54,7 +54,7 @@
         </a>
       </li>
       <li class="nav-item logout-item">
-        <a class="nav-link">
+        <a style="cursor: pointer;" (click)="logout()" class="nav-link">
           <i class="bi bi-box-arrow-right"></i>
           Logout
         </a>
