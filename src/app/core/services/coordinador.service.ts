@@ -169,7 +169,7 @@ export class CoordinadorService {
   postCargaAcademica(cargaAcademica: any) {
     return this.http.post(
       `${this.apiURL}/academic_load`,
-      { name: cargaAcademica.name, description: cargaAcademica.description, id_career : cargaAcademica.id_career },
+      { name: cargaAcademica.name, id_career : cargaAcademica.id_career },
       { headers: { 'ngrok-skip-browser-warning': 'true' } }
     );
   }
@@ -225,5 +225,12 @@ export class CoordinadorService {
     return this.http.delete(`${this.apiURL}/academic_load/${id}`, {
       headers: { 'ngrok-skip-browser-warning': 'true' },
     });
+  }
+
+  deleteAsignaturaCargaAcademica(credenciales: any): Observable<any>{
+    return this.http.delete(`${this.apiURL}/academic_load-subject/`, {
+      headers: { 'ngrok-skip-browser-warning': 'true' },
+       body: credenciales
+     })
   }
 }

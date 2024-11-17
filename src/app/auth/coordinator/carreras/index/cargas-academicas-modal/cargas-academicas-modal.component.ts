@@ -23,13 +23,11 @@ export class CargasAcademicasModalComponent {
     this.formulario = this.fb.group({
       id_career : [this.carrera.id],
       name: ['', Validators.required],
-      description: ['', Validators.required]
     });
   }
 
 
   crearCargaAcademica(): void{
-
     this.activeModal.close(this.formulario.value);
   }
 }

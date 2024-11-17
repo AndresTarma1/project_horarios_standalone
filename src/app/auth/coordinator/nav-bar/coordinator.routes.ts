@@ -35,7 +35,7 @@ export const routes: Routes = [
           ),
       },
       {
-        path: 'subject-teacher',
+        path: 'subject/teacher',
         loadComponent: () =>
           import('../add-subject-teacher/add-subject-teacher.component').then(
             (c) => c.AddSubjectTeacherComponent

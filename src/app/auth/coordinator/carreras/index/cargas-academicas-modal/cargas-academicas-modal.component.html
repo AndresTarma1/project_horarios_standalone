@@ -10,20 +10,20 @@
 <form (ngSubmit)="crearCargaAcademica()" [formGroup]="formulario">
   <div class="modal-body">
 
-    <div class="input-group mb-3">
-      <span class="input-group-text" id="basic-addon1">Nombre</span>
-      <input formControlName="name" type="text" class="form-control" placeholder="Primer_semestre..." aria-label="name" aria-describedby="basic-addon1">
-    </div>
-
-    <div class="form-group">
-      <div class="input-group">
-        <span class="input-group-text">Descripcion</span>
-        <textarea formControlName="description" class="form-control" aria-label="With textarea"></textarea>
-      </div>
+    <!-- Nombre Input -->
+    <div class="mb-3">
+      <label for="name" class="form-label">Nombre</label>
+      <input
+        formControlName="name"
+        type="text"
+        class="form-control"
+        id="name"
+        placeholder="Primer semestre..."
+        aria-label="name"
+      />
     </div>
   </div>
 
-  {{ formulario.value | json }}
   <div class="modal-footer d-flex justify-content-end gap-2">
     <button
       type="button"

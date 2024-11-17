@@ -31,12 +31,12 @@ export class CreateComponent implements OnInit {
   constructor(private fb: FormBuilder) {
     this.carreraForm = fb.group({
       name: ['', Validators.required],
+      description: ['', Validators.required],
       cargasAcademicas: fb.array([], Validators.required),
     });
 
     this.cargaAcademicaForm = fb.group({
       name: ['', Validators.required],
-      description: ['', Validators.required],
     });
   }
 
@@ -51,14 +51,13 @@ export class CreateComponent implements OnInit {
 
     const nuevaCarga: FormGroup = this.fb.group({
       name: this.cargaAcademicaForm.get('name')?.value,
-      description: this.cargaAcademicaForm.get('description')?.value,
     });
 
     cargasAcademicasCarreraForm.push(nuevaCarga);
 
     this.cargaAcademicaForm.patchValue({
       name: '',
-      description: '',
+      description: ''
     });
   }
 

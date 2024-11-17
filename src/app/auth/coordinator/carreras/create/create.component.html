@@ -10,7 +10,12 @@
             <!-- Nombre de la carrera -->
             <div class="form-group mb-3">
               <label for="name" class="form-label">Nombre de la carrera</label>
-              <input type="text" formControlName="name" id="name" class="form-control" placeholder="Ingrese el nombre de la carrera" />
+              <input type="text" formControlName="name" id="name" class="form-control"/>
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="description" class="form-label">Descripcion</label>
+              <input type="text" formControlName="description" id="description" class="form-control"/>
             </div>
 
             <!-- Botones para habilitar/deshabilitar y asignar carrera -->
@@ -40,10 +45,6 @@
                 <div class="form-group mb-3">
                   <label for="cargaName" class="form-label">Nombre de la carga académica</label>
                   <input type="text" formControlName="name" id="cargaName" class="form-control" placeholder="Ejemplo: Primer Semestre" />
-                </div>
-                <div class="form-group mb-3">
-                  <label for="cargaDescription" class="form-label">Descripción</label>
-                  <input type="text" formControlName="description" id="cargaDescription" class="form-control" placeholder="Descripción de la carga" />
                 </div>
 
                 <!-- Botón para agregar carga académica -->

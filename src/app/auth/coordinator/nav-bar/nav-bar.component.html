@@ -47,11 +47,16 @@
           <a routerLink="carreras/index" class="nav-link">Ver Carreras</a>
         </div>
       </li>
+
       <li class="nav-item">
-        <a routerLink="subject-teacher" class="nav-link">
-          <i class="bi bi-book-fill"></i>
-          Asignaturas Maestro
+        <a href="#asignaturasSubmenu" class="nav-link" data-bs-toggle="collapse">
+          <i class="bi bi-calendar-check-fill"></i>
+          Asignaturas
         </a>
+        <div class="collapse submenu" id="asignaturasSubmenu">
+          <a routerLink="subjects" class="nav-link">Ver Asignaturas</a>
+          <a routerLink="subject/teacher" class="nav-link">Añadir Profesores</a>
+        </div>
       </li>
       <li class="nav-item logout-item">
         <a style="cursor: pointer;" (click)="logout()" class="nav-link">
