@@ -1,6 +1,6 @@
 import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { CoordinadorService } from '../../../../core/services/coordinador.service';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Estudiante } from '../../../../interfaces/estudiante.interface';
 import { CommonModule } from '@angular/common';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -14,6 +14,7 @@ import Swal from 'sweetalert2';
   styleUrl: './modal-add-student-group.component.css',
 })
 export class ModalAddStudentGroupComponent implements OnInit {
+
   @Input() grupo: any;
   private coordinadorService: CoordinadorService = inject(CoordinadorService);
   estudiantesNoGrupo$: Observable<any>;
@@ -35,9 +36,6 @@ export class ModalAddStudentGroupComponent implements OnInit {
       id_group: this.grupo.id,
       id_student: id_estudiante
     };
-
-    console.log(credenctials);
-
     this.coordinadorService.patchGrupoEstudiante(credenctials).subscribe(
       (res: any) => {
         if(res.ok){

@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { AdminService } from '../../../core/services/admin-service.service';
-import { catchError, Observable } from 'rxjs';
+import { catchError, map, Observable } from 'rxjs';
 import { TableComponent } from "../../../components/table/table.component";
 import { CommonModule } from '@angular/common';
 import { Coordinador, columnasCoordinador } from '../../../interfaces/coordinador.interface';
@@ -37,6 +37,12 @@ export class IndexComponent implements OnInit {
 
   obtenerCoordinadores(): void{
     this.coordinadores$ = this.adminService.getCoordinadores().pipe(
+      map( (res: any) => {
+        if(!res.coor){
+          res.coor = [];
+        }
+        return res;
+      }),
       catchError( (err: any) =>
         {
           this.error = true;

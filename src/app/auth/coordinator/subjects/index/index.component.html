@@ -22,10 +22,17 @@
                 totalItems: total(asignaturasInfo) } ;track $index)
               {
                 <div class="col-12 col-md-6 col-lg-4 mb-3">
-                  <button [ngClass]="{'active' : botonSeleccionado  === asignatura.id }" (click)="buscarInformacionAsignatura(asignatura.id)" class="btn btn-outline-secondary w-100">
-                    {{ asignatura.name | titlecase }}
-                  </button>
-                </div>
+                  <div class="btn-group w-100" role="group" aria-label="asignatura actions">
+                    <button [ngClass]="{'active' : botonSeleccionado === asignatura.id }" (click)="buscarInformacionAsignatura(asignatura.id)" class="btn btn-outline-secondary w-100">
+                        {{ asignatura.name | titlecase }}
+                    </button>
+                    <button
+                    (click)="openModalEdit(asignatura)"
+                      class="btn btn-outline-secondary">
+                      <i class="bi bi-pen"></i>
+                    </button>
+                  </div>
+              </div>
               }
 
               <div class="align-items-end">
@@ -53,7 +60,7 @@
     <div class="section-secundary">
       <div class="row">
       @if (asignaturasPertenecientes$| async; as asignaturasPertenecientesInfo) {
-        <div class="h4">Profesores y Cargas Academicas a las que pertenece.</div>
+        <div class="h4 text-center">Profesores y Cargas Academicas a las que pertenece.</div>
         <div class="col-md-6">
           <div class="container">
             <div class="h4">Profesores</div>
@@ -81,7 +88,14 @@
         </div>
       }@else {
         <div>
-          <div class="h4 text-center">Seleccione una asignatura. </div>
+          @if (botonSeleccionado != null) {
+            <div class="d-flex align-items-center">
+              <strong>Buscando informacion de la asignatura...</strong>
+              <div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
+            </div>
+          }@else {
+            <div class="h4 text-center">Seleccione una asignatura. </div>
+          }
         </div>
       }
       </div>

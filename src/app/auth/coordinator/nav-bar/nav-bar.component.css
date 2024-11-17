@@ -3,6 +3,10 @@
   height: 100vh;
 }
 
+*{
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif !important;
+}
+
 
 .sidebar {
   height: 100vh;

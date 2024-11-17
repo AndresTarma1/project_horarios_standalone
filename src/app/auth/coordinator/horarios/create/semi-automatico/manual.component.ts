@@ -46,7 +46,7 @@ export class SemiAutomaticoComponent {
   obtenerCargasAcademicas(): void{
     let id_carrera =this.horarioForm.controls['id_career'].value;
     if(id_carrera){
-      this.cargaAcademicas$ = this.coordinadorService.getCargaAcademicas();
+      this.cargaAcademicas$ = this.coordinadorService.getCargasAcademicasCarrera(id_carrera);
     }else{
       this.horarioForm.patchValue({
         id_career: '',

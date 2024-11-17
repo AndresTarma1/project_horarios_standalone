@@ -33,7 +33,12 @@ export class AsignarMateriasModalComponent implements OnInit{
   obtenerAsignaturas(){
     this.coordinadorService.getAsignaturas().subscribe(
       (res: any) => {
-        this.asignaturas = res.subjects;
+
+        if(res.asignaturas){
+          this.asignaturas = [];
+        }else{
+          this.asignaturas = res.asignaturas;
+        }
       }
     );
   }
@@ -80,10 +85,6 @@ export class AsignarMateriasModalComponent implements OnInit{
         }
       }
     )
-  }
-
-  addAsignaturaNueva(){
-
   }
 
   closeModal() {

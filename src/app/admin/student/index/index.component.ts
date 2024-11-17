@@ -35,6 +35,12 @@ export class IndexComponent implements OnInit {
 
   obtenerEstudiantes(){
     this.estudiantes$ =  this.adminService.getEstudiantes().pipe(
+      map( (res: any) => {
+        if(!res.student){
+          res.student = [];
+        }
+        return res;
+      }),
       catchError ((err: any) => {
         this.error = true;
         throw new Error("Ah ocurrido un error en el servidor");

@@ -78,6 +78,12 @@ export class CoordinadorService {
     });
   }
 
+  getAsignaturasDeProfesor(id_teacher: string): Observable<any>{
+    return this.http.get(`${this.apiURL}/teacher/teacher-subject/${id_teacher}`, {
+      headers: { 'ngrok-skip-browser-warning': 'true' },
+    })
+  }
+
   getProfesoresAsignatura(id: string): Observable<any> {
     return this.http.get(`${this.apiURL}/subject_teacher/${id}`, {
       headers: { 'ngrok-skip-browser-warning': 'true' },
@@ -98,6 +104,12 @@ export class CoordinadorService {
 
   getGruposConEstudiantes(): Observable<any> {
     return this.http.get(`${this.apiURL}/group/with-students`, {
+      headers: { 'ngrok-skip-browser-warning': 'true' },
+    });
+  }
+
+  getEstudiantesDeUnGrupo(id_grupo: number): Observable<any> {
+    return this.http.get(`${this.apiURL}/student/group/${id_grupo}`, {
       headers: { 'ngrok-skip-browser-warning': 'true' },
     });
   }
@@ -203,8 +215,32 @@ export class CoordinadorService {
     });
   }
 
+  putCargaAcademica(cargaAcademica: any): Observable<any> {
+    return this.http.put(`${this.apiURL}/academic_load/${cargaAcademica.id}`, cargaAcademica, {
+      headers: { 'ngrok-skip-browser-warning': 'true' }
+    })
+  }
+
+  putCarrera(carrera: any): Observable<any> {
+    return this.http.put(`${this.apiURL}/careers/${carrera.id}`, carrera,
+      { headers: { 'ngrok-skip-browser-warning': 'true'}
+    });
+  }
+
+  putAsignatura(asignatura: any): Observable<any>{
+    return this.http.put(`${this.apiURL}/subject/${asignatura.id}`, asignatura, {
+      headers: { 'ngrok-skip-browser-warning': 'true' },
+    });
+  }
+
   deleteGrupo(id_grupo: string): Observable<any>{
     return this.http.delete(`${this.apiURL}/group/${id_grupo}`, {
+      headers: { 'ngrok-skip-browser-warning': 'true' },
+    })
+  }
+
+  deleteAsignatura(id_subject: string): Observable<any>{
+    return this.http.delete(`${this.apiURL}/subject/${id_subject}`, {
       headers: { 'ngrok-skip-browser-warning': 'true' },
     })
   }
@@ -225,6 +261,13 @@ export class CoordinadorService {
     return this.http.delete(`${this.apiURL}/academic_load/${id}`, {
       headers: { 'ngrok-skip-browser-warning': 'true' },
     });
+  }
+
+  deleteAsignaturaDeProfesor(credenciales: any): Observable<any>{
+    return this.http.delete(`${this.apiURL}/subject_teacher`, {
+      headers: { 'ngrok-skip-browser-warning': 'true' },
+      body: credenciales
+    })
   }
 
   deleteAsignaturaCargaAcademica(credenciales: any): Observable<any>{

@@ -42,7 +42,14 @@ export class IndexComponent implements OnInit {
     if(!this.grupo_id){
       return;
     }else{
-      this.horario$ = this.coordinadorService.getHorario(this.grupo_id);
+      this.horario$ = this.coordinadorService.getHorario(this.grupo_id).pipe(
+        map( (res: any) => {
+          if(!res.horario){
+            res.horario = [];
+          }
+        return res;
+      })
+      );
     }
   }
 

@@ -17,3 +17,6 @@ fieldset{
   margin-left: 0.5rem;
   color: green;
 }
+*{
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif !important;
+}

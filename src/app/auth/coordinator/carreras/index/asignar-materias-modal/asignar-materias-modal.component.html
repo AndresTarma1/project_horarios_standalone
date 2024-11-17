@@ -10,9 +10,9 @@
       @if (asignaturas) {
         @for (asignatura of asignaturas; track $index) {
           <option [value]="asignatura.id">{{ asignatura.name }}</option>
-        }@empty {
-          <option [value]="">No hay asignaturas disponibles.</option>
         }
+      }@else {
+        <option selected value="">No hay asignaturas disponibles</option>
       }
     </select>
   </div>

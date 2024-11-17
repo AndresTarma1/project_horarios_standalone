@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container mx-2 mt-4">
   <form>
     <label class="form-label" for="grupo">Grupos</label>
     <div class="row">
@@ -24,9 +24,16 @@
     </div>
 
   </form>
+  @if (horario$ | async; as horarioInfo) {
+    <app-schedule [horario]="horarioInfo.horario" ></app-schedule>
+  }@else {
+    @if (grupo_id) {
+      <div class="d-flex mt-3 align-items-center">
+        <strong>Cargando horario...</strong>
+        <div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
+      </div>
+    }
+  }
 </div>
 
-@if (horario$ | async; as horarioInfo) {
-  <app-schedule [horario]="horarioInfo.horario" ></app-schedule>
-}
 

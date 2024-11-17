@@ -18,6 +18,7 @@ export class AddSubjectTeacherComponent {
   valor = 0;
   asignaturas$: Observable<any>;
   profesores$: Observable<any>;
+  asignaturasMaestro$: Observable<any>;
 
 
   asignacionMaterias: FormGroup = this.fb.group({
@@ -27,38 +28,25 @@ export class AddSubjectTeacherComponent {
 
   constructor(private coordinadorService: CoordinadorService, private fb: FormBuilder){}
 
-  disable: boolean = true;
-
   ngOnInit(): void {
     this.obtenerMaestros();
   }
 
   obtenerMaestros(): void{
     this.profesores$ = this.coordinadorService.getProfesores();
-
-    this.valorCien()
   }
 
   obtenerAsignaturas(): void{
-    if(this.asignacionMaterias.controls['id_teacher'].value){
+    let id_teacher = this.asignacionMaterias.controls['id_teacher'].value;
+    if(id_teacher){
       this.asignaturas$ = this.coordinadorService.getAsignaturas();
+      this.asignaturasMaestro$ = this.coordinadorService.getAsignaturasDeProfesor(id_teacher);
     }else{
       this.asignaturas$ = new BehaviorSubject(null);
+      this.asignaturasMaestro$ = new BehaviorSubject(null);
     }
-
-    this.valorCien()
   }
 
-  valorCien(){
-    if(this.asignacionMaterias.controls['id_subject'].value && this.asignacionMaterias.controls['id_teacher'].value){
-      this.valor = 100;
-    }else if(this.asignacionMaterias.controls['id_teacher'].value){
-      this.valor = 50;
-    }else{
-      this.valor = 0;
-    }
-
-  }
 
 
   addAsignaturaAMaestro(): void{
@@ -70,7 +58,6 @@ export class AddSubjectTeacherComponent {
             text: 'La asignatura se ha establecido exitosamente',
             icon: 'success'
           });
-          this.asignacionMaterias.reset();
         }else{
           Swal.fire({
             title: 'Error',
@@ -89,7 +76,56 @@ export class AddSubjectTeacherComponent {
           'id_subject' : ''
         });
       },
-      complete: () => { this.valorCien();}
+      complete: () => {
+        this.obtenerAsignaturas();
+      }
     })
+  }
+
+
+  eliminarAsignaturaDelMaestro(asignatura: any): void {
+    const id_teacher = this.asignacionMaterias.controls['id_teacher'].value;
+
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: `Esta acción eliminará la asignatura ${asignatura.name} del profesor.`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        let credenciales = { id_teacher : id_teacher, id_subject: asignatura.id};
+        this.coordinadorService.deleteAsignaturaDeProfesor(credenciales).subscribe({
+          next: (res: any) => {
+            if (res.ok) {
+              Swal.fire(
+                'Eliminado!',
+                `La asignatura ${asignatura.name} ha sido eliminada del profesor.`,
+                'success'
+              );
+            } else {
+              Swal.fire(
+                'Error',
+                'No se pudo eliminar la asignatura. Intente nuevamente.',
+                'error'
+              );
+            }
+          },
+          error:(err: any) => {
+            Swal.fire(
+              'Error',
+              'Hubo un error al procesar la solicitud. Intente más tarde.',
+              'error'
+            );
+          },
+          complete: () => {
+            this.obtenerAsignaturas()
+          }
+        }
+      );
+      }
+    });
   }
 }

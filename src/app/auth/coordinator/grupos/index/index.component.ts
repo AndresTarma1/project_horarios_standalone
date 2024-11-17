@@ -4,7 +4,7 @@ import {
   NgbActiveModal,
   NgbModal,
 } from '@ng-bootstrap/ng-bootstrap';
-import { catchError, Observable } from 'rxjs';
+import { catchError, delay, map, Observable, retry, retryWhen, takeWhile } from 'rxjs';
 import { CoordinadorService } from '../../../../core/services/coordinador.service';
 import { CommonModule } from '@angular/common';
 import { ErrorServidorComponent } from '../../../../components/error-servidor/error-servidor.component';
@@ -18,7 +18,9 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { SidebarGroupsComponent } from '../sidebar-groups/sidebar-groups.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { EditGroupModalComponent } from '../edit-group-modal/edit-group-modal.component';
+import { ModalAddStudentGroupComponent } from '../modal-add-student-group/modal-add-student-group.component';
 
 @Component({
   selector: 'app-index',
@@ -28,37 +30,69 @@ import { SidebarGroupsComponent } from '../sidebar-groups/sidebar-groups.compone
     NgbAccordionModule,
     CommonModule,
     ErrorServidorComponent,
-    NgxSpinnerModule,
-    StudentsListGroupComponent,
-    SidebarGroupsComponent,
+    NgxPaginationModule
   ],
   templateUrl: './index.component.html',
   styleUrl: './index.component.css',
 })
 export class IndexComponent {
+
   private coordinadorService: CoordinadorService = inject(CoordinadorService);
   public grupos$: Observable<any>;
-  grupo: any = [];
+  public EstudiantesPorGrupo$: Observable<any>;
+
   error = false;
 
+  p: number = 1;
+
+  selectedGrupo: {id: number | null, name?: string} = {id: null};
+
   constructor(
-    private spinner: NgxSpinnerService,
     private modalService: NgbModal
   ) {}
 
+  addEstudianteGrupo(): void {
+    if(this.selectedGrupo.id){
+      const modalRef = this.modalService.open(ModalAddStudentGroupComponent);
+      modalRef.componentInstance.grupo = this.selectedGrupo;
+      modalRef.closed.subscribe((res: any) => {
+        if(res){
+          this.obtenerEstudiantesPorGrupo();
+        }
+      });
+    }
+  }
+
+  grupoSeleccionada(grupo: any): void{
+
+    if(grupo.id == this.selectedGrupo.id){
+      this.selectedGrupo = {id: null};
+      return;
+    }else{
+      this.selectedGrupo.id = grupo.id;
+      this.selectedGrupo.name = grupo.name;
+      this.obtenerEstudiantesPorGrupo();
+    }
+
+  }
+
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    this.spinner.show();
-    this.obtenerEstudiantesPorGrupo();
+    this.obtenerGrupos();
   }
 
-  obtenerEstudiantes(grupo: any) {
-    this.grupo = grupo;
+  obtenerGrupos(): void {
+    this.grupos$ = this.coordinadorService.getGrupos().pipe(
+      retry({delay: 5000}),
+      catchError((err) => {
+        this.error = true;
+        throw new Error('Ah ocurrido un error en el servidor');
+      })
+    );
   }
 
-  cambiosEmitidos(event: any) {
-    this.obtenerEstudiantesPorGrupo();
+
+  total(grupoInfo: any): number {
+    return grupoInfo.groups.length;
   }
 
   obtenerCambios(grupo: any) {
@@ -81,12 +115,44 @@ export class IndexComponent {
     });
   }
 
-  eliminarGrupo(grupo: string) {
-    this.coordinadorService.deleteGrupo(grupo).subscribe((res: any) => {
+  editarGrupo(grupo: any): void
+  {
+    const modalRef = this.modalService.open(EditGroupModalComponent);
+
+    modalRef.componentInstance.grupo = {...grupo};
+
+    modalRef.componentInstance.save.subscribe((grupo: any) => {
+
+      if(grupo.cambios){
+        this.obtenerCambios(grupo);
+      }
+    });
+
+    modalRef.componentInstance.delete.subscribe((grupo: any) => {
+      Swal.fire({
+        title: '¿Estás seguro?',
+        text: `¿Deseas eliminar el grupo "${grupo.name}"? Esta acción no se puede deshacer.`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.eliminarGrupo(grupo);
+        }
+      });
+    });
+
+  }
+
+  eliminarGrupo(grupo: any) {
+    this.coordinadorService.deleteGrupo(grupo.id).subscribe((res: any) => {
       if (res.ok) {
         Swal.fire({
           title: 'Exito',
-          text: `El grupo sido eliminado correctamente`,
+          text: `El grupo ${grupo.name} sido eliminado correctamente`,
           icon: 'success',
         }).then(() => {
           this.obtenerEstudiantesPorGrupo();
@@ -102,36 +168,61 @@ export class IndexComponent {
   }
 
   obtenerEstudiantesPorGrupo() {
-    this.grupo = [];
-    this.grupos$ = this.coordinadorService.getGruposConEstudiantes().pipe(
-      catchError((err) => {
-        this.error = true;
-        throw new Error('Ah ocurrido un error en el servidor');
-      })
-    );
+    if (this.selectedGrupo.id){
+      this.EstudiantesPorGrupo$ = this.coordinadorService
+       .getEstudiantesDeUnGrupo(this.selectedGrupo.id)
+       .pipe(
+          map((response: any) => {
+            if(!response.ok){
+              response.students = [];
+            }
+            return response;
+          }),
+          retry({delay: 5000}),
+          catchError((err) => {
+            this.error = true;
+            throw new Error('Ah ocurrido un error en el servidor');
+          })
+        );
+    }
   }
 
-  eliminarEstudianteDelGrupo(estudiante: any) {
-    this.coordinadorService
-      .patchQuitarEstudianteDeGrupo(estudiante.id)
-      .subscribe((res: any) => {
-        if (res.ok) {
-          Swal.fire({
-            title: 'Degradacion correcta',
-            text: `El estudiante ${estudiante.name} ha sido quitado del grupo exitosamente.`,
-            icon: 'success',
-          }).then(() => {
-            this.obtenerEstudiantesPorGrupo();
+  eliminarEstudianteDelGrupo(estudiante: any): void {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: `¿Quieres eliminar al estudiante ${estudiante.name} del grupo?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Si el usuario confirma la eliminación
+        this.coordinadorService
+          .patchQuitarEstudianteDeGrupo(estudiante.id)
+          .subscribe((res: any) => {
+            if (res.ok) {
+              Swal.fire({
+                title: 'Degradación correcta',
+                text: `El estudiante ${estudiante.name} ha sido quitado del grupo exitosamente.`,
+                icon: 'success',
+              }).then(() => {
+                this.obtenerEstudiantesPorGrupo(); // Actualizar la lista de estudiantes
+              });
+            } else {
+              Swal.fire({
+                title: 'Error',
+                text: `El estudiante ${estudiante.name} no se ha logrado quitar del grupo.`,
+                icon: 'error',
+              });
+            }
           });
-        } else {
-          Swal.fire({
-            title: 'Error',
-            text: `El estudiante ${estudiante.name} no se ha logrado quitar del grupo`,
-            icon: 'error',
-          });
-        }
-      });
+      }
+    });
   }
+
 
   crearGrupo() {
     const modalRef = this.modalService.open(CreateGroupComponent);

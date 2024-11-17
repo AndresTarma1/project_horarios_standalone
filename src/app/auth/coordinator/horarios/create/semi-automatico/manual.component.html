@@ -30,7 +30,7 @@
             <select formControlName="id_academic_load" (change)="obtenerGrupos()" class="form-select" name="carga_academica" id="carga_academica">
               @if (cargaAcademicas$ | async; as cargaAcademicasInfo) {
                 <option value="" selected>Cargas Académicas</option>
-                @for (cargaAcademica of cargaAcademicasInfo.academic_loads; track $index) {
+                @for (cargaAcademica of cargaAcademicasInfo.cargas; track $index) {
                   <option [value]="cargaAcademica.id">{{ cargaAcademica.name | titlecase }}</option>
                 }@empty {
                   <option value="" selected disabled>No hay cargas académicas disponibles</option>

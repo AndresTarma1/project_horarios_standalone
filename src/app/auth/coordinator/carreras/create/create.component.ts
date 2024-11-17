@@ -77,6 +77,7 @@ export class CreateComponent implements OnInit {
 
           this.carreraForm.patchValue({
             name: '',
+            description: ''
           });
           this.carreraForm.removeControl('cargasAcademicas');
           this.carreraForm.addControl('cargasAcademicas', this.fb.array([], Validators.required));

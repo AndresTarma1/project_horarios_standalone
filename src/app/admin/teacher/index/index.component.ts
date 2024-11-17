@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { catchError, delay, Observable, of, retry, retryWhen, throwError } from 'rxjs';
+import { catchError, delay, map, Observable, of, retry, retryWhen, throwError } from 'rxjs';
 import { AdminService } from '../../../core/services/admin-service.service';
 import { CommonModule } from '@angular/common';
 import { TableComponent } from "../../../components/table/table.component";
@@ -34,6 +34,12 @@ export class IndexComponent implements OnInit {
 
   obtenerProfesores(): void{
     this.profesores$ = this.adminService.getProfesores().pipe(
+      map( (res: any) => {
+        if(!res.teachers){
+          res.teachers = [];
+        }
+        return res;
+      }),
       catchError( (err: any) => {
         this.error = true;
         throw new Error("Ah ocurrido un error");

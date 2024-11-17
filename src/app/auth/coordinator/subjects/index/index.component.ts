@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { CoordinadorService } from '../../../../core/services/coordinador.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { RouterModule } from '@angular/router';
+import { EditModalComponent } from './edit-modal/edit-modal.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-index',
@@ -24,15 +26,20 @@ export class IndexComponent implements OnInit{
   tamañoAsignaturas: number = 0;
   botonSeleccionado: number | null = null;
 
-  constructor(private coordinadorService: CoordinadorService){
+  constructor(private coordinadorService: CoordinadorService, private modalService: NgbModal){
 
 
   }
 
   ngOnInit(): void {
 
-    this.asignaturas$ = this.coordinadorService.getAsignaturas();
+    this.obtenerAsignatura();
 
+  }
+
+  obtenerAsignatura(): void{
+
+    this.asignaturas$ = this.coordinadorService.getAsignaturas();
   }
 
   total(asignaturas_object: any): number{
@@ -42,8 +49,78 @@ export class IndexComponent implements OnInit{
   }
 
   buscarInformacionAsignatura(id_subject: number): void{
-    this.botonSeleccionado = id_subject;
 
+    if(this.botonSeleccionado == id_subject){
+      this.botonSeleccionado = null;
+      this.asignaturasPertenecientes$ = new BehaviorSubject(null);
+      return;
+    }
+
+    this.botonSeleccionado = id_subject;
     this.asignaturasPertenecientes$ = this.coordinadorService.getProfesoresConCargaAcademica(id_subject);
+  }
+
+  openModalEdit(asignatura: any): void{
+    const modalref = this.modalService.open(EditModalComponent);
+    modalref.componentInstance.asignatura = asignatura;
+
+    modalref.componentInstance.updateAsignatura.subscribe( (res: any) => {
+      this.coordinadorService.putAsignatura(res).subscribe(
+        (res: any) => {
+          if(res.ok){
+            Swal.fire({
+              title: 'Exito',
+              text: 'Asignatura modificada con exito',
+              icon: 'success'
+            }).then(
+              () => this.obtenerAsignatura()
+            )
+          }else{
+            Swal.fire({
+              title: 'Error',
+              text: 'Ah ocurrido un error al intentar modificar la asignatura',
+              icon: 'warning'
+            })
+          }
+        }
+      )
+    });
+
+    modalref.componentInstance.deleteAsignatura.subscribe( (asignatura: any) => {
+      Swal.fire({
+        title: '¿Estás seguro?',
+        text: `Esta acción eliminará la asignatura ${asignatura.name}`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar',
+        reverseButtons: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.coordinadorService.deleteAsignatura(asignatura.id).subscribe(
+            (res: any) => {
+              if(res.ok){
+                Swal.fire({
+                  title: 'Exito',
+                  text: 'La asignatura fue eliminada con exito.',
+                  icon: 'success'
+                }).then(
+                  () => {
+                    this.obtenerAsignatura();
+                  }
+                )
+              }else{
+                Swal.fire({
+                  title: 'Error',
+                  text: 'La asignatura no se ha podido',
+                  icon: 'error'
+                });
+              }
+            }
+          );
+        }
+      });
+    });
+
   }
 }
