@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import { BehaviorSubject, delay, map, Observable, retry } from 'rxjs';
 import { CoordinadorService } from '../../../../core/services/coordinador.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -39,7 +39,9 @@ export class IndexComponent implements OnInit{
 
   obtenerAsignatura(): void{
 
-    this.asignaturas$ = this.coordinadorService.getAsignaturas();
+    this.asignaturas$ = this.coordinadorService.getAsignaturas().pipe(
+      retry({delay: 4000})
+    );
   }
 
   total(asignaturas_object: any): number{
@@ -57,7 +59,9 @@ export class IndexComponent implements OnInit{
     }
 
     this.botonSeleccionado = id_subject;
-    this.asignaturasPertenecientes$ = this.coordinadorService.getProfesoresConCargaAcademica(id_subject);
+    this.asignaturasPertenecientes$ = this.coordinadorService.getProfesoresConCargaAcademica(id_subject).pipe(
+      retry({delay: 4000})
+    );
   }
 
   openModalEdit(asignatura: any): void{

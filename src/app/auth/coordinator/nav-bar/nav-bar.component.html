@@ -2,7 +2,7 @@
   <div class="sidebar" [ngClass]="{ active: isSidebarActive }" id="sidebarMenu">
     <div class="sidebar-header">
       <img src="https://via.placeholder.com/60" alt="Profile Image" />
-      <h5>Esteban Perez</h5>
+      <h5>{{ coordinador.name }}</h5>
       <p>Coordinador</p>
     </div>
     <ul class="nav flex-column p-3">
@@ -75,7 +75,7 @@
     ☰
   </button>
 
-  <section [class.margin-content]="isSidebarActive" class="section-main">
+  <section [class.margin-content]="isSidebarActive" class="bg-body-secondary overflow-auto section-main">
     <router-outlet></router-outlet>
   </section>
 </div>

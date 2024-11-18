@@ -1,16 +1,20 @@
-<div class="container-flui">
-
+<div class="container-fluid">
   <br>
-
-  <div class="h2 text-center">Control de asignaturas de maestros.</div>
-
+  <div class="h2 text-center">Control de asignaturas de maestros</div>
+  <p class="text-center text-muted">
+    En esta página puedes asignar materias a los profesores y gestionar las asignaturas ya asignadas.
+  </p>
   <hr class="my-5">
-
 
   <div class="row">
     <!-- Columna del formulario -->
     <div class="col-12 col-md-6 mb-4">
-      <div class="container">
+      <div class="p-4 bg-white rounded shadow-sm">
+        <h5 class="mb-3">Asignar materias a un maestro</h5>
+        <p class="text-muted">
+          Selecciona un maestro de la lista y una asignatura para añadirla a su carga académica.
+          Solo aparecerán las asignaturas disponibles.
+        </p>
         <form (ngSubmit)="addAsignaturaAMaestro()" [formGroup]="asignacionMaterias">
           <!-- Selección de Profesor -->
           <div class="form-group mb-4">
@@ -47,7 +51,7 @@
 
           <!-- Botón de Añadir Asignatura de Maestro -->
           <div class="form-group d-flex justify-content-start">
-            <button [disabled]="asignacionMaterias.invalid"  type="submit" class="btn btn-secondary">
+            <button [disabled]="asignacionMaterias.invalid" type="submit" class="btn btn-secondary">
               Añadir Asignatura de Maestro
             </button>
           </div>
@@ -57,10 +61,13 @@
 
     <!-- Columna de asignaturas del maestro -->
     <div class="col-12 col-md-6 mb-4">
-      <div class="container">
+      <div class="p-4 bg-white rounded shadow-sm">
+        <h5 class="mb-3">Asignaturas del maestro</h5>
+        <p class="text-muted">
+          Aquí puedes ver las asignaturas actualmente asignadas al maestro seleccionado.
+          También puedes eliminarlas si es necesario.
+        </p>
         @if (asignaturasMaestro$ | async; as asignaturasDelMaestroInfo) {
-          <h5>Asignaturas del Maestro</h5>
-
           <ul class="list-group">
             @for (asignatura of asignaturasDelMaestroInfo.subjects; track $index) {
               <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -88,6 +95,4 @@
       </div>
     </div>
   </div>
-
-
 </div>

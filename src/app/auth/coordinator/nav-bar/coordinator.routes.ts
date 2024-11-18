@@ -14,7 +14,7 @@ export const routes: Routes = [
       },
       {
         path: 'dashboard',
-        redirectTo: 'profile',
+        loadComponent: () => import('../dashboard/dashboard.component').then( (c) => c.CoordinatorDashboardComponent )
       },
       {
         path: 'config',

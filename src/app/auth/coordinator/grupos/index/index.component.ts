@@ -283,7 +283,7 @@ export class IndexComponent {
         <button
           type="button"
           [disabled]="formGrupo.invalid"
-          class="btn btn-primary me-2"
+          class="btn btn-outline-primary me-2"
           (click)="activeModal.close(formGrupo.value)"
         >
           Crear Grupo

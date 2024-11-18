@@ -62,19 +62,23 @@ export class CreateComponent {
 
   onSubmit() {
     if (this.teacherForm.valid) {
-      this.adminService.postProfesor(this.teacherForm.value).subscribe(
+      this.adminService.postProfesor(this.teacherForm.getRawValue()).subscribe(
         (res: any) => {
           if(res.ok){
             Swal.fire({
               icon: 'success',
               title: 'Correcto',
               text: `El profesor se ha creado correctamente`
-            });
+            }).then(
+              () => {
+                this.teacherForm.reset();
+              }
+            );
           }else{
             Swal.fire({
               icon: 'info',
               title: 'Error',
-              text: `Ah ocurrido un error al crearlo`
+              text: `${res.msg}`
             });
         }
         }

@@ -17,7 +17,7 @@ import { appConfig } from '../../app.config';
   providedIn: 'root',
 })
 export class CoordinadorService {
-  constructor() {}
+  constructor() { }
 
   private http: HttpClient = inject(HttpClient);
 
@@ -35,9 +35,9 @@ export class CoordinadorService {
     });
   }
 
-  getProfesoresConCargaAcademica(id_subject: number): Observable<any>{
+  getProfesoresConCargaAcademica(id_subject: number): Observable<any> {
     return this.http.get(
-      `${this.apiURL}/subject/show-teachers-academicLoads/${id_subject}`, { headers: { 'ngrok-skip-browser-warning': 'true' }}
+      `${this.apiURL}/subject/show-teachers-academicLoads/${id_subject}`, { headers: { 'ngrok-skip-browser-warning': 'true' } }
     )
   }
 
@@ -60,8 +60,8 @@ export class CoordinadorService {
     });
   }
 
-  getCarrera(carrera_id: string): Observable<any>{
-    return this.http.get(`${this.apiURL}/careers/${carrera_id}`,{
+  getCarrera(carrera_id: string): Observable<any> {
+    return this.http.get(`${this.apiURL}/careers/${carrera_id}`, {
       headers: { 'ngrok-skip-browser-warning': 'true' },
     });
   }
@@ -78,7 +78,7 @@ export class CoordinadorService {
     });
   }
 
-  getAsignaturasDeProfesor(id_teacher: string): Observable<any>{
+  getAsignaturasDeProfesor(id_teacher: string): Observable<any> {
     return this.http.get(`${this.apiURL}/teacher/teacher-subject/${id_teacher}`, {
       headers: { 'ngrok-skip-browser-warning': 'true' },
     })
@@ -96,7 +96,7 @@ export class CoordinadorService {
     });
   }
 
-  postAsignatura(asignatura: any): Observable<any>{
+  postAsignatura(asignatura: any): Observable<any> {
     return this.http.post(`${this.apiURL}/subject`, asignatura, {
       headers: { 'ngrok-skip-browser-warning': 'true' },
     })
@@ -112,6 +112,10 @@ export class CoordinadorService {
     return this.http.get(`${this.apiURL}/student/group/${id_grupo}`, {
       headers: { 'ngrok-skip-browser-warning': 'true' },
     });
+  }
+
+  getEstudiantes(): Observable<any> {
+    return this.http.get(`${this.apiURL}/student`, { headers: { 'ngrok-skip-browser-warning': 'true' } })
   }
 
   getHorario(grupoId: any): Observable<any> {
@@ -141,10 +145,16 @@ export class CoordinadorService {
     );
   }
 
-  postCarreraConCargas(credentials: any): Observable<any>{
+  postCarreraConCargas(credentials: any): Observable<any> {
     return this.http.post(`${this.apiURL}/careers/withAcademic`, credentials,
-      {headers: { 'ngrok-skip-browser-warning': 'true' }}
+      { headers: { 'ngrok-skip-browser-warning': 'true' } }
     );
+  }
+
+  putMe(coordinador: any): Observable<any> {
+    return this.http.patch(`${this.apiURL}/coordinator/${coordinador.id}`, coordinador,
+      { headers: { 'ngrok-skip-browser-warning': 'true' }
+    });
   }
 
 
@@ -152,9 +162,9 @@ export class CoordinadorService {
     const { id_group, id_student } = credentials;
     return this.http.patch(
       `${this.apiURL}/student/add-group`,
-        credentials, {
-          headers: { 'ngrok-skip-browser-warning': 'true' }
-        }
+      credentials, {
+      headers: { 'ngrok-skip-browser-warning': 'true' }
+    }
     );
   }
 
@@ -181,7 +191,7 @@ export class CoordinadorService {
   postCargaAcademica(cargaAcademica: any) {
     return this.http.post(
       `${this.apiURL}/academic_load`,
-      { name: cargaAcademica.name, id_career : cargaAcademica.id_career },
+      { name: cargaAcademica.name, id_career: cargaAcademica.id_career },
       { headers: { 'ngrok-skip-browser-warning': 'true' } }
     );
   }
@@ -194,7 +204,7 @@ export class CoordinadorService {
     });
   }
 
-  postGrupo(grupo: any){
+  postGrupo(grupo: any) {
     return this.http.post(`${this.apiURL}/group`, grupo,
       { headers: { 'ngrok-skip-browser-warning': 'true' } }
     );
@@ -223,23 +233,24 @@ export class CoordinadorService {
 
   putCarrera(carrera: any): Observable<any> {
     return this.http.put(`${this.apiURL}/careers/${carrera.id}`, carrera,
-      { headers: { 'ngrok-skip-browser-warning': 'true'}
-    });
+      {
+        headers: { 'ngrok-skip-browser-warning': 'true' }
+      });
   }
 
-  putAsignatura(asignatura: any): Observable<any>{
+  putAsignatura(asignatura: any): Observable<any> {
     return this.http.put(`${this.apiURL}/subject/${asignatura.id}`, asignatura, {
       headers: { 'ngrok-skip-browser-warning': 'true' },
     });
   }
 
-  deleteGrupo(id_grupo: string): Observable<any>{
+  deleteGrupo(id_grupo: string): Observable<any> {
     return this.http.delete(`${this.apiURL}/group/${id_grupo}`, {
       headers: { 'ngrok-skip-browser-warning': 'true' },
     })
   }
 
-  deleteAsignatura(id_subject: string): Observable<any>{
+  deleteAsignatura(id_subject: string): Observable<any> {
     return this.http.delete(`${this.apiURL}/subject/${id_subject}`, {
       headers: { 'ngrok-skip-browser-warning': 'true' },
     })
@@ -251,7 +262,7 @@ export class CoordinadorService {
     });
   }
 
-  deleteCarrera(id_carrera: string): Observable<any>{
+  deleteCarrera(id_carrera: string): Observable<any> {
     return this.http.delete(`${this.apiURL}/careers/${id_carrera}`, {
       headers: { 'ngrok-skip-browser-warning': 'true' },
     });
@@ -263,17 +274,17 @@ export class CoordinadorService {
     });
   }
 
-  deleteAsignaturaDeProfesor(credenciales: any): Observable<any>{
+  deleteAsignaturaDeProfesor(credenciales: any): Observable<any> {
     return this.http.delete(`${this.apiURL}/subject_teacher`, {
       headers: { 'ngrok-skip-browser-warning': 'true' },
       body: credenciales
     })
   }
 
-  deleteAsignaturaCargaAcademica(credenciales: any): Observable<any>{
+  deleteAsignaturaCargaAcademica(credenciales: any): Observable<any> {
     return this.http.delete(`${this.apiURL}/academic_load-subject/`, {
       headers: { 'ngrok-skip-browser-warning': 'true' },
-       body: credenciales
-     })
+      body: credenciales
+    })
   }
 }

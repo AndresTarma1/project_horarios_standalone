@@ -112,12 +112,7 @@ export class AutomaticoComponent implements OnInit {
             ${res.advertencia}`,
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonText: 'Ver horario',
             cancelButtonText: 'Listo',
-          }).then((result) => {
-            if (result.isConfirmed) {
-              this.router.navigate([`../index`, horario.id_group], { relativeTo: this.route});
-            }
           });
         }else{
           Swal.fire({

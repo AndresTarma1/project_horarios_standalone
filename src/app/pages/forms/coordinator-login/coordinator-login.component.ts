@@ -28,7 +28,9 @@ export default class CoordinatorLoginComponent {
   loginCoordinador(){
     this.loginService.loginCoordinador(this.coordinatorLogin.value).subscribe(
       (res: any) => {
+        console.log(res);
         if(res.ok){
+          console.log(res);
           let coordinador: any = res.coor;
           coordinador.token = res.token;
           localStorage.setItem('coordinador', JSON.stringify(coordinador));

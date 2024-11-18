@@ -65,7 +65,6 @@ export class CreateComponent implements OnInit {
   }
 
   crearCarrera(): void{
-    console.log(this.carreraForm.value);
     this.coordinadorService.postCarreraConCargas(this.carreraForm.value).subscribe(
       (res: any) => {
         if(res.ok){
@@ -88,8 +87,15 @@ export class CreateComponent implements OnInit {
             icon: 'error'
           });
         }
-      }
-    )
+      },
+      (error: any) => {
+        Swal.fire({
+          title: 'error',
+          text: `El servidor no responde. Por favor, inténtelo de nuevo.`,
+          icon: 'error'
+          });
+      })
+      ;
   }
 
   eliminarCargaAcademica(index: number) {

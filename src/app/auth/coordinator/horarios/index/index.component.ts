@@ -2,58 +2,131 @@ import { Component, inject, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { CoordinadorService } from '../../../../core/services/coordinador.service';
 import { CommonModule } from '@angular/common';
-import { ScheduleComponent } from '../../../../components/schedule/schedule.component';
-import { map, Observable } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
-import { ErrorServidorComponent } from "../../../../components/error-servidor/error-servidor.component";
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { FormsModule } from '@angular/forms';
+import { HorarioService } from '../../../../core/services/horario.service';
+import { ScheduleComponent } from '../../../../components/schedule/schedule.component';
 
 @Component({
   selector: 'app-index',
   standalone: true,
-  imports: [CommonModule, FormsModule, ScheduleComponent],
+  imports: [CommonModule, FormsModule,ScheduleComponent],
   templateUrl: './index.component.html',
   styleUrl: './index.component.css',
 })
 export class IndexComponent implements OnInit {
 
-  public horario$: Observable<any>;
   public grupos$: Observable<any>;
+  public profesores$: Observable<any>;
+  public carreras$: Observable<any>;
+  public horario$: Observable<any>;
+
+  buscarPor: number = 0;
+  id_search: string = '';
+
+  label_search: string[] = ['Carga Académica','Maestro', 'Grupo']
 
   private coordinadorService: CoordinadorService = inject(CoordinadorService);
+  private horarioService: HorarioService = inject(HorarioService);
 
-  grupo_id: string;
 
-  constructor(private activeRoute: ActivatedRoute) {
-    let id_grupo;
-    activeRoute.paramMap.subscribe((param: any) => {
-      id_grupo = param.id;
-    });
-
-    if (id_grupo) {
-
-    } else {
-
-    }
-    this.grupos$ = this.coordinadorService.getGrupos();
-  }
-
-  buscarHorario() {
-    if(!this.grupo_id){
+  buscarOpciones(): void{
+    if(  this.buscarPor == 0){
       return;
     }else{
-      this.horario$ = this.coordinadorService.getHorario(this.grupo_id).pipe(
-        map( (res: any) => {
-          if(!res.horario){
-            res.horario = [];
-          }
-        return res;
-      })
-      );
+      switch(this.buscarPor){
+        case 1:
+          this.carreras$ = this.coordinadorService.getCarreras();
+          break;
+
+        case 2:
+          this.profesores$ = this.coordinadorService.getProfesores().pipe(
+            map((res: any) => {
+              if(!res.teachers){
+                res.teachers = [];
+              }
+              return res;
+            })
+          );
+
+          break;
+        case 3:
+          this.grupos$ = this.coordinadorService.getGrupos();
+        break;
+
+        default:
+          break;
+      }
     }
   }
 
-
+  constructor() {
+  }
 
   ngOnInit(): void {}
+
+  habilitarButton(): boolean{
+    if(this.buscarPor != 0 && this.id_search != ''){
+      return false;
+    }
+    else{
+      return true;
+    }
+  }
+
+  buscarHorario(): void{
+
+    if(this.buscarPor){
+
+      switch(this.buscarPor){
+
+        case 1:
+          this.horario$ = this.horarioService.getHorarioCargaAcademica(parseInt(this.id_search)).pipe(
+            map( (res: any) => {
+              if(!res.ok){
+                Swal.fire({
+                  title: 'Error',
+                  text: 'La carga académica no contiene horarios',
+                  icon: 'error',
+                }).then(() => { this.horario$ = new BehaviorSubject(null);});
+              }
+              return res;
+            })
+          );
+
+          break;
+
+        case 2:
+          this.horario$ = this.horarioService.getHorarioMaestro(this.id_search.toString()).pipe(
+            map( (res: any) => {
+              if(!res.ok){
+                Swal.fire({
+                  title: 'Error',
+                  text: `${res.msg}`,
+                  icon: 'error',
+                }).then(() => { this.horario$ = new BehaviorSubject(null);});
+              }
+              return res;
+            })
+          );
+          break;
+
+        case 3:
+        this.horario$ = this.horarioService.getHorarioGrupo(parseInt(this.id_search)).pipe(
+          map( (res: any) => {
+            if(!res.ok){
+              Swal.fire({
+                title: 'Error',
+                text: 'El grupo no contiene horarios',
+                icon: 'error',
+              }).then(() => { this.horario$ = new BehaviorSubject(null);});
+            }
+            return res;
+          })
+        );
+        break;
+      }
+    }
+  }
+
 }

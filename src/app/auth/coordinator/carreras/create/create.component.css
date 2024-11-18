@@ -48,23 +48,12 @@ textarea {
 }
 
 button {
-  background-color: #007bff;
-  color: white;
-  border: none;
   padding: 10px 15px;
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
-button:hover {
-  background-color: #0056b3;
-}
-
-button:disabled {
-  background-color: #6c757d;
-  cursor: not-allowed;
-}
 
 .careers-container {
   background-color: #f8f9fa;
@@ -122,4 +111,8 @@ button:disabled {
   margin: 5px 0 0;
   color: #6c757d;
   font-size: 14px;
+}
+
+*{
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif !important;
 }

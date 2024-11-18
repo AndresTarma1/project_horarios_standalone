@@ -2,11 +2,11 @@
 
   <br>
 
-  <h2 class="text-center text-uppercase">Carreras Academicas</h2>
+  <h2 class="text-center  p-4 bg-white text-uppercase">Carreras Academicas</h2>
 
   <hr class="my-2">
 
-  <div class="container">
+  <div class="container  p-4 bg-white rounded">
 
     <div class="form-group">
       <label class="form-label" for="filter-search">Buscar por nombre de la carrera</label>
@@ -55,7 +55,7 @@
 
       <hr class="my-3">
 
-      <div class="section-secundary pb-5">
+      <div class="section-secundary  pb-5">
         @if (selectedCarrera.id) {
           <div class="row">
             <div class="col-8">
@@ -83,7 +83,7 @@
                           <div ngbAccordionBody>
                               <ng-template>
                                   <!-- Botón para añadir asignatura -->
-                                  <button (click)="openModalAsignatura(cargaAcademica)" class="btn btn-primary mb-3">
+                                  <button (click)="openModalAsignatura(cargaAcademica)" class="btn btn-outline-primary mb-3">
                                       <i class="bi bi-plus"></i> Añadir Asignatura
                                   </button>
 
@@ -94,7 +94,7 @@
                                                   {{ asignatura.name }}
 
                                                   <!-- Botón para eliminar asignatura -->
-                                                  <button (click)="deleteAsignatura(cargaAcademica, asignatura)" class="btn btn-danger btn-sm">
+                                                  <button (click)="deleteAsignatura(cargaAcademica, asignatura)" class="btn btn-outline-danger btn-sm">
                                                       <i class="bi bi-trash"></i>
                                                   </button>
                                               </li>
