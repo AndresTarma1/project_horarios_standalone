@@ -35,10 +35,6 @@ export class IndexComponent implements OnInit {
       return;
     }else{
       switch(this.buscarPor){
-        case 1:
-          this.carreras$ = this.coordinadorService.getCarreras();
-          break;
-
         case 2:
           this.profesores$ = this.coordinadorService.getProfesores().pipe(
             map((res: any) => {
@@ -51,7 +47,14 @@ export class IndexComponent implements OnInit {
 
           break;
         case 3:
-          this.grupos$ = this.coordinadorService.getGrupos();
+          this.grupos$ = this.coordinadorService.getGrupos().pipe(
+            map((res: any) => {
+              if(!res.groups){
+                res.groups = [];
+              }
+              return res;
+            })
+          );
         break;
 
         default:
@@ -79,23 +82,6 @@ export class IndexComponent implements OnInit {
     if(this.buscarPor){
 
       switch(this.buscarPor){
-
-        case 1:
-          this.horario$ = this.horarioService.getHorarioCargaAcademica(parseInt(this.id_search)).pipe(
-            map( (res: any) => {
-              if(!res.ok){
-                Swal.fire({
-                  title: 'Error',
-                  text: 'La carga académica no contiene horarios',
-                  icon: 'error',
-                }).then(() => { this.horario$ = new BehaviorSubject(null);});
-              }
-              return res;
-            })
-          );
-
-          break;
-
         case 2:
           this.horario$ = this.horarioService.getHorarioMaestro(this.id_search.toString()).pipe(
             map( (res: any) => {

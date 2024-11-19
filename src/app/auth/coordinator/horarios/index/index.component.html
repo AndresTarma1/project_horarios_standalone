@@ -11,7 +11,6 @@
         <label for="select1" class="form-label">Buscar horario de: </label>
         <select (change)="buscarOpciones()" [(ngModel)]="buscarPor" id="select1" name="buscarPor" class="form-select">
           <option [ngValue]="0" selected>Seleccione una opción...</option>
-          <option [ngValue]="1">Carga Académica</option>
           <option [ngValue]="2">Maestro</option>
           <option [ngValue]="3">Grupo</option>
         </select>
@@ -21,22 +20,6 @@
         <label for="select2" class="form-label">{{ label_search[buscarPor-1] || 'Seleccione una opción' }}</label>
         <select [(ngModel)]="id_search" id="select2" name="id_search" class="form-select">
           @switch (buscarPor) {
-
-            @case (1) {
-              @if (carreras$ | async; as carrerasInfo) {
-                <option value="">Seleccione una carrera</option>
-                @for (carrera of carrerasInfo.data; track $index) {
-                  @for (cargas of carrera.academic_loads; track $index) {
-                    <option [value]="carrera.id">{{ carrera.name }} -- {{ cargas.name }}</option>
-                  }
-                }@empty {
-                  <option value="" selected>No hay carreras académicas disponibles</option>
-                }
-              }@else {
-                <option>Cargando carreras</option>
-              }
-            }
-
             <!-- Opciones para Maestro -->
             @case (2) {
               @if (profesores$ | async; as profesoresInfo) {

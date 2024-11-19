@@ -29,7 +29,7 @@ interface Message {
 })
 export class MainComponent {
 
-  grupo: string = 'Grupo 1';
+  grupo: string = '';
   estudianteService: StudentService = inject(StudentService);
   $horario: Observable<any>;
 
@@ -38,6 +38,18 @@ export class MainComponent {
   ngOnInit(): void {
     this.estudiante = JSON.parse(localStorage.getItem('estudiante')!);
     this.buscarHorarioHoy();
+    this.buscarGrupo();
+  }
+
+  buscarGrupo(){
+    this.estudianteService.getGrupo(this.estudiante.id).subscribe(
+      (res: any) => {
+        if(res.ok){
+          this.grupo = res.group.name;
+        }else{
+          this.grupo = 'No tiene grupo';
+        }
+      });
   }
 
   buscarHorarioHoy(){

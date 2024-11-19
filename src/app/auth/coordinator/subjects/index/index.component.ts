@@ -60,7 +60,11 @@ export class IndexComponent implements OnInit{
 
     this.botonSeleccionado = id_subject;
     this.asignaturasPertenecientes$ = this.coordinadorService.getProfesoresConCargaAcademica(id_subject).pipe(
-      retry({delay: 4000})
+      retry({delay: 4000}),
+      map( (res: any) => {
+        console.log(res);
+        return res;
+      })
     );
   }
 
