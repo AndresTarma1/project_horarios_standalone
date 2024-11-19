@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { LoginService } from '../../../core/services/login.service';
 import { CommonModule } from '@angular/common';
+import { Estudiante } from '../../../interfaces/estudiante.interface';
 
 @Component({
   selector: 'app-student-login',
@@ -27,7 +28,6 @@ export default class StudentLoginComponent {
   }
 
   loginStudent(){
-
     this.loginService.loginEstudiante(this.studentLogin.value).subscribe(
       (res: any) => {
         if(res.ok){

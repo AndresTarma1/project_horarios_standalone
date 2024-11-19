@@ -1,50 +1,77 @@
-<div class="container profile-container mt-4">
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <h1 class="h2">Perfil del Administrador</h1>
-    <button (click)="editProfile()" class="btn btn-primary">Editar Perfil</button>
-  </div>
 
-  <!-- Información Personal y de Contacto en columnas -->
-  <div class="row">
-    <div class="col-md-6 mb-4">
-      <section class="profile-section p-3 shadow-sm">
-        <h2 class="h5">Información Personal</h2>
-        <p><strong>Nombre:</strong> {{ admin.name }} {{ admin.lastName }}</p>
-        <p><strong>Identificación:</strong> {{ admin.identify }}</p>
-        <p><strong>Departamento:</strong> {{ admin.department }}</p>
-      </section>
-    </div>
-    <div class="col-md-6 mb-4">
-      <section class="profile-section p-3 shadow-sm">
-        <h2 class="h5">Información de Contacto</h2>
-        <p><strong>Email:</strong> {{ admin.email }}</p>
-        <p><strong>Teléfono:</strong> {{ admin.phone }}</p>
-      </section>
-    </div>
-  </div>
+  <div class="row justify-content-center h-100 my-auto w-100">
+    <div class="col-12 col-md-8">
+      <div class="card text-start">
+        <div class="mx-4 mt-4 d-flex justify-content-between align-items-center">
+          <h5>User Profile</h5>
+          <button (click)="toggleEdit()" class="btn btn-outline-secondary">
+            <i class="bi bi-pencil"></i>
+          </button>
+        </div>
 
-  <!-- Accesos y Actividades Recientes en columnas -->
-  <div class="row">
-    <div class="col-md-6 mb-4">
-      <section class="profile-section p-3 shadow-sm">
-        <h2 class="h5">Accesos y Roles</h2>
-        <p><strong>Rol:</strong> {{ admin.role }}</p>
-        <ul class="list-unstyled">
-          <li *ngFor="let permiso of admin.permissions" class="bg-light p-2 rounded mb-1">
-            {{ permiso }}
-          </li>
-        </ul>
-      </section>
-    </div>
-    <div class="col-md-6 mb-4">
-      <section class="profile-section p-3 shadow-sm">
-        <h2 class="h5">Actividades Recientes</h2>
-        <ul class="list-unstyled">
-          <li *ngFor="let activity of recentActivities" class="bg-light p-2 rounded mb-1">
-            {{ activity.date }} - {{ activity.description }}
-          </li>
-        </ul>
-      </section>
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <img src="/assets/placeholders/image.png" alt="User Avatar" class="img-fluid rounded-circle mr-3" style="max-width: 80px; height: auto;">
+            <div class="ms-3 mt-3 w-100">
+              <!-- Formulario en modo edición -->
+              <div *ngIf="isEditing">
+                <form [formGroup]="formulario" >
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label for="name" class="form-label">Nombre</label>
+                      <input id="name" formControlName="name" type="text" class="form-control" aria-label="Nombre del coordinador">
+                    </div>
+                    <div class="col-md-6">
+                      <label for="last_name" class="form-label">Apellido</label>
+                      <input id="last_name" formControlName="last_name" type="text" class="form-control" aria-label="Apellido del coordinador">
+                    </div>
+                  </div>
+                  <div class="my-2">
+                    <label for="email" class="form-label">Correo</label>
+                    <input id="email" type="email" formControlName="email" class="form-control" aria-label="Correo del coordinador">
+                  </div>
+
+                  <div class="my-2">
+                    <label for="phone" class="form-label">Telefono</label>
+                    <input id="phone" type="tel" formControlName="phone" class="form-control" aria-label="Correo del coordinador">
+                  </div>
+
+                </form>
+
+              </div>
+              @if (!isEditing) {
+                <h5 class="mb-0"></h5>
+                <p class="text-muted">Administrador</p>
+              }
+            </div>
+          </div>
+          <hr>
+
+          <div class="text-start">
+
+            <div class="my-2">
+              <p><strong>Identificación:</strong></p>
+              <p class="text-muted"></p>
+            </div>
+
+            <div class="my-2">
+              <p><strong>Teléfono:</strong></p>
+              <p class="text-muted"></p>
+            </div>
+
+            <div class="my-2">
+              <p><strong>Correo:</strong></p>
+              <p class="text-muted"></p>
+            </div>
+
+          </div>
+
+          <!-- Botones de Guardar y Cancelar cuando está en modo edición -->
+          <div *ngIf="isEditing" class="d-flex justify-content-end mt-4">
+            <button  type="button" class="btn btn-outline-primary me-2">Guardar Cambios</button>
+            <button (click)="cancelEdit()" type="button" class="btn btn-outline-secondary">Cancelar</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</div>

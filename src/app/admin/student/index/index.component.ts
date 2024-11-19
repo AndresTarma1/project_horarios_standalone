@@ -1,6 +1,6 @@
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { catchError, map, Observable } from 'rxjs';
+import { catchError, map, Observable, retry } from 'rxjs';
 import { AdminService } from '../../../core/services/admin-service.service';
 import { TableComponent } from "../../../components/table/table.component";
 import { NgxSpinner, NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
@@ -41,6 +41,7 @@ export class IndexComponent implements OnInit {
         }
         return res;
       }),
+      retry({count: 5, delay: 4000}),
       catchError ((err: any) => {
         this.error = true;
         throw new Error("Ah ocurrido un error en el servidor");

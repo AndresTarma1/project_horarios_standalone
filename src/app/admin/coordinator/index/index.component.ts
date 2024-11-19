@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { AdminService } from '../../../core/services/admin-service.service';
-import { catchError, map, Observable } from 'rxjs';
+import { catchError, delay, map, Observable, retry } from 'rxjs';
 import { TableComponent } from "../../../components/table/table.component";
 import { CommonModule } from '@angular/common';
 import { Coordinador, columnasCoordinador } from '../../../interfaces/coordinador.interface';
@@ -43,11 +43,12 @@ export class IndexComponent implements OnInit {
         }
         return res;
       }),
+      retry({count: 5, delay: 4000}),
       catchError( (err: any) =>
         {
           this.error = true;
           throw new Error("Ha ocurrido un error");
-        })
+      })
     );
   }
 

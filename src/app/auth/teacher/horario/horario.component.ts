@@ -3,6 +3,7 @@ import { ScheduleComponent } from "../../../components/schedule/schedule.compone
 import { NgxSpinnerService } from 'ngx-spinner';
 import { TeacherService } from '../../../core/services/teacher.service';
 import { CommonModule } from '@angular/common';
+import { map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-horario',
@@ -14,32 +15,23 @@ import { CommonModule } from '@angular/common';
 export class HorarioComponent {
 
   profesor:any;
-  hayHorario = false;
-  horario: any= [] ;
+
+  horario$: Observable<any>;
 
   constructor(private teacherService: TeacherService, private spinner: NgxSpinnerService){
   }
 
   ngOnInit(): void {
     this.profesor = JSON.parse(localStorage.getItem('profesor')!);
-    this.spinner.show();
-    this.teacherHorario();
+    this.buscarHorario();
   }
 
 
-  teacherHorario(){
-    this.teacherService.getHorario(this.profesor.id).subscribe(
-      (res: any) => {
-
-        // console.log(res);
-        if(res.ok){
-          this.hayHorario = true;
-          this.horario = res.horario
-        }else{
-          this.hayHorario = false;
-        }
-        this.spinner.hide();
-      }
-    );
+  buscarHorario(){
+      this.horario$ = this.teacherService.getHorario(this.profesor.id).pipe(
+        map((res: any) => {
+          return res;
+        })
+      );
   }
 }

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { Estudiante } from '../../interfaces/estudiante.interface';
 
 @Component({
   selector: 'app-student',
@@ -9,11 +10,22 @@ import { Router, RouterModule } from '@angular/router';
   templateUrl: './student.component.html',
   styleUrl: './student.component.css'
 })
-export class StudentComponent {
+export class StudentComponent implements OnInit {
 
   router = inject(Router);
+  estudiante: Estudiante;
 
-  isSidebarActive: boolean = false;
+  constructor(){
+
+  }
+
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    this.estudiante = JSON.parse(localStorage.getItem('estudiante')!);
+  }
+
+  isSidebarActive: boolean = true;
 
   toggleSidebar() {
     this.isSidebarActive = !this.isSidebarActive;

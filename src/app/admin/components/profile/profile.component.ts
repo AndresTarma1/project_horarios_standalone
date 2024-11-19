@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-profile',
@@ -11,24 +11,27 @@ import { FormGroup, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 })
 export class ProfileComponent {
 
-  admin = {
-    name: 'Juan',
-    lastName: 'Pérez',
-    identify: '12345678',
-    department: 'Recursos Humanos',
-    email: 'juan.perez@example.com',
-    phone: '+123456789',
-    role: 'Administrador',
-    permissions: ['Crear usuarios', 'Editar configuraciones', 'Ver reportes']
-  };
+  isEditing = false;
 
-  recentActivities = [
-    { date: '2024-11-01', description: 'Accedió a la configuración del sistema' },
-    { date: '2024-11-03', description: 'Actualizó el perfil de usuario' },
-    { date: '2024-11-05', description: 'Generó un reporte de actividad' }
-  ];
+  toggleEdit(){
+    this.isEditing = !this.isEditing;
+  }
+
+  formulario: FormGroup = this.fb.group({
+    name: ['', ],
+    last_name: ['', ],
+    email: [{value: '', disabled: true}, [Validators.required, Validators.email]],
+    phone: [{value: '', disabled: true}, [Validators.required]],
+  });
+
+  constructor(private fb: FormBuilder){
+  }
 
   editProfile() {
-    // Lógica para editar el perfil
+
+  }
+
+  cancelEdit(){
+    this.isEditing = false;
   }
 }

@@ -8,14 +8,6 @@
 
   <div class="container  p-4 bg-white rounded">
 
-    <div class="form-group">
-      <label class="form-label" for="filter-search">Buscar por nombre de la carrera</label>
-      <div class="input-group">
-          <input class="form-control" type="text" placeholder="eje: Ingenieria en sistemas">
-          <span class="search-icon"><i class="bi bi-search text-end"></i></span>
-      </div>
-    </div>
-
       <div class="row my-4 carrers-container">
 
         @if (carreras$ | async; as carrerasInfo) {

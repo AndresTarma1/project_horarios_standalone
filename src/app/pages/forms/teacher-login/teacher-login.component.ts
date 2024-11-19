@@ -35,7 +35,6 @@ export default class TeacherLoginComponent {
     this.loginService.loginProfesor(this.teacherLogin.value)
     .subscribe(
       (res:any) => {
-        console.log(res);
         if(res.ok){
           localStorage.setItem('profesor', JSON.stringify(res.teacher));
           this.router.navigateByUrl('teacher');

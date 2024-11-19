@@ -3,6 +3,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { StudentService } from '../../../core/services/student.service';
 import { CommonModule } from '@angular/common';
 import { ScheduleComponent } from "../../../components/schedule/schedule.component";
+import { delay, map, Observable, retry } from 'rxjs';
 
 @Component({
   selector: 'app-horario',
@@ -13,30 +14,31 @@ import { ScheduleComponent } from "../../../components/schedule/schedule.compone
 })
 export class HorarioComponent {
   estudiante:any = {};
-  hayHorario = false;
-  horario: any= [] ;
 
+  horario$: Observable<any>;
   constructor(private studentService: StudentService, private spinner: NgxSpinnerService){
+
   }
+
 
   ngOnInit(): void {
     this.estudiante = JSON.parse(localStorage.getItem('estudiante')!);
-    this.spinner.show();
     this.estudianteHorario();
   }
 
+  grupoEstudiante(){
+
+  }
 
   estudianteHorario(){
-    this.studentService.getHorario(this.estudiante.id).subscribe(
-      (res: any) => {
-        if(res.ok){
-          this.hayHorario = true;
-          this.horario = res.horario
-        }else{
-          this.hayHorario = false;
+    this.horario$ = this.studentService.getHorario(this.estudiante.id).pipe(
+      retry({delay: 4000}),
+      map( (res: any) => {
+        if(!res.horario){
+          res.horario = [];
         }
-        this.spinner.hide();
-      }
+        return res;
+      })
     );
   }
 }

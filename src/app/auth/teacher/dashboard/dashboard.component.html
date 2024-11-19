@@ -2,29 +2,15 @@
   <div class="row">
     <main class="col-12 px-md-4">
       <div class="text-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Dashboard del Estudiante</h1>
+        <h1 class="h2">Dashboard del Profesor</h1>
       </div>
-
-      <div class="row g-4 mb-4">
-        <div class="col-12">
-          <div class="card">
-            <div class="card-body d-flex align-items-center justify-content-center">
-              <div>
-                <h5 class="card-title">Mi Grupo</h5>
-                <p class="card-text display-6 mb-0">{{ grupo }}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
 
       <div class="row mt-5">
         <div class="col-12">
           <div class="card">
             <div class="card-body">
               <h4 class="card-title text-start">Horario de Clases</h4>
-              @if ($horario| async; as horarioInfo) {
+              @if (horario$| async; as horarioInfo) {
                 @if (horarioInfo.horario) {
                   <p class="card-text text-muted text-start">Tu horario para hoy</p>
                   <div class="table-responsive">

@@ -9,13 +9,13 @@ export const routes: Routes = [{
 },{
   path: 'admin', canActivate: [] ,loadChildren: () => import('./admin/admin-navbar/admin.routes'), title: 'Admin'
 },{
-  path: 'coordinator', canActivate: [] ,loadChildren: () => import('./auth/coordinator/nav-bar/coordinator.routes')
+  path: 'coordinator', canActivate: [authGuardCoordinador] ,loadChildren: () => import('./auth/coordinator/nav-bar/coordinator.routes')
 },
 {
-  path: 'student', canActivate: [] , loadChildren: () => import('./auth/student/student.routes')
+  path: 'student', canActivate: [authGuardEstudiante] , loadChildren: () => import('./auth/student/student.routes')
 },
 {
-  path: 'teacher', canActivate: [] , loadChildren: () => import('./auth/teacher/teacher.routes')
+  path: 'teacher', canActivate: [authGuardProfesor] , loadChildren: () => import('./auth/teacher/teacher.routes')
 },
 {
   path: '', redirectTo: '/main', pathMatch: 'full'

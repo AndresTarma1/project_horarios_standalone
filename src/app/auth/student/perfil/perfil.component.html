@@ -1,53 +1,78 @@
-<div class="seccion-perfil-usuario">
-  <div class="perfil-usuario-header">
-    <div class="perfil-usuario-portada">
-      <div class="perfil-usuario-avatar">
-        <img class="img-fluid"
-          src="https://static.vecteezy.com/system/resources/previews/014/300/061/non_2x/man-profile-glyph-icon-anonymous-photo-for-documents-illustration-vector.jpg"
-          alt="img-avatar">
+<div class="container h-100 d-flex justify-content-center align-items-center">
+  <div class="row justify-content-center w-100">
+    <div class="col-12 col-md-8">
+      <div class="card text-start">
+        <div class="mx-4 mt-4 d-flex justify-content-between align-items-center">
+          <h5>User Profile</h5>
+          <button (click)="toggleEdit()" class="btn btn-outline-secondary">
+            <i class="bi bi-pencil"></i>
+          </button>
+        </div>
+
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <img src="/assets/placeholders/image.png" alt="User Avatar" class="img-fluid rounded-circle mr-3" style="max-width: 80px; height: auto;">
+            <div class="ms-3 mt-3 w-100">
+              <!-- Formulario en modo edición -->
+              <div *ngIf="isEditing">
+                <form  [formGroup]="formuliario">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label for="name" class="form-label">Nombre</label>
+                      <input id="name" formControlName="name" type="text" class="form-control" aria-label="Nombre del coordinador">
+                    </div>
+                    <div class="col-md-6">
+                      <label for="last_name" class="form-label">Apellido</label>
+                      <input id="last_name" formControlName="last_name" type="text" class="form-control" aria-label="Apellido del coordinador">
+                    </div>
+                  </div>
+                  <div class="my-2">
+                    <label for="email" class="form-label">Correo</label>
+                    <input id="email" type="email" formControlName="email" class="form-control" aria-label="Correo del coordinador">
+                  </div>
+
+                  <div class="my-2">
+                    <label for="phone" class="form-label">Telefono</label>
+                    <input id="phone" type="tel" formControlName="phone" class="form-control" aria-label="Correo del coordinador">
+                  </div>
+
+                </form>
+
+              </div>
+              @if (!isEditing) {
+                <h5 class="mb-0">{{ estudiante.name }} {{ estudiante.last_name }}</h5>
+                <p class="text-muted">Estudiante</p>
+              }
+            </div>
+          </div>
+          <hr>
+
+          <div class="text-start">
+
+            <div class="my-2">
+              <p><strong>Identificación:</strong></p>
+              <p class="text-muted">{{ estudiante.identify }}</p>
+            </div>
+
+            <div class="my-2">
+              <p><strong>Teléfono:</strong></p>
+              <p class="text-muted">{{ estudiante.phone }}</p>
+            </div>
+
+            <div class="my-2">
+              <p><strong>Correo:</strong></p>
+              <p class="text-muted">{{ estudiante.email }}</p>
+            </div>
+
+          </div>
+
+          <!-- Botones de Guardar y Cancelar cuando está en modo edición -->
+          <div *ngIf="isEditing" class="d-flex justify-content-end mt-4">
+            <button type="button" (click)="saveEdit()" class="btn btn-outline-primary me-2">Guardar Cambios</button>
+            <button type="button" (click)="cancelEdit()" class="btn btn-outline-secondary">Cancelar</button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="perfil-usuario-body">
-    <div class="perfil-usuario-bio">
-      <h3 class="titulo"> {{ estudiante.name }} </h3>
-      <p class="texto">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-        labore et dolore magna aliqua.</p>
-    </div>
-    <div class="perfil-usuario-footer w-100">
-      <ul class="lista-datos w-100">
-        <li>
-          <div class="row">
-            <div class="col">Teléfono: </div>
-            <div class="col">{{ estudiante.phone }}</div>
-          </div>
-        </li>
-        <li>
-          <div class="row">
-            <div class="col">email: </div>
-            <div class="col">{{ estudiante.email }}</div>
-          </div>
-        </li>
-        <!-- <li>
-          <div class="row">
-            <div class="col">Semestre:</div>
-            <div class="col">2</div>
-          </div>
-        </li> -->
-        <!-- <li>
-          <div class="row">
-            <div class="col">Carrera: </div>
-            <div class="col">{{ estudiante.carrera }}</div>
-          </div>
-        </li> -->
-        <li>
-          <div class="row">
-            <div class="col">Documento: </div>
-            <div class="col">{{ estudiante.identify }}</div>
-          </div>
-        </li>
-      </ul>
-    </div>
-
   </div>
 </div>

@@ -40,10 +40,11 @@ export class IndexComponent implements OnInit {
         }
         return res;
       }),
+      retry({count: 5, delay: 4000}),
       catchError( (err: any) => {
         this.error = true;
         throw new Error("Ah ocurrido un error");
-      })
+      }),
     )
   }
 

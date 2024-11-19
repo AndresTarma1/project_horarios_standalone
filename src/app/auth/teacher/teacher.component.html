@@ -1,46 +1,45 @@
 <div class="container_">
-
-  <div class="sidebar">
-    <nav class="nav flex-column">
-      <a routerLinkActive="active" class="nav-link" routerLink="main">
-        <span class="icon">
-          <i class="bi bi-grid"></i>
-        </span>
-        <span class="description">Dashboard</span>
-      </a>
-
-      <a routerLinkActive="active" class="nav-link" routerLink="perfil">
-        <span class="icon">
+  <div class="sidebar" [ngClass]="{ active: isSidebarActive }" id="sidebarMenu">
+    <div class="sidebar-header">
+      <img src="/assets/placeholders/image.png" alt="Profile Image" />
+      <h5>{{ profesor.name }}</h5>
+      <p>Profesor</p>
+    </div>
+    <ul class="nav flex-column p-3">
+      <li class="nav-item">
+        <a routerLink="dashboard" class="nav-link">
+          <i class="bi bi-house-door-fill"></i>
+          Dashboard
+        </a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="perfil" class="nav-link">
           <i class="bi bi-person-circle"></i>
-        </span>
-        <span class="description">Perfil</span>
-      </a>
-      <a routerLinkActive="active" class="nav-link" routerLink="horario">
-        <span class="icon">
-          <i class="bi bi-calendar"></i>
-        </span>
-        <span class="description">Horario</span>
-      </a>
-      <a routerLink="config" routerLinkActive="active" class="nav-link" routerLink="config">
-        <span class="icon">
-          <i class="bi bi-gear"></i>
-        </span>
-        <span class="description">Configuracion</span>
-      </a>
-
-
-      <a class="nav-link mt-auto" href="" (click)="logout()">
-        <span class="icon">
-          <i class="bi bi-box-arrow-left"></i>
-        </span>
-        <span class="description">Logout</span>
-      </a>
-    </nav>
+          Perfil
+        </a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="horario" class="nav-link">
+          <i class="bi bi-calendar-check-fill"></i>
+          Horario
+        </a>
+      </li>
+      <li class="nav-item logout-item">
+        <a style="cursor: pointer;" (click)="logout()" class="nav-link">
+          <i class="bi bi-box-arrow-right"></i>
+          Logout
+        </a>
+      </li>
+    </ul>
   </div>
-
-  <section  class="main-content">
-    <router-outlet></router-outlet>
-  </section>
-
+  <button
+    [class.menu-inactivo]="!isSidebarActive"
+    class="toggle-btn"
+    (click)="toggleSidebar()"
+  >
+    ☰
+  </button>
+    <div class="section-main bg-body-secondary overflow-auto text-center" [class.margin-content]="isSidebarActive">
+      <router-outlet></router-outlet>
+    </div>
 </div>
-

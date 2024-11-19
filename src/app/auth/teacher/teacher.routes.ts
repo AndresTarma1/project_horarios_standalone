@@ -6,8 +6,9 @@ export const routes: Routes = [
     path: '', component: TeacherComponent,
     children: [
       {
-        path: 'config', loadComponent: () => import('./config/config.component').then( c => c.ConfigComponent)
-      },
+        path: 'dashboard', loadComponent: () => import('./dashboard/dashboard.component').then( (c) => c.DashboardComponent),
+      }
+      ,
       {
         path: 'perfil', loadComponent: () => import('./perfil/perfil.component').then( c => c.PerfilComponent)
       },

@@ -15,6 +15,13 @@ export class TeacherService {
 
   constructor() {}
 
+  patchMe(profesor: any): Observable<any>{
+    return this.http.patch(`${this.urlAPI}/teacher/${profesor.id}`,
+      profesor,
+      { headers: {'ngrok-skip-browser-warning':'true'}
+    });
+  }
+
   getHorario(id: string): Observable<any>{
     return this.http.get(`${this.urlAPI}/teacher/show-schedule/${id}`, { headers: {'ngrok-skip-browser-warning':'true'} });
   }
