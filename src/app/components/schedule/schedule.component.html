@@ -1,65 +1,29 @@
 <div class="container mt-4">
   <h2 class="text-center text-secondary">Horario De Clases</h2>
   <div class="table-responsive">
-    <table class="table schedule-table">
+    <table class="table table-bordered schedule-table">
       <thead>
         <tr>
-          <th class="time-block">Horas</th>
-          <th>Lunes</th>
-          <th>Martes</th>
-          <th>Miércoles</th>
-          <th>Jueves</th>
-          <th>Viernes</th>
-          <th>Sábado</th>
+          <th>Hora</th>
+          @for (dia of dias; track $index) {
+            <th class="time-block">{{ dia | titlecase }}</th>
+          }
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th class="text-hora time-block">8:00 - 10:00</th>
-          <td class="text-asignatura">{{ horarioTransformado_.lunes[0]  | titlecase }}</td>
-          <td class="text-asignatura">{{ horarioTransformado_.martes[0] | titlecase }}</td>
-          <td class="text-asignatura">{{ horarioTransformado_.miercoles[0] | titlecase }}</td>
-          <td class="text-asignatura">{{ horarioTransformado_.jueves[0] | titlecase }}</td>
-          <td class="text-asignatura">{{ horarioTransformado_.viernes[0] | titlecase }}</td>
-          <td class="text-asignatura">{{ horarioTransformado_.sabado[0] | titlecase }}</td>
-        </tr>
-        <tr>
-          <th class="text-hora time-block">10:00 - 12:00</th>
-          <td class="text-asignatura">{{ horarioTransformado_.lunes[1] | titlecase }}</td>
-          <td class="text-asignatura">{{ horarioTransformado_.martes[1] | titlecase }}</td>
-          <td class="text-asignatura">{{ horarioTransformado_.miercoles[1] | titlecase }}</td>
-          <td class="text-asignatura">{{ horarioTransformado_.jueves[1] | titlecase }}</td>
-          <td class="text-asignatura">{{ horarioTransformado_.viernes[1] | titlecase }}</td>
-          <td class="text-asignatura">{{ horarioTransformado_.sabado[1] | titlecase }}</td>
-        </tr>
-        <tr>
-          <th class="text-hora time-block">12:00 - 14:00</th>
-          <td class="text-asignatura">{{ horarioTransformado_.lunes[2] | titlecase }}</td>
-          <td class="text-asignatura">{{ horarioTransformado_.martes[2] | titlecase }}</td>
-          <td class="text-asignatura">{{ horarioTransformado_.miercoles[2] | titlecase }}</td>
-          <td class="text-asignatura">{{ horarioTransformado_.jueves[2] | titlecase }}</td>
-          <td class="text-asignatura">{{ horarioTransformado_.viernes[2] | titlecase }}</td>
-          <td class="text-asignatura">{{ horarioTransformado_.sabado[2] | titlecase }}</td>
-        </tr>
-        <tr>
-          <th class="text-hora time-block">14:00 - 16:00</th>
-          <td class="text-asignatura">{{ horarioTransformado_.lunes[3]  | titlecase}}</td>
-          <td class="text-asignatura">{{ horarioTransformado_.martes[3] | titlecase }}</td>
-          <td class="text-asignatura">{{ horarioTransformado_.miercoles[3] | titlecase }}</td>
-          <td class="text-asignatura">{{ horarioTransformado_.jueves[3] | titlecase }}</td>
-          <td class="text-asignatura">{{ horarioTransformado_.viernes[3] | titlecase }}</td>
-          <td class="text-asignatura">{{ horarioTransformado_.sabado[3] | titlecase }}</td>
-        </tr>
-        <tr>
-          <th class="text-hora time-block">16:00 - 18:00</th>
-          <td class="text-asignatura">{{ horarioTransformado_.lunes[4]  | titlecase}}</td>
-          <td class="text-asignatura">{{ horarioTransformado_.martes[4] | titlecase }}</td>
-          <td class="text-asignatura">{{ horarioTransformado_.miercoles[4] | titlecase }}</td>
-          <td class="text-asignatura">{{ horarioTransformado_.jueves[4] | titlecase }}</td>
-          <td class="text-asignatura">{{ horarioTransformado_.viernes[4] | titlecase }}</td>
-          <td class="text-asignatura">{{ horarioTransformado_.sabado[4] | titlecase }}</td>
-        </tr>
+        @for (hora of horas;let i = $index; track $index) {
+          <tr>
+            <td class="text-hora">{{ hora }}</td>
+            @for (dia of dias; track $index) {
+              @if (horarioTransformado[dia][i]; as clase) {
+                <td class="text-center align-content-center text-asignatura" [rowSpan]="clase.rowspan">{{ clase.name }}</td>
+              }
+            }
+          </tr>
+        }
       </tbody>
     </table>
+
+
   </div>
 </div>

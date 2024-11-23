@@ -3,9 +3,8 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { CoordinadorService } from '../../../../../core/services/coordinador.service';
-import { group } from '@angular/animations';
-import { StarIcon } from 'primeng/icons/star';
 import Swal from 'sweetalert2';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 interface Horario {
   'h:i': string;
@@ -64,7 +63,7 @@ export class ManualComponent implements OnInit {
   ngOnInit(): void {
       this.obtenerCarreras();
   }
-  constructor(private fb: FormBuilder){
+  constructor(private fb: FormBuilder, private modalService: NgbModal){
 
   }
 
@@ -145,24 +144,33 @@ export class ManualComponent implements OnInit {
     let credenciales = {
       'id_subject' : this.horarioForm.controls['id_subject'].value,
       'id_teacher' : this.horarioForm.controls['id_teacher'].value,
-      'id_group' : this.horarioForm.controls['id_group'].value
+      'id_group' : this.horarioForm.controls['id_group'].value,
     }
 
 
     if(credenciales.id_group){
       this.coordinadorService.getProfesoresDisponibilidad(credenciales).subscribe(
         (res: any) => {
-          const devolverHoraDia = (dia: string)  =>{
-            return Object.values(res.dias_horas[dia]) as [{'h:i': string, 'h:f': string}];
-          }
-          Object.keys(res.dias_horas).forEach(
-            (valor: string) =>  {
-              this.diasDisponibles.push({
-                dia: valor,
-                horas: devolverHoraDia(valor)
-              });
+
+          if(res.ok){
+            const devolverHoraDia = (dia: string)  =>{
+              return Object.values(res.dias_horas[dia]) as [{'h:i': string, 'h:f': string}];
             }
-          );
+            Object.keys(res.dias_horas).forEach(
+              (valor: string) =>  {
+                this.diasDisponibles.push({
+                  dia: valor,
+                  horas: devolverHoraDia(valor)
+                });
+              }
+            );
+          }else{
+            Swal.fire({
+              title: 'Espera',
+              text: `${res.msg}`,
+              icon: 'warning'
+            })
+          }
         }
       );
     }else{
@@ -206,4 +214,5 @@ export class ManualComponent implements OnInit {
 
     )
   }
+
 }

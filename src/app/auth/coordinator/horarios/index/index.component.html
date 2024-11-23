@@ -68,7 +68,10 @@
 
   <div class="container-fluid mt-3 bg-white p-4 rounded">
     @if (horario$| async; as horarioInfo) {
-      <app-schedule [horario]="horarioInfo.horario"></app-schedule>
+      @if (horarioInfo.ok) {
+        <button (click)="borrarHorario()" class="btn btn-outline-danger">Borrar horario</button>
+        <app-schedule [horario]="horarioInfo.horario"></app-schedule>
+      }
     }@else {
       <div class="text-center">
         <h3>No hay horarios disponibles</h3>

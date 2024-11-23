@@ -51,7 +51,7 @@ export class CoordinatorDashboardComponent implements OnInit {
   obtenerDatos(): void {
     this.coordinadorService.getEstudiantes().subscribe(
       (res: any) => {
-        if(res.ok){
+        if(res.student){
           this.estudiantes_lenght = res.student.length;
         }else{
           this.estudiantes_lenght = 0;
@@ -61,7 +61,7 @@ export class CoordinatorDashboardComponent implements OnInit {
 
     this.coordinadorService.getGrupos().subscribe(
       (res: any) => {
-        if(res.ok){
+        if(res.groups){
           this.grupos_lenght = res.groups.length;
         }else{
           this.grupos_lenght = 0;
@@ -71,7 +71,7 @@ export class CoordinatorDashboardComponent implements OnInit {
 
     this.coordinadorService.getProfesores().subscribe(
       (res: any) => {
-        if(res.ok){
+        if(res.teachers){
           this.profesores_lenght = res.teachers.length;
         }else{
           this.profesores_lenght = 0;

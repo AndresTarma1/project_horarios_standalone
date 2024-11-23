@@ -25,7 +25,8 @@ export class EditModalComponent {
     this.editForm = this.fb.group({
       id: [{ value: '', disabled: true }],  // El id será deshabilitado
       name: ['', Validators.required],
-      description: ['', Validators.required]
+      description: ['', Validators.required],
+      hours_week: ['', Validators.required],
     });
   }
 
@@ -34,7 +35,8 @@ export class EditModalComponent {
       this.editForm.patchValue({
         id: this.asignatura.id,
         name: this.asignatura.name,
-        description: this.asignatura.description
+        description: this.asignatura.description,
+        hours_week: this.asignatura.hours_week,
       });
     }
   }

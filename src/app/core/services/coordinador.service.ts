@@ -262,6 +262,13 @@ export class CoordinadorService {
     });
   }
 
+  deleteHorarioCompleto(id_group: string): Observable<any>{
+    return this.http.delete(`${this.apiURL}/group/delete-schedule`, {
+      headers: { 'ngrok-skip-browser-warning': 'true' },
+      params: { 'id_group': id_group},
+    });
+  }
+
   deleteCarrera(id_carrera: string): Observable<any> {
     return this.http.delete(`${this.apiURL}/careers/${id_carrera}`, {
       headers: { 'ngrok-skip-browser-warning': 'true' },

@@ -23,6 +23,7 @@ export class IndexComponent implements OnInit {
 
   buscarPor: number = 0;
   id_search: string = '';
+  opcion: boolean = false;
 
   label_search: string[] = ['Carga Académica','Maestro', 'Grupo']
 
@@ -36,6 +37,7 @@ export class IndexComponent implements OnInit {
     }else{
       switch(this.buscarPor){
         case 2:
+          this.opcion = false;
           this.profesores$ = this.coordinadorService.getProfesores().pipe(
             map((res: any) => {
               if(!res.teachers){
@@ -47,6 +49,7 @@ export class IndexComponent implements OnInit {
 
           break;
         case 3:
+          this.opcion = true;
           this.grupos$ = this.coordinadorService.getGrupos().pipe(
             map((res: any) => {
               if(!res.groups){
@@ -100,6 +103,7 @@ export class IndexComponent implements OnInit {
         case 3:
         this.horario$ = this.horarioService.getHorarioGrupo(parseInt(this.id_search)).pipe(
           map( (res: any) => {
+            console.log(res);
             if(!res.ok){
               Swal.fire({
                 title: 'Error',
@@ -113,6 +117,45 @@ export class IndexComponent implements OnInit {
         break;
       }
     }
+  }
+
+  borrarHorario(){
+    if (this.id_search) {
+      Swal.fire({
+        title: '¿Estás seguro?',
+        text: 'No podrás deshacer esta acción',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, borrar',
+        cancelButtonText: 'Cancelar',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.coordinadorService.deleteHorarioCompleto(this.id_search).subscribe(
+            (res: any) => {
+              if (res.ok) {
+                Swal.fire({
+                  title: 'Éxito',
+                  text: 'El horario ha sido eliminado',
+                  icon: 'success',
+                }).then(() => {
+                  this.buscarHorario();
+                });
+              }
+            },
+            (error) => {
+              Swal.fire({
+                title: 'Error',
+                text: 'No se pudo eliminar el horario',
+                icon: 'error',
+              });
+            }
+          );
+        }
+      });
+    }
+
   }
 
 }

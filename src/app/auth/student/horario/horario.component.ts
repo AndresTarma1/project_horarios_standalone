@@ -26,14 +26,11 @@ export class HorarioComponent {
     this.estudianteHorario();
   }
 
-  grupoEstudiante(){
-
-  }
-
   estudianteHorario(){
     this.horario$ = this.studentService.getHorario(this.estudiante.id).pipe(
       retry({delay: 4000}),
       map( (res: any) => {
+        console.log(res);
         if(!res.horario){
           res.horario = [];
         }

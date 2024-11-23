@@ -22,47 +22,103 @@ interface Dia {
 export class ScheduleComponent implements OnInit {
 
   @Input() horario: any;
-  horarioTransformado_ : any;
 
   ngOnInit(): void {
-    this.horarioTransformado_ = this.transformarHorario(this.horario);
+    this.procesarHorario();
+    console.log(this.horario);
   }
 
-  transformarHorario(horario: any): any {
-    const horarioTransformado : any = {
-      lunes: ['', '', '', '', ''],
-      martes: ['', '', '', '', ''],
-      miercoles: ['', '', '', '', ''],
-      jueves: ['', '', '', '', ''],
-      viernes: ['', '', '', '', ''],
-      sabado: ['', '', '', '', '']
-    };
+  dias = [
+      'lunes'
+    , 'martes'
+    , 'miercoles'
+    , 'jueves'
+    , 'viernes'
+    , 'sabado'
+  ];
 
-    horario.forEach((dia: any) => {
-      dia.clases.forEach((clase: any) => {
-        const horaInicio = clase["h:i"];
-        const indiceHora = this.obtenerIndiceHora(horaInicio);
 
-        if (indiceHora !== -1) {
-          horarioTransformado[dia.dia][indiceHora] = clase.name;
-        }
-      });
-    });
+  horas = [
+      '08:00'
+    , '09:00'
+    , '10:00'
+    , '11:00'
+    , '12:00'
+    , '13:00'
+    , '14:00'
+    , '15:00'
+    , '16:00'
+    , '17:00'
+    , '18:00'
+  ];
 
-    return horarioTransformado;
+  horarioTransformado: any = {}; // Objeto que contendrá las clases organizadas por días y horas
+
+procesarHorario() {
+  this.horarioTransformado = {}; // Reinicia el horario
+
+  for (const dia of this.dias) {
+    this.horarioTransformado[dia] = this.horas.map(() => null); // Inicializa cada hora como `null`
   }
 
-  obtenerIndiceHora(horaInicio: string): number {
-    const horas: any = {
-      "08:00:00": 0,
-      "10:00:00": 1,
-      "12:00:00": 2,
-      "14:00:00": 3,
-      "16:00:00": 4
-    };
+  for (const diaData of this.horario) {
+    const dia = diaData.dia;
+    for (const clase of diaData.clases) {
+      const inicioIndex = this.horas.indexOf(clase['h:i']);
+      const finIndex = this.horas.indexOf(clase['h:f']);
 
-    return horas[horaInicio] !== undefined ? horas[horaInicio] : -1;
+      if (inicioIndex === -1 || finIndex === -1) continue;
+
+      // Asignar la clase a la hora inicial
+      this.horarioTransformado[dia][inicioIndex] = { ...clase, rowspan: finIndex - inicioIndex };
+
+      // Rellena las horas intermedias con un marcador para evitar celdas duplicadas
+      for (let i = inicioIndex + 1; i < finIndex; i++) {
+        this.horarioTransformado[dia][i] = null;
+      }
+    }
   }
+}
+
+
+
+
+
+  // transformarHorario(horario: any): any {
+  //   const horarioTransformado : any = {
+  //     lunes: ['', '', '', '', ''],
+  //     martes: ['', '', '', '', ''],
+  //     miercoles: ['', '', '', '', ''],
+  //     jueves: ['', '', '', '', ''],
+  //     viernes: ['', '', '', '', ''],
+  //     sabado: ['', '', '', '', '']
+  //   };
+
+  //   horario.forEach((dia: any) => {
+  //     dia.clases.forEach((clase: any) => {
+  //       const horaInicio = clase["h:i"];
+  //       const indiceHora = this.obtenerIndiceHora(horaInicio);
+
+  //       if (indiceHora !== -1) {
+  //         horarioTransformado[dia.dia][indiceHora] = clase.name;
+  //       }
+  //     });
+  //   });
+
+  //   return horarioTransformado;
+  // }
+
+  // obtenerIndiceHora(horaInicio: string): number {
+  //   const horas: any = {
+  //     "08:00:00": 0,
+  //     "10:00:00": 1,
+  //     "12:00:00": 2,
+  //     "14:00:00": 3,
+  //     "16:00:00": 4
+  //   };
+
+  //   return horas[horaInicio] !== undefined ? horas[horaInicio] : -1;
+  // }
 
 
 }

@@ -19,7 +19,7 @@ export class AsignarMateriasModalComponent implements OnInit{
   asignaturas: any = [];
   selectedAsignatura: number | null = null;
   mostrarCrearNueva = false;
-  nuevaAsignatura = { name: '', description: '' };
+  nuevaAsignatura = { name: '', description: '', hours_week: ''};
 
 
   constructor(private coordinadorService: CoordinadorService, private activateModal: NgbActiveModal){
@@ -33,11 +33,10 @@ export class AsignarMateriasModalComponent implements OnInit{
   obtenerAsignaturas(){
     this.coordinadorService.getAsignaturas().subscribe(
       (res: any) => {
-
-        if(res.asignaturas){
+        if(!res.subjects){
           this.asignaturas = [];
         }else{
-          this.asignaturas = res.asignaturas;
+          this.asignaturas = res.subjects;
         }
       }
     );
