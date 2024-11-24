@@ -7,7 +7,7 @@
   <div class="form-group mb-3">
     <label for="selectAsignatura">Asignaturas Existentes</label>
     <select [disabled]="mostrarCrearNueva" id="selectAsignatura" class="form-control" [(ngModel)]="selectedAsignatura">
-      @if (asignaturas) {
+      @if (asignaturas.length > 0) {
         @for (asignatura of asignaturas; track $index) {
           <option [value]="asignatura.id">{{ asignatura.name }}</option>
         }

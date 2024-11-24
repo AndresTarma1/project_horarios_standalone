@@ -33,8 +33,8 @@ export default class TeacherLoginComponent {
 
     // console.log(this.teacherLogin.value);
     this.loginService.loginProfesor(this.teacherLogin.value)
-    .subscribe(
-      (res:any) => {
+    .subscribe({
+      next: (res:any) => {
         if(res.ok){
           localStorage.setItem('profesor', JSON.stringify(res.teacher));
           this.router.navigateByUrl('teacher');
@@ -45,7 +45,12 @@ export default class TeacherLoginComponent {
             icon: 'info'
           })
         }
+      },
+      error: (err: any) => {
+        alert('El servidor no responde');
       }
+    }
+      
     )
   }
 }

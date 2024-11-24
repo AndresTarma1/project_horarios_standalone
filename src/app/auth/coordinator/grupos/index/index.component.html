@@ -38,18 +38,20 @@
                 </button>
               </div>
             </div>
+          }@empty {
+            <div class="h4">No hay grupos disponibles.</div>
           }
-          <div class="align-items-end">
-            <pagination-controls
-              class="text-center"
-              nextLabel="Siguiente"
-              previousLabel="Anterior"
-              (pageChange)="p = $event"
-            ></pagination-controls>
-          </div>
-        } @else {
-          <div class="h4">No hay grupos disponibles.</div>
-        }
+          @if (gruposInfo.groups.length > 0) {
+            <div class="align-items-end">
+              <pagination-controls
+                class="text-center"
+                nextLabel="Siguiente"
+                previousLabel="Anterior"
+                (pageChange)="p = $event"
+              ></pagination-controls>
+            </div>
+          }
+        } 
       </div>
 
       <hr class="my-3">

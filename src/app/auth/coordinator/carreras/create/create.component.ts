@@ -67,6 +67,7 @@ export class CreateComponent implements OnInit {
   crearCarrera(): void{
     this.coordinadorService.postCarreraConCargas(this.carreraForm.value).subscribe(
       (res: any) => {
+        console.log(res);
         if(res.ok){
           Swal.fire({
             title: 'Exito',
@@ -89,6 +90,7 @@ export class CreateComponent implements OnInit {
         }
       },
       (error: any) => {
+        console.log(error);
         Swal.fire({
           title: 'error',
           text: `El servidor no responde. Por favor, inténtelo de nuevo.`,

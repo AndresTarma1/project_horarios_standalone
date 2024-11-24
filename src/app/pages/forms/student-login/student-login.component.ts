@@ -28,8 +28,8 @@ export default class StudentLoginComponent {
   }
 
   loginStudent(){
-    this.loginService.loginEstudiante(this.studentLogin.value).subscribe(
-      (res: any) => {
+    this.loginService.loginEstudiante(this.studentLogin.value).subscribe({
+      next: (res: any) => {
         if(res.ok){
           localStorage.setItem('estudiante', JSON.stringify(res.student));
           this.router.navigateByUrl('student');
@@ -40,7 +40,11 @@ export default class StudentLoginComponent {
             icon: 'info'
           })
         }
+      },
+      error: (err: any) => {
+        alert('El servidor no responde');
       }
-    );
+  })
+      
   }
 }

@@ -1,13 +1,13 @@
 <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
   <div class="container-fluid mt-4">
     <h3 class="text-center text-primary">Creación De Horarios</h3>
-    <p class="text-center text-secondary">Sistema De Creación De Horarios De Clases</p>
+    <p class="text-center text-secondary">Sistema De Creación De Horarios Semiautomatico</p>
 
     <hr class="border border-3 opacity-75 mb-4" />
 
     <div class="row">
       <!-- Formulario -->
-      <div class="col-lg-6 form-horario">
+      <div class="col-xl-6 col-12 form-horario">
         <form (ngSubmit)="crearHorario()" [formGroup]="horarioForm" class="bg-light p-4 rounded shadow-sm">
           <div class="mb-3">
             <label for="carrera" class="form-label"><strong>Carreras</strong></label>
@@ -94,7 +94,7 @@
       </div>
 
       <!-- Pasos -->
-      <div class="col-lg-6 pasos">
+      <div class="col-xl-6 col-12 pasos">
         <fieldset class="mx-auto border rounded-3 p-4 bg-light shadow-sm">
           <legend class="float-none w-auto px-3">Creación de horarios</legend>
           <h3 class="text-center text-primary">Pasos</h3>

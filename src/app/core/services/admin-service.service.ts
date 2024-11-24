@@ -55,6 +55,10 @@ export class AdminService {
     return this.http.patch(`${this.apiUrl}/coordinator/${coordinador.id}`, coordinador, { headers: this.baseHeader});
   }
 
+  putMe(admin: any): Observable<any>{
+    return this.http.patch(`${this.apiUrl}/admin/${admin.id}`, admin, { headers: this.baseHeader});
+  }
+
   deleteProfesor(id: string): Observable<any>{
     return this.http.delete(`${this.apiUrl}/teacher/${id}`, { headers: this.baseHeader });
   }

@@ -27,21 +27,27 @@ export default class CoordinatorLoginComponent {
 
   loginCoordinador(){
     this.loginService.loginCoordinador(this.coordinatorLogin.value).subscribe(
-      (res: any) => {
-        if(res.ok){
-          console.log(res);
-          let coordinador: any = res.coor;
-          coordinador.token = res.token;
-          localStorage.setItem('coordinador', JSON.stringify(coordinador));
-          this.router.navigateByUrl('/coordinator');
-        }else{
-          Swal.fire({
-            title: 'Error',
-            text: `${res.msg}`,
-            icon: 'info'
-          })
+      {
+        next:  (res: any) => {
+          if(res.ok){
+            console.log(res);
+            let coordinador: any = res.coor;
+            coordinador.token = res.token;
+            localStorage.setItem('coordinador', JSON.stringify(coordinador));
+            this.router.navigateByUrl('/coordinator');
+          }else{
+            Swal.fire({
+              title: 'Error',
+              text: `${res.msg}`,
+              icon: 'info'
+            })
+          }
+        },
+        error: (err: any) => {
+          alert('El servidor no responde');
         }
       }
+      
     );
   }
 

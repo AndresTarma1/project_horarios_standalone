@@ -1,3 +1,3 @@
 export const environment = {
-  apiUrl: 'https://virtually-suited-racer.ngrok-free.app/api'
+  apiUrl: 'https://eternal-cricket-highly.ngrok-free.app/api'
 };

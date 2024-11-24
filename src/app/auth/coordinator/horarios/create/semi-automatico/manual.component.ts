@@ -84,28 +84,7 @@ export class SemiAutomaticoComponent {
     let id_grupo = this.horarioForm.controls['id_group'].value;
 
     if(id_grupo){
-        this.asignaturas$ = this.coordinadorService.getAsignaturasCargaAcademica(cargaAcademica).pipe( map( (res: any) => {
-          if(!res.ok){
-            Swal.fire({
-              title: 'Error',
-              text: 'Esta carga academica no contiene asignaturas',
-              icon: 'error'
-            });
-          }
-          return res;
-        }),
-        catchError( (err: any) => {
-          if(!err.error.ok){
-            Swal.fire({
-              title: 'Error',
-              text: 'Esta carga academica no contiene asignaturas',
-              icon: 'error'
-            });
-          }
-          throw new Error('Ah ocurrido un error');
-        })
-
-      );
+        this.asignaturas$ = this.coordinadorService.getAsignaturasCargaAcademica(cargaAcademica);
     }else{
       this.horarioForm.patchValue({
         id_subject: '',

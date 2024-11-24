@@ -114,6 +114,10 @@ export class CoordinadorService {
     });
   }
 
+  getCarreraDeUnGrupo(): void{
+    
+  }
+
   getEstudiantes(): Observable<any> {
     return this.http.get(`${this.apiURL}/student`, { headers: { 'ngrok-skip-browser-warning': 'true' } })
   }

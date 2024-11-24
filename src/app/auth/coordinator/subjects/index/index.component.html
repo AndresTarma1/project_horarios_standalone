@@ -28,7 +28,7 @@
           </p>
           @for (asignatura of asignaturasInfo.subjects | paginate : { itemsPerPage: 6, currentPage: p, totalItems: total(asignaturasInfo) }; track $index) {
             <div class="col-12 col-md-6 col-lg-4 mb-3">
-              <div class="btn-group w-100" role="group" aria-label="asignatura actions">
+              <div class="btn-group h-100 w-100" role="group" aria-label="asignatura actions">
                 <button [ngClass]="{'active' : botonSeleccionado === asignatura.id}"
                         (click)="buscarInformacionAsignatura(asignatura.id)"
                         class="btn btn-outline-secondary w-100">
@@ -93,7 +93,9 @@
               <p class="text-muted">Lista de cargas académicas en las que está incluida esta asignatura.</p>
               <ul class="list-group">
                 @for (cargaAcademica of asignaturasPertenecientesInfo.cargas; track $index) {
-                  <li class="list-group-item">{{ cargaAcademica.name }}</li>
+                  <li class="list-group-item">
+                    {{ cargaAcademica.name }} <br>
+                  </li>
                 } @empty {
                   <li class="list-group-item">Ninguna carga académica contiene esta asignatura.</li>
                 }

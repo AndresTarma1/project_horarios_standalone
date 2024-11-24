@@ -155,7 +155,9 @@ export class IndexComponent {
           text: `El grupo ${grupo.name} sido eliminado correctamente`,
           icon: 'success',
         }).then(() => {
+          this.selectedGrupo = {id: null};
           this.obtenerEstudiantesPorGrupo();
+          this.obtenerGrupos();
         });
       } else {
         Swal.fire({
@@ -236,6 +238,7 @@ export class IndexComponent {
               icon: 'success',
             }).then(() => {
               this.obtenerEstudiantesPorGrupo();
+              this.obtenerGrupos()
             });
           } else {
             Swal.fire({

@@ -80,25 +80,41 @@ export class ManualComponent implements OnInit {
     }else{
       this.horarioForm.patchValue({
         'id_academic_load': '',
-        'id_subject': '',
         'id_group': '',
+        'id_subject': '',
         'id_teacher': '',
         'disponibilidad': ''
       });
       this.$cargas_academicas = new BehaviorSubject(null);
+      this.obtenerGrupos();
+    }
+  }
+
+  obtenerGrupos(): void{
+    let id_carga_academica = this.horarioForm.controls['id_academic_load'].value;
+    if(id_carga_academica){
+      this.$grupos = this.coordinadorService.getGrupos();
+    }else{
+      this.horarioForm.patchValue({
+        'id_group': '',
+        'id_subject': '',
+        'id_teacher': '',
+        'disponibilidad': ''
+      });
+      this.$grupos = new BehaviorSubject(null);
       this.obtenerAsignaturas();
     }
   }
 
   obtenerAsignaturas(): void{
     let id_carga_academica = this.horarioForm.controls['id_academic_load'].value;
+    let grupo = this.horarioForm.controls['id_group'].value;
 
-    if(id_carga_academica){
+    if(id_carga_academica && grupo){
       this.$asignaturas = this.coordinadorService.getAsignaturasCargaAcademica(id_carga_academica);
     }else{
       this.horarioForm.patchValue({
         'id_subject': '',
-        'id_group': '',
         'id_teacher': '',
         'disponibilidad': ''
       });
@@ -111,31 +127,22 @@ export class ManualComponent implements OnInit {
   obtenerMaestros(): void{
     let id_asignatura = this.horarioForm.controls['id_subject'].value;
 
+
     if(id_asignatura){
+
       this.$profesores = this.coordinadorService.getProfesoresAsignatura(id_asignatura);
+      
     }else{
       this.horarioForm.patchValue({
-        'id_group': '',
         'id_teacher': '',
         'disponibilidad': ''
       });
       this.$profesores = new BehaviorSubject(null);
-      this.obtenerGrupos();
-    }
-  }
-
-  obtenerGrupos(): void{
-    if(this.horarioForm.controls['id_teacher'].value){
-      this.$grupos = this.coordinadorService.getGrupos();
-    }else{
-      this.horarioForm.patchValue({
-        'id_teacher': '',
-        'disponibilidad': ''
-      });
-      this.$grupos = new BehaviorSubject(null);
       this.obtenerDisponibilidad();
     }
   }
+
+  
 
   diasDisponibles: DiaDisponible[] = [];
   dia_hora: any;
@@ -181,9 +188,9 @@ export class ManualComponent implements OnInit {
 
   controlarDias(){
     const disponibilidad = this.horarioForm.controls['disponibilidad'].value;
-    const regex = /(\w+) (\d{2}:\d{2}:\d{2}) -- (\d{2}:\d{2}:\d{2})/;
+    const regex = /(\w+) (\d{1,2}:\d{2}:\d{2}) -- (\d{2}:\d{2}:\d{2})/;
     const match = disponibilidad.match(regex);
-
+    
     if(match){
       this.horarioForm.get('day')?.setValue(match[1]);
       this.horarioForm.get('hi')?.setValue(match[2]);
@@ -193,6 +200,7 @@ export class ManualComponent implements OnInit {
   }
 
   crearHorario(){
+    console.log(this.horarioForm.value);
     this.coordinadorService.postHorarioManual(this.horarioForm.value).subscribe(
       (res: any) => {
         if(res.ok){

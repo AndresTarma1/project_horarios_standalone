@@ -32,8 +32,8 @@ export default class AdminLoginComponent {
       return;
     }
 
-    this.loginService.loginAdmin(this.adminLogin.value).subscribe(
-      (res: any) => {
+    this.loginService.loginAdmin(this.adminLogin.value).subscribe({
+      next: (res: any) => {
         if(res.ok){
           localStorage.setItem('admin', JSON.stringify(res.admin));
           this.router.navigateByUrl('admin');
@@ -44,7 +44,11 @@ export default class AdminLoginComponent {
             icon: 'info'
           })
         }
+      },
+      error: (err: any) => {
+        alert('El servidor no responde');
       }
-    );
+  })
+      
   }
 }
