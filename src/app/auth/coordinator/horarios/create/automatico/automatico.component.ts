@@ -109,7 +109,7 @@ export class AutomaticoComponent implements OnInit {
           Swal.fire({
             title: 'Exito...',
             html: `${mensaje}
-            ${res.advertencia}`,
+            ${res.advertencia}`.toLowerCase(),
             icon: 'warning',
             showCancelButton: true,
             cancelButtonText: 'Listo',

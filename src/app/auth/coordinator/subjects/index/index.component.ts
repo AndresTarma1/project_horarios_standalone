@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, delay, map, Observable, retry } from 'rxjs';
+import { BehaviorSubject, delay, pipe, map, Observable, retry } from 'rxjs';
 import { CoordinadorService } from '../../../../core/services/coordinador.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -21,12 +21,47 @@ export class IndexComponent implements OnInit{
 
   asignaturas$: Observable<any>;
   asignaturasPertenecientes$: Observable<any>;
+  asignaturasFiltradas$: Observable<any>;
 
   p: number = 1;
   tamañoAsignaturas: number = 0;
   botonSeleccionado: number | null = null;
 
   constructor(private coordinadorService: CoordinadorService, private modalService: NgbModal){
+  }
+
+  filterInput: string = '';
+  filtrarAsignaturas(): void{
+    
+    console.log(1);
+    if (this.filterInput.length > 0) {
+      this.asignaturasFiltradas$ = this.asignaturas$;
+
+      this.asignaturasFiltradas$.subscribe(
+        (res: any) => {
+          console.log(res);
+        }
+      )
+      this.asignaturas$ = this.asignaturasFiltradas$.pipe(
+        map((res: any) =>
+          {
+            res.subjects = res.subjects.filter((subject: any) => {
+              if(subject.name.toLowerCase().includes(this.filterInput.toLowerCase())){
+                return subject;
+              }
+            
+            }
+
+          )
+          console.log(res);
+          return res;
+        }
+        )
+      );
+    } else {
+      // Si no hay filtro, mostramos todas las asignaturas
+      this.asignaturas$ = this.asignaturasFiltradas$;
+    }
   }
 
   ngOnInit(): void {

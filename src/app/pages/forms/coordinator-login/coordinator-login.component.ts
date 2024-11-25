@@ -30,7 +30,6 @@ export default class CoordinatorLoginComponent {
       {
         next:  (res: any) => {
           if(res.ok){
-            console.log(res);
             let coordinador: any = res.coor;
             coordinador.token = res.token;
             localStorage.setItem('coordinador', JSON.stringify(coordinador));

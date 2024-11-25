@@ -41,6 +41,35 @@ export class IndexComponent {
   public grupos$: Observable<any>;
   public EstudiantesPorGrupo$: Observable<any>;
 
+
+  filtroInput: string = '';
+  gruposFiltrados$: Observable<any>;
+  filtrarGrupos(){
+
+    if (this.filtroInput.length > 0) {
+      this.gruposFiltrados$ = this.grupos$;
+
+      this.grupos$ = this.gruposFiltrados$.pipe(
+        map((res: any) =>
+          {
+            res.groups = res.groups.filter((group: any) => {
+              if(group.name.toLowerCase().includes(this.filtroInput.toLowerCase())){
+                return group;
+              }
+            
+            }
+
+          )
+          return res;
+        }
+        )
+      );
+    } else {
+      // Si no hay filtro, mostramos todas las asignaturas
+      this.grupos$ = this.gruposFiltrados$;
+    }
+
+  }
   error = false;
 
   p: number = 1;

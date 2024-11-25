@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
+import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 
 
@@ -15,7 +16,7 @@ interface Dia {
 @Component({
   selector: 'app-schedule',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NgbPopoverModule],
   templateUrl: './schedule.component.html',
   styleUrl: './schedule.component.css'
 })
@@ -29,30 +30,45 @@ export class ScheduleComponent implements OnInit {
   }
 
   dias = [
-      'lunes'
-    , 'martes'
-    , 'miercoles'
-    , 'jueves'
-    , 'viernes'
-    , 'sabado'
-  ];
+    'lunes'
+  , 'martes'
+  , 'miercoles'
+  , 'jueves'
+  , 'viernes'
+  , 'sabado'
+];
 
 
-  horas = [
-      '08:00'
-    , '09:00'
-    , '10:00'
-    , '11:00'
-    , '12:00'
-    , '13:00'
-    , '14:00'
-    , '15:00'
-    , '16:00'
-    , '17:00'
-    , '18:00'
-  ];
+horas = [
 
-  horarioTransformado: any = {}; // Objeto que contendrá las clases organizadas por días y horas
+  '08:00'
+  , '09:00'
+  , '10:00'
+  , '11:00'
+  , '12:00'
+  , '13:00'
+  , '14:00'
+  , '15:00'
+  , '16:00'
+  , '17:00'
+  , '18:00'
+];
+
+horasFinal = [
+  , '09:00'
+  , '10:00'
+  , '11:00'
+  , '12:00'
+  , '13:00'
+  , '14:00'
+  , '15:00'
+  , '16:00'
+  , '17:00'
+  , '18:00'
+  , '19:00'
+]
+
+horarioTransformado: any = {}; // Objeto que contendrá las clases organizadas por días y horas
 
 procesarHorario() {
   this.horarioTransformado = {}; // Reinicia el horario
@@ -74,12 +90,13 @@ procesarHorario() {
 
       // Rellena las horas intermedias con un marcador para evitar celdas duplicadas
       for (let i = inicioIndex + 1; i < finIndex; i++) {
-        this.horarioTransformado[dia][i] = null;
+        this.horarioTransformado[dia][i] = { covered: true }; // Usa un marcador para celdas cubiertas
       }
     }
   }
-}
 
+  console.log(this.horarioTransformado);
+}
 
 
 

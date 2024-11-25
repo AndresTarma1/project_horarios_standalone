@@ -45,37 +45,39 @@ export class SemiAutomaticoComponent {
 
   obtenerCargasAcademicas(): void{
     let id_carrera =this.horarioForm.controls['id_career'].value;
+    
+    this.horarioForm.patchValue({
+      id_career: '',
+      id_academic_load: '',
+      id_group: '',
+      id_subject: '',
+      id_teacher: '',
+    });
+
+    this.cargaAcademicas$ = new BehaviorSubject(null);
+    this.obtenerGrupos()
+    
     if(id_carrera){
       this.cargaAcademicas$ = this.coordinadorService.getCargasAcademicasCarrera(id_carrera);
-    }else{
-      this.horarioForm.patchValue({
-        id_career: '',
-        id_academic_load: '',
-        id_group: '',
-        id_subject: '',
-        id_teacher: '',
-      });
-
-      this.cargaAcademicas$ = new BehaviorSubject(null);
-      this.obtenerGrupos()
     }
   }
 
 
   obtenerGrupos() : void{
     let id_carga_academica = this.horarioForm.controls['id_academic_load'].value;
+    
+    this.horarioForm.patchValue({
+      id_academic_load: '',
+      id_group: '',
+      id_subject: '',
+      id_teacher: '',
+    });
+
+    this.grupos$ = new BehaviorSubject(null);
+    this.obtenerAsignaturas()
+
     if(id_carga_academica){
       this.grupos$ = this.coordinadorService.getGrupos();
-    }else{
-      this.horarioForm.patchValue({
-        id_academic_load: '',
-        id_group: '',
-        id_subject: '',
-        id_teacher: '',
-      });
-
-      this.grupos$ = new BehaviorSubject(null);
-      this.obtenerAsignaturas()
     }
   }
 
@@ -83,31 +85,27 @@ export class SemiAutomaticoComponent {
     let cargaAcademica = this.horarioForm.controls['id_academic_load'].value;
     let id_grupo = this.horarioForm.controls['id_group'].value;
 
+    this.horarioForm.patchValue({
+      id_subject: '',
+      id_teacher: '',
+    });
+
+    this.asignaturas$ = new BehaviorSubject(null);
+    this.obtenerProfesores();
     if(id_grupo){
-        this.asignaturas$ = this.coordinadorService.getAsignaturasCargaAcademica(cargaAcademica);
-    }else{
-      this.horarioForm.patchValue({
-        id_subject: '',
-        id_teacher: '',
-      });
-
-      this.asignaturas$ = new BehaviorSubject(null);
-      this.obtenerProfesores();
-
+      this.asignaturas$ = this.coordinadorService.getAsignaturasCargaAcademica(cargaAcademica);
     }
 }
 
   obtenerProfesores(): void{
     let asignatura: string = this.horarioForm.controls['id_subject'].value;
 
+    this.horarioForm.patchValue({
+      id_teacher: '',
+    });
+    this.profesores$ = new BehaviorSubject(null);
     if(asignatura){
       this.profesores$ = this.coordinadorService.getProfesoresAsignatura(asignatura);
-    }else{
-      this.horarioForm.patchValue({
-        id_teacher: '',
-      });
-
-      this.profesores$ = new BehaviorSubject(null);
     }
 
   }

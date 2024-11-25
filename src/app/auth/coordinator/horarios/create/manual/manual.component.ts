@@ -74,72 +74,65 @@ export class ManualComponent implements OnInit {
   obtenerCargasAcademicas(): void{
 
     let id_academic_load = this.horarioForm.controls['id_career'].value;
-
+    this.horarioForm.patchValue({
+      'id_academic_load': '',
+      'id_group': '',
+      'id_subject': '',
+      'id_teacher': '',
+      'disponibilidad': ''
+    });
+    this.$cargas_academicas = new BehaviorSubject(null);
+    this.obtenerGrupos();
+    
     if(id_academic_load){
       this.$cargas_academicas = this.coordinadorService.getCargasAcademicasCarrera(id_academic_load);
-    }else{
-      this.horarioForm.patchValue({
-        'id_academic_load': '',
-        'id_group': '',
-        'id_subject': '',
-        'id_teacher': '',
-        'disponibilidad': ''
-      });
-      this.$cargas_academicas = new BehaviorSubject(null);
-      this.obtenerGrupos();
     }
   }
 
   obtenerGrupos(): void{
     let id_carga_academica = this.horarioForm.controls['id_academic_load'].value;
+    this.horarioForm.patchValue({
+      'id_group': '',
+      'id_subject': '',
+      'id_teacher': '',
+      'disponibilidad': ''
+    });
+    this.obtenerAsignaturas();
+    this.$grupos = new BehaviorSubject(null);
     if(id_carga_academica){
       this.$grupos = this.coordinadorService.getGrupos();
-    }else{
-      this.horarioForm.patchValue({
-        'id_group': '',
-        'id_subject': '',
-        'id_teacher': '',
-        'disponibilidad': ''
-      });
-      this.$grupos = new BehaviorSubject(null);
-      this.obtenerAsignaturas();
     }
   }
 
   obtenerAsignaturas(): void{
     let id_carga_academica = this.horarioForm.controls['id_academic_load'].value;
     let grupo = this.horarioForm.controls['id_group'].value;
-
+    this.horarioForm.patchValue({
+      'id_subject': '',
+      'id_teacher': '',
+      'disponibilidad': ''
+    });
+    this.obtenerMaestros();
+    this.$asignaturas = new BehaviorSubject(null);
     if(id_carga_academica && grupo){
       this.$asignaturas = this.coordinadorService.getAsignaturasCargaAcademica(id_carga_academica);
-    }else{
-      this.horarioForm.patchValue({
-        'id_subject': '',
-        'id_teacher': '',
-        'disponibilidad': ''
-      });
-
-      this.$asignaturas = new BehaviorSubject(null);
-      this.obtenerMaestros();
     }
   }
 
   obtenerMaestros(): void{
     let id_asignatura = this.horarioForm.controls['id_subject'].value;
-
-
+    this.horarioForm.patchValue({
+      'id_teacher': '',
+      'disponibilidad': ''
+    });
+    this.$profesores = new BehaviorSubject(null);
+    this.obtenerDisponibilidad();
+    
     if(id_asignatura){
-
+      this.horarioForm.patchValue({'id_teacher': ''});
       this.$profesores = this.coordinadorService.getProfesoresAsignatura(id_asignatura);
       
-    }else{
-      this.horarioForm.patchValue({
-        'id_teacher': '',
-        'disponibilidad': ''
-      });
-      this.$profesores = new BehaviorSubject(null);
-      this.obtenerDisponibilidad();
-    }
+      }
   }
 
   
@@ -148,6 +141,7 @@ export class ManualComponent implements OnInit {
   dia_hora: any;
 
   obtenerDisponibilidad(): void{
+    this.diasDisponibles = [];
     let credenciales = {
       'id_subject' : this.horarioForm.controls['id_subject'].value,
       'id_teacher' : this.horarioForm.controls['id_teacher'].value,
@@ -155,7 +149,7 @@ export class ManualComponent implements OnInit {
     }
 
 
-    if(credenciales.id_group){
+    if(credenciales.id_teacher){
       this.coordinadorService.getProfesoresDisponibilidad(credenciales).subscribe(
         (res: any) => {
 
@@ -208,7 +202,11 @@ export class ManualComponent implements OnInit {
             title: 'Exito',
             text: `${res.msg}`,
             icon: 'success'
-          })
+          }).then(
+            () => {
+              this.obtenerDisponibilidad();
+            }
+          )
         }else{
           Swal.fire({
             title: 'Error',

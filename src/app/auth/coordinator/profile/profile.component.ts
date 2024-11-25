@@ -58,7 +58,6 @@ export class ProfileComponent implements OnInit {
           this.coordinador.name = coordinador.name;
           this.coordinador.last_name = coordinador.last_name;
           this.coordinador.departament = coordinador.departament;
-          console.log(this.coordinador);
           this.isEditing = false;
           localStorage.setItem('coordinador', JSON.stringify(this.coordinador));
           this.obtenerCoordinador();

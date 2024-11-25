@@ -33,7 +33,6 @@ export class ProfileComponent implements OnInit {
 
   obtenerAdmin(): void{
     this.admin = JSON.parse(localStorage.getItem('admin')!);
-    console.log(this.admin)
   }
 
   ngOnInit(): void {

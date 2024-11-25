@@ -4,6 +4,7 @@ export interface Profesor {
     last_name: string
     email: string
     phone: string
+    identify: string
 }
 
 export const columnasProfesor = [
@@ -12,4 +13,5 @@ export const columnasProfesor = [
     { field: 'last_name', header: 'Apellido' },
     { field: 'email', header: 'Email' },
     { field: 'phone', header: 'Teléfono' },
+    { field: 'identify', header: 'N° Documento'}
 ];

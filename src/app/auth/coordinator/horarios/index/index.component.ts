@@ -32,7 +32,9 @@ export class IndexComponent implements OnInit {
 
 
   buscarOpciones(): void{
-    if(  this.buscarPor == 0){
+    this.horario$ = new BehaviorSubject(null);
+    this.id_search = '';
+    if(this.buscarPor == 0){
       return;
     }else{
       switch(this.buscarPor){
@@ -82,12 +84,13 @@ export class IndexComponent implements OnInit {
 
   buscarHorario(): void{
 
-    if(this.buscarPor){
+    if(this.buscarPor && this.id_search){
 
       switch(this.buscarPor){
         case 2:
           this.horario$ = this.horarioService.getHorarioMaestro(this.id_search.toString()).pipe(
             map( (res: any) => {
+              console.log(res);
               if(!res.ok){
                 Swal.fire({
                   title: 'Error',
@@ -103,7 +106,6 @@ export class IndexComponent implements OnInit {
         case 3:
         this.horario$ = this.horarioService.getHorarioGrupo(parseInt(this.id_search)).pipe(
           map( (res: any) => {
-            console.log(res);
             if(!res.ok){
               Swal.fire({
                 title: 'Error',
@@ -116,7 +118,13 @@ export class IndexComponent implements OnInit {
         );
         break;
       }
+    }else{
+      this.horario$ = new BehaviorSubject(null);
     }
+  }
+
+  verificarSearch(){
+    this.horario$ = new BehaviorSubject(null);
   }
 
   borrarHorario(){

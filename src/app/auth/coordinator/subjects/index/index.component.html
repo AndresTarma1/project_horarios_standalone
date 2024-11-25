@@ -12,10 +12,8 @@
     <div class="form-group">
       <label class="form-label" for="filter-search">Buscar por nombre</label>
       <div class="input-group">
-        <input class="form-control" type="text" placeholder="Ejemplo: Inglés II" />
-        <span class="search-icon">
-          <i class="bi bi-search text-muted"></i>
-        </span>
+        <input [(ngModel)]="filterInput" class="form-control" type="text" placeholder="Ejemplo: Inglés II" />
+        <button class="btn btn-outline-primary" (click)="filtrarAsignaturas()">Buscar</button>
       </div>
     </div>
 
@@ -44,7 +42,7 @@
           <!-- Paginación -->
           <div class="align-items-end">
             <pagination-controls
-              class="text-center"
+              class="text-center ngx-pagination-v1"
               nextLabel="Siguiente"
               previousLabel="Anterior"
               (pageChange)="p = $event">

@@ -1,29 +1,42 @@
 <div class="container mt-4">
-  <h2 class="text-center text-secondary">Horario De Clases</h2>
-  <div class="table-responsive">
-    <table class="table table-bordered schedule-table">
+  <h2 class="text-center text-uppercase text-secondary">Horario De Clases</h2>
+  <div class="table-container">
+    <table class="table  table-bordered schedule-table">
       <thead>
         <tr>
           <th>Hora</th>
-          @for (dia of dias; track $index) {
+          <ng-container *ngFor="let dia of dias">
             <th class="time-block">{{ dia | titlecase }}</th>
-          }
+          </ng-container>
         </tr>
       </thead>
       <tbody>
-        @for (hora of horas;let i = $index; track $index) {
+        <ng-container *ngFor="let hora of horas; let i = index;">
           <tr>
-            <td class="text-hora">{{ hora }}</td>
-            @for (dia of dias; track $index) {
-              @if (horarioTransformado[dia][i]; as clase) {
-                <td class="text-center align-content-center text-asignatura" [rowSpan]="clase.rowspan">{{ clase.name }}</td>
-              }
-            }
+            <td class="text-hora">{{ hora }} -- {{ horasFinal[i+1] }}</td>
+            <ng-container *ngFor="let dia of dias">
+              <ng-container *ngIf="horarioTransformado[dia][i] as clase">
+                <ng-container *ngIf="!clase.covered">
+                  <td 
+                    [rowSpan]="clase.rowspan || 1"
+                    class="text-center align-content-center"
+                    >
+                    <div
+                    class="text-asignatura"
+                    popoverTitle="Informacion"
+                    [autoClose]="'outside'"
+                    ngbPopover="{{clase.name}}">{{ clase.name }}</div>
+                    
+                  </td>
+                </ng-container>
+              </ng-container>
+              <ng-container *ngIf="!horarioTransformado[dia][i]">
+                <td></td>
+              </ng-container>
+            </ng-container>
           </tr>
-        }
+        </ng-container>
       </tbody>
     </table>
-
-
   </div>
 </div>
