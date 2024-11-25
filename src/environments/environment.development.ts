@@ -1,3 +1,3 @@
 export const environment = {
-  apiUrl: 'https://eternal-cricket-highly.ngrok-free.app/api'
+  apiUrl: 'https://localhost:8000/api'
 };

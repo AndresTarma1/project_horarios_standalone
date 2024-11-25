@@ -9,17 +9,6 @@ interface Task {
   description: string;
 }
 
-interface Event {
-  date: string;
-  description: string;
-}
-
-interface Message {
-  name: string;
-  avatar: string;
-  message: string;
-}
-
 @Component({
   selector: 'app-main',
   standalone: true,

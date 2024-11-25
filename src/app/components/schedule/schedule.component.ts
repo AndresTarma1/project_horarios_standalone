@@ -23,10 +23,10 @@ interface Dia {
 export class ScheduleComponent implements OnInit {
 
   @Input() horario: any;
+  @Input() teacher? : boolean = false;
 
   ngOnInit(): void {
     this.procesarHorario();
-    console.log(this.horario);
   }
 
   dias = [
@@ -95,7 +95,6 @@ procesarHorario() {
     }
   }
 
-  console.log(this.horarioTransformado);
 }
 
 

@@ -70,7 +70,7 @@
           @if (buscarPor === 3) {
             <button (click)="borrarHorario()" class="btn btn-outline-danger">Borrar horario</button>
           }
-          <app-schedule [horario]="horarioInfo.horario"></app-schedule>
+          <app-schedule [teacher]="maestro" [horario]="horarioInfo.horario"></app-schedule>
         }
       }@else {
         <div class="text-center">

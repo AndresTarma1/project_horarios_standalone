@@ -54,7 +54,6 @@ export class StudentsListGroupComponent implements OnInit, OnChanges {
   completarNombres(): void{
     if (this.grupo.estudiantes) {
       this.grupo.estudiantes.forEach((estudiante: Estudiante) => {
-        estudiante.name_completo = estudiante.name + ' ' + estudiante.last_name;
       });
       this.unFiltro = [...this.grupo.estudiantes];
     }
@@ -63,9 +62,7 @@ export class StudentsListGroupComponent implements OnInit, OnChanges {
   buscarFiltro() {
     if (this.inputFiltro) {
       this.grupo.estudiantes = this.unFiltro.filter((estudiantes: Estudiante) => {
-        return estudiantes
-          .name_completo!.toLowerCase()
-          .includes(this.inputFiltro.toLowerCase());
+        return estudiantes.name.includes(this.inputFiltro.toLowerCase());
       });
     } else {
       this.grupo.estudiantes = this.unFiltro;

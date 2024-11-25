@@ -42,22 +42,21 @@ export class CreateComponent {
     this.teacherForm.get('password')?.setValue(`Aa${n_documento}`, { emitEvent: false})
   }
 
-  generarEmail(): void{
-    const name = this.teacherForm.get('name')?.value;
-    const last_name = this.teacherForm.get('last_name')?.value;
-
-    const nameParts = name.split(' ');
-    const surnameParts = last_name.split(' ');
-
+  generarEmail(): void {
+    const name = this.teacherForm.get('name')?.value || ''; // Si es null o undefined, se asigna una cadena vacía
+    const last_name = this.teacherForm.get('last_name')?.value || ''; // Lo mismo para last_name
+  
+    const nameParts = name ? name.split(' ') : [];
+    const surnameParts = last_name ? last_name.split(' ') : [];
+  
     const firstInitial = nameParts[0]?.charAt(0) || '';
     const secondInitial = nameParts[1]?.charAt(0) || '';
     const firstLastName = surnameParts[0] || '';
     const secondLastInitial = surnameParts[1]?.charAt(0) || '';
-
-    const email = `${firstInitial}${secondInitial}${firstLastName}${secondLastInitial}`.toLowerCase() + '@profesor.com'
-
+  
+    const email = `${firstInitial}${secondInitial}${firstLastName}${secondLastInitial}`.toLowerCase() + '@profesor.com';
+  
     this.teacherForm.get('email')?.setValue(email, { emitEvent: false });
-
   }
 
   onSubmit() {

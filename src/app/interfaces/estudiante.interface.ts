@@ -1,5 +1,3 @@
-import { last } from "rxjs"
-
 export interface Estudiante {
     id: string
     name: string
@@ -7,7 +5,6 @@ export interface Estudiante {
     email: string
     phone: string
     identify: string,
-    name_completo? : string
 }
 
 export const columnasEstudiante = [

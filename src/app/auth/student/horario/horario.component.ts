@@ -21,9 +21,23 @@ export class HorarioComponent {
   }
 
 
+  grupo = '';
+  buscarGrupo(){
+    this.studentService.getGrupo(this.estudiante.id).subscribe(
+      (res: any) => {
+        if(res.ok){
+          this.grupo = res.group.name;
+        }else{
+          this.grupo = 'No tiene grupo';
+        }
+      });
+  }
+
+
   ngOnInit(): void {
     this.estudiante = JSON.parse(localStorage.getItem('estudiante')!);
     this.estudianteHorario();
+    this.buscarGrupo();
   }
 
   estudianteHorario(){

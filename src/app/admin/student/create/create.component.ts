@@ -37,31 +37,41 @@ export class CreateComponent implements OnInit {
   }
 
   generateEmail() {
-    const name = this.studenForm.get('name')?.value;
-    const lastName = this.studenForm.get('last_name')?.value;
-
-    const nameParts = name.split(' ');
-    const lastNameParts = lastName.split(' ');
-
+    const name = this.studenForm.get('name')?.value || '';
+    const lastName = this.studenForm.get('last_name')?.value || '';
+  
+    const nameParts = name ? name.split(' ') : [];
+    const lastNameParts = lastName ? lastName.split(' ') : [];
+  
     const firstInitial = nameParts[0]?.charAt(0) || '';
     const secondInitial = nameParts[1]?.charAt(0) || '';
     const firstLastName = lastNameParts[0] || '';
     const secondLastInitial = lastNameParts[1]?.charAt(0) || '';
-
+  
     const email = `${firstInitial}${secondInitial}${firstLastName}${secondLastInitial}`.toLowerCase() + '@estudiante.com';
-
+  
     this.studenForm.get('email')?.setValue(email, { emitEvent: false });
   }
-
   onSubmit(){
     this.adminService.postEstudiante(this.studenForm.getRawValue()).subscribe(
       (res: any) => {
-        Swal.fire({
-          title: 'Creado Correctamente',
-          text: `El estudiante ${this.studenForm.controls['name'].value} ha sido creado correctamente`,
-          icon: 'success'
-        });
-        this.studenForm.reset();
+        if(res.ok){
+          Swal.fire({
+            title: 'Creado Correctamente',
+            text: `El estudiante ${this.studenForm.controls['name'].value} ha sido creado correctamente`,
+            icon: 'success'
+          }).then(
+            () => {
+              this.studenForm.reset();
+            }
+          );
+        }else{
+          Swal.fire({
+            title: 'Precaucion',
+            text: `${res.message}`,
+            icon: 'warning'
+          });
+        }
       }
     );
   }

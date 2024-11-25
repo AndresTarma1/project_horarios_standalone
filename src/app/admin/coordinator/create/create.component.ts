@@ -40,7 +40,11 @@ export class CreateComponent {
               title: 'Exito',
               text: `Creado correctamente`,
               icon: 'success'
-            });
+            }).then(
+              () => {
+                this.coordinatorForm.reset();
+              }
+            );
           }else{
             Swal.fire({
               title: 'Error',
@@ -49,7 +53,6 @@ export class CreateComponent {
             });
           }
 
-          this.coordinatorForm.reset();
         }
       );
     }

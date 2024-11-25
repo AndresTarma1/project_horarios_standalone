@@ -8,7 +8,7 @@
       @if (horario$| async; as horarioInfo) {
         @if (horarioInfo.horario.length > 0) {
           <div class="row g-4 mb-4">
-            <app-schedule [horario]="horarioInfo.horario"></app-schedule>
+            <app-schedule [teacher]="true" [horario]="horarioInfo.horario"></app-schedule>
           </div>
         }@else {
           <div class="row g-4 mb-4">

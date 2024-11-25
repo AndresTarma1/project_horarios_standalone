@@ -82,15 +82,16 @@ export class IndexComponent implements OnInit {
     }
   }
 
+  maestro: boolean = false;
   buscarHorario(): void{
 
     if(this.buscarPor && this.id_search){
 
       switch(this.buscarPor){
         case 2:
+          this.maestro = true;
           this.horario$ = this.horarioService.getHorarioMaestro(this.id_search.toString()).pipe(
             map( (res: any) => {
-              console.log(res);
               if(!res.ok){
                 Swal.fire({
                   title: 'Error',
@@ -104,6 +105,7 @@ export class IndexComponent implements OnInit {
           break;
 
         case 3:
+        this.maestro = false;
         this.horario$ = this.horarioService.getHorarioGrupo(parseInt(this.id_search)).pipe(
           map( (res: any) => {
             if(!res.ok){
